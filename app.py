@@ -34,7 +34,7 @@ def home():
                 
                 team1id = teams[team1]
                 team2id = teams[team2]
-
+                print(team1id, team2id)
         else:
             return jsonify({'error': 'not data found'})
                 
