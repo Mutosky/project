@@ -1,0 +1,77 @@
+Elevate your match predictions with our AI Football Predictor. 
+Using advanced machine learning, it analyzes historical data and player 
+stats for accurate forecasts. Customizable and community-driven, stay ahead 
+in predicting football outcomes with this powerful tool.
+
+
+Features:
+    Recent Team Performance:
+        Goals scored and conceded in the last few matches.
+        Possession percentages, shots on target, or other team statistics from recent games.
+    Player Form:
+        Recent performance metrics for key players.
+        Information on player injuries or suspensions from the last few matches.
+    Match-Specific Factors:
+        Home or away advantage in recent games.
+        Weather conditions and their impact on recent matches.
+    Head-to-Head Performance:
+        Outcomes of the last few matches between the two teams.
+    Derived Features:
+        Team form based on the results of the last 10 matches.
+        Average goals scored or conceded over the last 10 matches.
+
+explanation: 
+    Team Statistics:
+        Goals scored
+        Possession percentage
+        Shots on target
+        Passing accuracy
+    Player Statistics:
+        Individual player performance metrics
+        Number of goals scored by key players
+        Player injuries or suspensions
+    Match-Specific Factors:
+        Home advantage
+        Weather conditions
+        Recent match results
+    Derived Features (Feature Engineering):
+        Team form based on recent matches
+        Head-to-head performance between the two teams
+        Average goals conceded over a certain period
+
+leagueName                leagueShortcut
+Premier League            pl1
+UEFA                      uefaconf2023
+
+
+
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00         5
+           1       0.55      1.00      0.71         6
+           2       0.00      0.00      0.00         2
+
+    accuracy                           0.46        13
+   macro avg       0.18      0.33      0.24        13
+weighted avg       0.25      0.46      0.33        13
+
+
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00         2
+           1       0.73      0.92      0.81        12
+           2       0.00      0.00      0.00         2
+
+    accuracy                           0.69        16
+   macro avg       0.24      0.31      0.27        16
+weighted avg       0.55      0.69      0.61        16
+
+
+
+
+On Target
+Corners
+Goal Kick
+Attacks
+
+python3 match_predictor.py
