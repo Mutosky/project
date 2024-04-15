@@ -1,13 +1,14 @@
 import requests
 import numpy as np
-api_key = '718898069a6bb44a68b11fadacaf9a2dbf703754e8cc91085f63d958aae9fe44'
+import os
+api_key = "df7c75bf8ca678790da079439129a291b8a238dea11effda993bf659243a997b"
 
 
 def pad_list(lst, max_length):
     return lst + [np.nan] * (max_length - len(lst))
 
 
-def getdata(teamid, teamid2):
+def getTestData(teamid, teamid2):
 
     score = []
     place = []
@@ -54,26 +55,27 @@ def getdata(teamid, teamid2):
 
         for key in data:
             event_key = key['event_key']
-            featureurl = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2023-01-01&to=2024-03-31&matchId={event_key}'
+            featureurl = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2023-01-01&to=2024-05-14&matchId={event_key}'
 
             featurerespond = requests.get(url=featureurl)
             if featurerespond.status_code == 200:
                 if 'result' in featurerespond.json():
-                    print(key['event_date'])
-                    featuredata = featurerespond.json()['result']
+                    featuredata = featurerespond.json()['result'][:1]
                     for match in featuredata:
                         homeid = match['home_team_key']
                         awayid = match['away_team_key']
+                        homename = match['event_home_team']
+                        awayname = match['event_away_team']
                         goals = match['event_final_result']
                         event_date.append(match['event_date'])
                         stat = match['statistics']
 
                         if goals == '-':
-                            team1.append(teamid)
-                            team2.append(teamid2)
                             if teamid == homeid:
                                 place.append(home)
                                 place2.append(away)
+                                team1.append(homename)
+                                team2.append(awayname)
                                 score.append(0)
                                 score2.append(0)
                                 outcome.append('Draw')
@@ -86,12 +88,12 @@ def getdata(teamid, teamid2):
                         else:
                             homescores = goals[0]
                             awayscores = goals[4]
-                            team1.append(teamid)
-                            team2.append(teamid2)
 
                             if homeid == teamid:
                                 place.append(home)
                                 place2.append(away)
+                                team1.append(homename)
+                                team2.append(awayname)
                                 score.append(homescores)
                                 score2.append(awayscores)
                                 if homescores > awayscores:
@@ -128,6 +130,8 @@ def getdata(teamid, teamid2):
                                         Attacks2.append(statis['away'])
 
                             elif awayid == teamid:
+                                team1.append(awayname)
+                                team2.append(homename)
                                 place.append(away)
                                 place2.append(home)
                                 score.append(awayscores)
@@ -164,7 +168,6 @@ def getdata(teamid, teamid2):
                                     if statis['type'] == Attack:
                                         Attacks.append(statis['away'])
                                         Attacks2.append(statis['home'])
-                    print(key['event_home_team'], 'home team', key['event_away_team'], 'away team')
 
         max_length = max(len(score), len(outcome))
         possession = pad_list(possession, max_length)
@@ -189,17 +192,7 @@ def getdata(teamid, teamid2):
         print(responed.status_code)
 
 
-
-
-
-
-
-
-
-
-
-
-def getpastfivematch(teamid):
+def getpastfivematch(teamid= 80, trainData =False):
 
     score = []
     place = []
@@ -237,19 +230,18 @@ def getpastfivematch(teamid):
     Attack = 'Attacks'
 
 
-    url = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2023-01-01&to=2024-03-1&teamId={teamid}'
+    url = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2023-09-01&to=2024-03-14&teamId={teamid}'
 
     respond  = requests.get(url=url)
     if respond.status_code ==  200:
         if 'result' in respond.json():
-            featuredata = respond.json()['result'][:9]
+            featuredata = respond.json()['result']
             for match in featuredata:
                 homeid = match['home_team_key']
                 awayid = match['away_team_key']
                 homename = match['event_home_team']
                 awayname = match['event_away_team']
                 goals = match['event_final_result']
-                print(match['event_date'])
                 event_date.append(match['event_date'])
                 stat = match['statistics']
 
@@ -280,12 +272,20 @@ def getpastfivematch(teamid):
                         place2.append(away)
                         score.append(homescores)
                         score2.append(awayscores)
-                        if homescores > awayscores:
-                            outcome.append('Win')
-                        elif awayscores > homescores:
-                            outcome.append('Loss')
+                        if trainData == True:
+                            if homescores > awayscores:
+                                outcome.append('TeamOne')
+                            elif awayscores > homescores:
+                                outcome.append('TeamTwo')
+                            else:
+                                outcome.append('Draw')
                         else:
-                            outcome.append('Draw')
+                            if homescores > awayscores:
+                                outcome.append('Win')
+                            elif awayscores > homescores:
+                                outcome.append('Loss')
+                            else:
+                                outcome.append('Draw')
 
                         for statis in stat:
                             if statis['type'] == ballpos:
@@ -320,12 +320,20 @@ def getpastfivematch(teamid):
                         place2.append(home)
                         score.append(awayscores)
                         score2.append(homescores)
-                        if awayscores > homescores:
-                            outcome.append('Win')
-                        elif homescores > awayscores:
-                            outcome.append('Loss')
+                        if trainData == True:
+                            if homescores > awayscores:
+                                outcome.append('TeamOne')
+                            elif awayscores > homescores:
+                                outcome.append('TeamTwo')
+                            else:
+                                outcome.append('Draw')
                         else:
-                            outcome.append('Draw')
+                            if homescores > awayscores:
+                                outcome.append('Win')
+                            elif awayscores > homescores:
+                                outcome.append('Loss')
+                            else:
+                                outcome.append('Draw')
 
                         for statis in stat:
                             if statis['type'] == ballpos:
@@ -353,7 +361,6 @@ def getpastfivematch(teamid):
                                 Attacks.append(statis['away'])
                                 Attacks2.append(statis['home'])
 
-            print(match['event_home_team'], 'home team', match['event_away_team'], 'away team', '\n')
 
         max_length = max(len(score), len(outcome))
         possession = pad_list(possession, max_length)

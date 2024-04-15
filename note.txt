@@ -44,34 +44,46 @@ Premier League            pl1
 UEFA                      uefaconf2023
 
 
+h2h 
+chart 
+label(win probability)
 
-              precision    recall  f1-score   support
+past h2h matchs 
+match outcome 
 
-           0       0.00      0.00      0.00         5
-           1       0.55      1.00      0.71         6
-           2       0.00      0.00      0.00         2
-
-    accuracy                           0.46        13
-   macro avg       0.18      0.33      0.24        13
-weighted avg       0.25      0.46      0.33        13
-
-
-              precision    recall  f1-score   support
-
-           0       0.00      0.00      0.00         2
-           1       0.73      0.92      0.81        12
-           2       0.00      0.00      0.00         2
-
-    accuracy                           0.69        16
-   macro avg       0.24      0.31      0.27        16
-weighted avg       0.55      0.69      0.61        16
+whatapp linsk (https://wa.link/kz8og3)
 
 
 
 
-On Target
-Corners
-Goal Kick
-Attacks
 
-python3 match_predictor.py
+<body>
+    <div id="app">
+        <ve-line :data="chartData"></ve-line>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/v-charts/lib/line.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
+    <script>
+        new Vue({
+            el: '#app',
+            data: function () {
+                return {
+                    chartData: {
+                        columns: ['date', 'sales'],
+                        rows: [
+                            { 'date': '1月1日', 'sales': 123 },
+                            { 'date': '1月2日', 'sales': 1223 },
+                            { 'date': '1月3日', 'sales': 2123 },
+                            { 'date': '1月4日', 'sales': 4123 },
+                            { 'date': '1月5日', 'sales': 3123 },
+                            { 'date': '1月6日', 'sales': 7123 }
+                        ]
+                    }
+                }
+            },
+            components: { VeLine }
+        })
+    </script> 
+</body>

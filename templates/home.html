@@ -9,12 +9,12 @@
 </head>
 
 <body>
-    <div align="center" class="container">
+    <div class="container">
         <h1>analysis</h1>
         <div class="inner">
             <div class="select_team">
                 <label for="team1">Home Team:</label>
-                <select id="Team1">
+                <select id="Team1" class="select-item">
                     <option value="">Select Team</option>
                     <option value="AC Milan">AC Milan</option>
                     <option value="Arsenal">Arsenal</option>
@@ -91,9 +91,9 @@
             <div class="vs">
                 <h1>vs</h1>
             </div>
-            <div class="select_team2">
+            <div class="select_team">
                 <label for="team2">Away Team:</label>
-                <select id="Team2">
+                <select id="Team2" class="select-item">
                     <option value="">Select Team</option>
                     <option value="AC Milan">AC Milan</option>
                     <option value="Arsenal">Arsenal</option>
@@ -168,16 +168,33 @@
                 </select>
             </div>
         </div>
-        <div class="button">
-            <button onclick="getSelectedTeams()" id="analyze_team">Start Analysis</button>
+        <div>
+            <button onclick="getSelectedTeams()" id="analyze_team" class="select-button">Start Analysis</button>
         </div>
         <div class="note">
             <p>please ensure: that the home team and away team are correctly selected</p>
         </div>
     </div>
     <div class="head2head">
-        <h2>H2H</h2>
+        <div class="chart">
+            <h1>probability</h1>
+            <div class="chart-con">
+                <canvas class="charts" id="chart-container" style="height: 300px; width: 300px;"</canvas>
+            </div>
+        </div>
+        <div class="description">
+            <h1>all matchs</h1>
+            <h2>match-name match-date match-outcome</h2>
+        </div>
     </div>
+    <div class="last-fivematch" id="last-fivematch">
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/v-charts/lib/line.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
     <script src="{{url_for('static', filename='main.js')}}"></script>
 </body>
 
