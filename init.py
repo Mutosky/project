@@ -1,6 +1,7 @@
-from flask import Flask
-from sqlalchemy import create_engine, Float, String, Integer
+from sqlalchemy import create_engine, Column, Float, String, Integer
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from flask import Flask
 
 
 teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle United": "3100",
@@ -19,6 +20,21 @@ teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle U
          "Juventus": "96", "Manchester United": "102", "Real Valladolid": "7262", "Liverpool": "84", "Espanyol": "7268", "Elche": "7274", "Al Hilal": "366", "Al Ahly": "585",
          "Cacereño": "6805", "Celtic": "127", "Shakhtar Donetsk": "78", "Eintracht Frankfurt": "3945", "América": "284", "Levante": "7259", "Alcoyano": "7249",
          "Bayern Munich": "72"}
+
+engine = create_engine('sqlite:///database.db',
+                       connect_args={"check_same_thread": False})
+session = sessionmaker(bind=engine)
+Base = declarative_base()
+
+class Users(Base):
+    __tablename__ = 'users'
+    
+    id = Column(Integer, primary_key=True)
+    name = Column(String unique=True)
+    password = Column(String)
+    status = Column(String, nullable=True)
+
+Base.metadata.create_all(engine)
 
 def flaskinit():
     app = Flask(__name__)
