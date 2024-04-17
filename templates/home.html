@@ -13,7 +13,7 @@
         <h1>analysis</h1>
         <div class="inner">
             <div class="select_team">
-                <label for="team1">Home Team:</label>
+                <label for="Team1">Home Team:</label>
                 <select id="Team1" class="select-item">
                     <option value="">Select Team</option>
                     <option value="AC Milan">AC Milan</option>
@@ -92,7 +92,7 @@
                 <h1>vs</h1>
             </div>
             <div class="select_team">
-                <label for="team2">Away Team:</label>
+                <label for="Team2">Away Team:</label>
                 <select id="Team2" class="select-item">
                     <option value="">Select Team</option>
                     <option value="AC Milan">AC Milan</option>
@@ -184,10 +184,28 @@
         </div>
         <div class="description">
             <h1>all matchs</h1>
-            <h2>match-name match-date match-outcome</h2>
+            <p>match-name match-date match-outcome</p>
         </div>
     </div>
     <div class="last-fivematch" id="last-fivematch">
+        <div class="team-div">
+            <h1>home team</h1>
+            <div class="line-chart">
+                <canvas id="home-myChart"></canvas>
+            </div>
+            <div class="bar-chart">
+                <canvas class="bar-container"></canvas>
+            </div>
+        </div>
+        <div class="team-div">
+            <h1>away team</h1>
+            <div class="line-chart">
+                <canvas id="away-myChart"></canvas>
+            </div>
+            <div class="bar-chart">
+                <canvas class="bar-containers"></canvas>
+            </div>
+        </div>
         
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
@@ -196,6 +214,8 @@
     <script src="https://cdn.jsdelivr.net/npm/v-charts/lib/line.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
     <script src="{{url_for('static', filename='main.js')}}"></script>
+    
+
 </body>
 
 </html>

@@ -1,27 +1,48 @@
-function lineChart(){
-    new Vue({
-        el: '#app',
-        data: function () {
-            return {
-                chartData: {
-                    columns: ['date', 'sales'],
-                    rows: [
-                        { 'date': '1月1日', 'sales': 123 },
-                        { 'date': '1月2日', 'sales': 1223 },
-                        { 'date': '1月3日', 'sales': 2123 },
-                        { 'date': '1月4日', 'sales': 4123 },
-                        { 'date': '1月5日', 'sales': 3123 },
-                        { 'date': '1月6日', 'sales': 7123 }
-                    ]
-                }
-            }
+function lineChart(match1, match2, match3, match4, match5, winData, lossData, drawData, elementId) {
+    const ctx = document.getElementById(elementId).getContext('2d');
+
+    // Sample data for wins, losses, and draws (replace with your actual data)
+
+    const labels = [match1, match2, match3, match4, match5];
+
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Wins',
+                data: winData,
+                borderColor: 'green',
+                backgroundColor: 'rgba(0, 255, 0, 0.2)', // Transparent green fill
+                fill: false, // Fill the area under the line
+            },
+            {
+                label: 'Losses',
+                data: lossData,
+                borderColor: 'red',
+                backgroundColor: 'rgba(255, 0, 0, 0.2)', // Transparent red fill
+                fill: false, // Fill the area under the line
+            },
+            {
+                label: 'Draws',
+                data: drawData,
+                borderColor: 'grey',
+                backgroundColor: 'rgba(128, 128, 128, 0.2)', // Transparent grey fill
+                fill: false, // Fill the area under the line
+            },
+        ],
+    };
+
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            // Optional options for customization (e.g., title, legend, scales)
         },
-        components: { VeLine }
-    })
+    });
+    return {
+        myChart
+    }
 }
-
-
-
 
 function pieChart(label1, label2, label3, data1, data2, data3, elementid) {
     const ctx = document.getElementById(elementid).getContext('2d');
@@ -106,6 +127,28 @@ async function getSelectedTeams(){
 
         const jsonData = await response.json();
         const h2hData = jsonData['H2H_data']['last_match_probability'];
+        const last5MatchAway = jsonData['Lastfivematchdata']['AwayTeam'];
+        const last5MatchHome = jsonData['Lastfivematchdata']['HomeTeam'];
+        const dates = last5MatchHome['date']
+        const dates2 = last5MatchAway['date']
+
+
+        const homeTeamData={
+            'win': last5MatchHome['win'],
+            'loss': last5MatchHome['loss'],
+            'draw': last5MatchHome['draw'],
+            'Id': 'home-myChart'
+
+        }
+
+        const awayTeamData ={
+            'win': last5MatchAway['win'],
+            'loss': last5MatchAway['loss'],
+            'draw': last5MatchAway['draw'],
+            'Id': 'away-myChart'
+        }
+        
+
         const homeTeam = h2hData[1] * 100
         const awayTeam = h2hData[0] * 100
         const draw = h2hData[2] * 100
@@ -117,8 +160,13 @@ async function getSelectedTeams(){
         let data2 = homeTeam;
         let data3 = awayTeam;
         let elementid = 'chart-container';
+        console.log(jsonData)
 
         pieChart(label1, label2, label3, data1, data2, data3, elementid)
+        lineChart(dates[0], dates[1], dates[2], dates[3], dates[4], homeTeamData['win'], homeTeamData['loss'], homeTeamData['draw'], homeTeamData['Id'])
+        console.log(typeof homeTeamData['win'])
+        lineChart(dates2[0], dates2[1], dates2[2], dates2[3], dates2[4], awayTeamData['win'], awayTeamData['loss'], awayTeamData['draw'], awayTeamData['Id'])
 
     }
 }
+

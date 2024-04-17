@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, Column, Float, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from flask import Flask
+import time
 
 
 teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle United": "3100",
@@ -30,7 +31,7 @@ class Users(Base):
     __tablename__ = 'users'
     
     id = Column(Integer, primary_key=True)
-    name = Column(String unique=True)
+    name = Column(String, unique=True)
     password = Column(String)
     status = Column(String, nullable=True)
 
@@ -38,6 +39,24 @@ Base.metadata.create_all(engine)
 
 def flaskinit():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = "key"
+    app.config['SECRET_KEY'] = "football-site-key"
     return app
 
+
+def add_user(userData):
+    if userData:
+        try:
+            db = session()
+            db.add(userData)
+            db.commit()
+            return 0
+        except Exception as e:
+            db.rollback()
+            return f'error {e}'
+    else: return 'no data found'
+
+
+def userConfirmation(username, password):
+    if username and password:
+        db = session()
+        db.query(Users)

@@ -213,6 +213,7 @@ def getpastfivematch(teamid= 80, trainData =False):
     On_target2 = []
     Corners2 = []
     Attacks2 = []
+    team2id = []
 
     outcome = []
     team1 = []
@@ -249,6 +250,7 @@ def getpastfivematch(teamid= 80, trainData =False):
                     if teamid == homeid:
                         team1.append(teamid)
                         team2.append(awayname)
+                        team2id.append(awayid)
                         place.append(home)
                         place2.append(away)
                         score.append(0)
@@ -257,6 +259,7 @@ def getpastfivematch(teamid= 80, trainData =False):
                     elif teamid == awayid:
                         team1.append(teamid)
                         team2.append(homename)
+                        team2id.append(homeid)
                         place.append(away)
                         place2.append(home)
                         score.append(0)
@@ -268,6 +271,7 @@ def getpastfivematch(teamid= 80, trainData =False):
                     if homeid == teamid:
                         team1.append(teamid)
                         team2.append(awayname)
+                        team2id.append(awayid)
                         place.append(home)
                         place2.append(away)
                         score.append(homescores)
@@ -316,6 +320,7 @@ def getpastfivematch(teamid= 80, trainData =False):
                     elif awayid == teamid:
                         team1.append(teamid)
                         team2.append(homename)
+                        team2id.append(homeid)
                         place.append(away)
                         place2.append(home)
                         score.append(awayscores)
@@ -378,7 +383,7 @@ def getpastfivematch(teamid= 80, trainData =False):
         Corners2 = pad_list(Corners2, max_length)
         Attacks2 = pad_list(Attacks2, max_length)
 
-        return outcome, event_date, team1, score, place, possession, dangerousattacks, accuracy, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracy2, On_target2, shotinsidebox2, Corners2, Attacks2
+        return outcome, event_date, team1, score, place, possession, dangerousattacks, accuracy, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracy2, On_target2, shotinsidebox2, Corners2, Attacks2, team2id
 
     else: print(respond.status_code)
 

@@ -5,10 +5,47 @@ import pandas as pd
 from api import getTestData, getpastfivematch
 
 
+
+def put_in_list(data):
+    win = []
+    loss =[]
+    draw = []
+    for proba in data:
+        draw.append(proba[0])
+        loss.append(proba[1])
+        win.append(proba[2])
+
+    return win, loss, draw
+
+def needData(data, data2):
+    team1OpponentName = []
+    team1MatchDate = []
+    team1MatchOutcome = []
+    team2OpponentName = []
+    team2MatchDate = []
+    team2MatchOutcome = []
+
+    for dat in data['team1_opponentname']:
+        team1OpponentName.append(dat)
+    for dat in data['team1_match_date']:
+        team1MatchDate.append(dat)
+    for dat in data['team1_Outcome']:
+        team1MatchOutcome.append(dat)
+    for dat in data2['team2_opponentname']:
+        team2OpponentName.append(dat)
+    for dat in data2['team2_match_date']:
+        team2MatchDate.append(dat)
+    for dat in data2['team2_Outcome']:
+        team2MatchOutcome.append(dat)
+
+    return team1OpponentName, team1MatchDate, team1MatchOutcome, team2OpponentName, team2MatchDate, team2MatchOutcome
+    
+
+
 def predictionalgorithm(team1id, team2id):
     outcome, event_date, team1, score, place, possession, dangerousattacks, accuracies, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracies2, On_target2, shotinsidebox2, Corners2, Attacks2 = getTestData(
         teamid=team1id, teamid2=team2id)
-    outcomeB, event_dateB, team1B, scoreB, placeB, possessionB, dangerousattacksB, accuraciesB, On_targetB, shotinsideboxB, CornersB, AttacksB, team2B, score2B, place2B, possession2B, dangerousattacks2B, accuracies2B, On_target2B, shotinsidebox2B, Corners2B, Attacks2B = getpastfivematch(
+    outcomeB, event_dateB, team1B, scoreB, placeB, possessionB, dangerousattacksB, accuraciesB, On_targetB, shotinsideboxB, CornersB, AttacksB, team2B, score2B, place2B, possession2B, dangerousattacks2B, accuracies2B, On_target2B, shotinsidebox2B, Corners2B, Attacks2B, team2ids = getpastfivematch(
         trainData=True)
         
     
@@ -89,13 +126,10 @@ def predictionalgorithm(team1id, team2id):
 
     #needed data for displaying
 
-    event_dates = list(testdata['event_date'])
-    probability_list = list()
-    for match in probability:
-        for proba in match:
-            probability_list.append(proba)
+    teamData = testdata[['event_date', 'match_outcome', 'team1_id', 'team2_id']]
+    print(teamData)
 
-    return probability_list, event_dates
+    return probability, teamData
 
 
 
@@ -107,16 +141,17 @@ def predictionalgorithm(team1id, team2id):
 
 
 def predictionalgorithm2(team1id, team2id):
-    outcome, event_date, team1, score, place, possession, dangerousattacks, accuracies, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracies2, On_target2, shotinsidebox2, Corners2, Attacks2 = getpastfivematch(
+    outcome, event_date, team1, score, place, possession, dangerousattacks, accuracies, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracies2, On_target2, shotinsidebox2, Corners2, Attacks2, team2ids = getpastfivematch(
         teamid=team1id)
-    outcomeB, event_dateB, team1B, scoreB, placeB, possessionB, dangerousattacksB, accuraciesB, On_targetB, shotinsideboxB, CornersB, AttacksB, team2B, score2B, place2B, possession2B, dangerousattacks2B, accuracies2B, On_target2B, shotinsidebox2B, Corners2B, Attacks2B= getpastfivematch(
+    outcomeB, event_dateB, team1B, scoreB, placeB, possessionB, dangerousattacksB, accuraciesB, On_targetB, shotinsideboxB, CornersB, AttacksB, team2B, score2B, place2B, possession2B, dangerousattacks2B, accuracies2B, On_target2B, shotinsidebox2B, Corners2B, Attacks2B, team2idsB= getpastfivematch(
         teamid=team2id)
     
     dataA = pd.DataFrame({
         'team1_Outcome': outcome,
         'team1_match_date': event_date,
         'team1id': team1,
-        'team1_opponentid': team2,
+        'team1_opponentname': team2,
+        'team1_opponentid': team2ids,
         'team1_scores': score,
         'team1_opponent_scores': score2,
         'team1_place': place,
@@ -142,7 +177,8 @@ def predictionalgorithm2(team1id, team2id):
         'team2_Outcome': outcomeB,
         'team2_match_date': event_dateB,
         'team2id': team1B,
-        'team2_opponentid': team2B,
+        'team2_opponentname': team2B,
+        'team2_opponentid': team2idsB,
         'team2_scores': scoreB,
         'team2_opponent_scores': score2B,
         'team2_place': placeB,
@@ -175,8 +211,8 @@ def predictionalgorithm2(team1id, team2id):
 
 
 
-    features1 = dataA.drop(columns=['team1_Outcome', 'team1_match_date', 'team1id', 'team1_opponentid'])
-    features2 = dataB.drop(columns=['team2_Outcome', 'team2_match_date', 'team2id', 'team2_opponentid'])
+    features1 = dataA.drop(columns=['team1_Outcome', 'team1_match_date', 'team1id', 'team1_opponentname'])
+    features2 = dataB.drop(columns=['team2_Outcome', 'team2_match_date', 'team2id', 'team2_opponentname'])
 
     label1 = dataA['team1_Outcome']
     encoded_labelteam1 = LabelEncoder().fit_transform(label1)
@@ -201,12 +237,12 @@ def predictionalgorithm2(team1id, team2id):
     dataB = dataB.sort_values(by='team2_match_date', ascending=False)
 
     X_test1 = dataA.head(n=5)
-    team1outcome = X_test1[['team1_Outcome', 'team1_match_date']]
-    X_test1 = X_test1.drop(columns=['team1_Outcome', 'team1_match_date', 'team1id', 'team1_opponentid'])
+    team1outcome = X_test1[['team1_Outcome', 'team1_match_date', 'team1_opponentname']]
+    X_test1 = X_test1.drop(columns=['team1_Outcome', 'team1_match_date', 'team1id', 'team1_opponentname'])
     
     X_test2 = dataB.head(n=5)
-    team2outcome = X_test2[['team2_Outcome', 'team2_match_date']]
-    X_test2 = X_test2.drop(columns=['team2_Outcome', 'team2_match_date', 'team2id', 'team2_opponentid'])
+    team2outcome = X_test2[['team2_Outcome', 'team2_match_date', 'team2_opponentname']]
+    X_test2 = X_test2.drop(columns=['team2_Outcome', 'team2_match_date', 'team2id', 'team2_opponentname'])
     
 
 
@@ -215,20 +251,3 @@ def predictionalgorithm2(team1id, team2id):
 
 
     return Team1_probability, team1outcome, Team2_probability, team2outcome
-
-
-'''team1 = 88
-team2 = 102
-
-probability, event = predictionalgorithm(
-    team1id=team1,
-    team2id=team2
-)
-
-Team1_probability, team1outcome, Team2_probability, team2outcome = predictionalgorithm2(
-    team1id=team1,
-    team2id=team2
-)
-
-print(event)
-print(Team1_probability)'''

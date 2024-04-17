@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 20px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif
 }
 
 .container {
@@ -49,9 +50,7 @@ body {
     margin-top: 20px;
 }
 
-.select-item {
-    padding: 20px 40px;
-}
+
 
 .note {
     padding: 20px 40px;
@@ -62,12 +61,14 @@ body {
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: 20%;
     border-radius: 20px 20px;
 }
 
 .chart {
     background-color: rgb(233, 233, 233);
     width: 50%;
+    height: 20%;
     padding: 10px 20px;
     border-radius: 20px 0px 0px 20px;
 }
@@ -75,21 +76,38 @@ body {
 .description {
     background-color: rgb(33, 116, 65);
     width: 50%;
+    padding: 10px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 0px 20px 20px 0px;
 }
 
-.chart h1{
+.head2head h1{
     font-size: 24px;
     text-transform: capitalize;
 }
 
-.description h1 {
+.description p {
+    font-size: 20px;
+    text-transform: lowercase;
+}
+
+.last-fivematch{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.team-div {
     padding: 10px 20px;
+    width: 50%;
+}
+
+.team-div h1 {
     font-size: 24px;
     text-transform: capitalize;
+
 }
 
 
