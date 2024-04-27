@@ -1,7 +1,10 @@
 import requests
 import numpy as np
-import os
-api_key = "df7c75bf8ca678790da079439129a291b8a238dea11effda993bf659243a997b"
+from datetime import date
+
+
+today = date.today()
+api_key = "c0bbeb584e5287c7d142f75486275a19f48090969411a85d6b5721ed35e090bd"
 
 
 def pad_list(lst, max_length):
@@ -55,7 +58,7 @@ def getTestData(teamid, teamid2):
 
         for key in data:
             event_key = key['event_key']
-            featureurl = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2023-01-01&to=2024-05-14&matchId={event_key}'
+            featureurl = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2023-01-01&to={today}&matchId={event_key}'
 
             featurerespond = requests.get(url=featureurl)
             if featurerespond.status_code == 200:
@@ -231,7 +234,7 @@ def getpastfivematch(teamid= 80, trainData =False):
     Attack = 'Attacks'
 
 
-    url = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2023-09-01&to=2024-03-14&teamId={teamid}'
+    url = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2023-09-01&to={today}&teamId={teamid}'
 
     respond  = requests.get(url=url)
     if respond.status_code ==  200:

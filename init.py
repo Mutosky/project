@@ -1,9 +1,13 @@
-from sqlalchemy import create_engine, Column, Float, String, Integer
+from sqlalchemy import create_engine, Column, Float, String, Integer, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from datetime import date
 from flask import Flask
-import time
 
+def flaskinit():
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = "football-site-key"
+    return app
 
 teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle United": "3100",
          "Sheffield United": "3074", "Lens": "3821", "AFC Bournemouth": "3071", "Tottenham Hotspur": "164", "Everton": "3073", "Monaco": "3817",
@@ -24,7 +28,7 @@ teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle U
 
 engine = create_engine('sqlite:///database.db',
                        connect_args={"check_same_thread": False})
-session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
 class Users(Base):
@@ -34,29 +38,35 @@ class Users(Base):
     name = Column(String, unique=True)
     password = Column(String)
     status = Column(String, nullable=True)
+    dates = Column(Date)
 
 Base.metadata.create_all(engine)
 
-def flaskinit():
-    app = Flask(__name__)
-    app.config['SECRET_KEY'] = "football-site-key"
-    return app
 
-
-def add_user(userData):
-    if userData:
+def add_user(username, password, dates, status='deactivated'):
+    if username and password:
         try:
-            db = session()
-            db.add(userData)
-            db.commit()
-            return 0
+            session = Session()
+            session.add(Users(name=username, password=password, status=status, dates=dates))
+            session.commit()
+            return 'successful'
         except Exception as e:
-            db.rollback()
+            session.rollback()
             return f'error {e}'
+        finally:
+            session.close()
     else: return 'no data found'
 
 
-def userConfirmation(username, password):
+def login_users(username, password):
     if username and password:
-        db = session()
-        db.query(Users)
+        try: 
+            session = Session()
+            user = session.query(Users).filter_by(name=username, password=password).first()
+            if user:
+                return user
+            else: return 'invalid'
+        except Exception as e:
+            return f'error {e}'
+        finally: session.close()
+

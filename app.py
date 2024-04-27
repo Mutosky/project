@@ -1,9 +1,17 @@
 from supervised import predictionalgorithm, predictionalgorithm2, put_in_list, needData
 from flask import request, jsonify, render_template, redirect
-from init import flaskinit, teams, add_user, Users
+from init import flaskinit, teams, add_user, Users, login_users, Session
+from datetime import date
 import os
 
 app = flaskinit()
+
+def loop(data):
+    itemList = []
+    for dat in data:
+        itemList.append(dat)
+    return itemList
+
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
@@ -19,19 +27,12 @@ def home():
                     team2id=team2id
                 )
 
-                outcome = []
-                date = []
-                team1 = []
-                team2 = []
+                
 
-                for dat in match_data['match_outcome']:
-                    outcome.append(dat)
-                for dat in match_data['event_date']:
-                    date.append(dat)
-                for dat in match_date['team1_id']:
-                    team1.append(dat)
-                for dat in match_data['team2_id']:
-                    team2.append(dat)
+                outcome = loop(data=match_data['match_outcome'])
+                date = loop(data=match_data['event_date'])
+                team1 = loop(data=match_data['team1_id'])
+                team2 = loop(data=match_data['team2_id'])
 
                 Team1_probability, team1outcome, Team2_probability, team2outcome = predictionalgorithm2(
                     team1id=team1id,
@@ -56,23 +57,32 @@ def home():
 
 
 
+@app.route('/')
+@app.route('/services')
+def services():
+    return render_template('services.html')
 
-@app.route('/payment', methods=['GET', 'POST'])
-def payment():
-    return render_template('payment.html')
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = 'Error this account is not active make payment in payment page or if payment has already been made wait for confirmation'
     if request.method == 'POST':
         userData = request.get_json()
         if userData:
             username = userData['name']
             password = userData['pass']
-            print(f'{username} : {password} for signIn')
+            code = login_users( username=username, password=password)
+            if code == 'invalid':
+                return jsonify({'error': 'user not found'})
+            else:
+                status = code.status
+                if status == 'active':
+                    return redirect('/home', code=304)
+                else: return jsonify({'error': error})
     return render_template('register.html')
-
-
 
 
 
@@ -84,12 +94,51 @@ def register():
         if userData:
             username = userData['name']
             password = userData['pass']
-            outCome = add_user(userData=Users(name=username, password=password))
-            
+            status = 'deactivated'
+            dates = date.today()
+            code = add_user(username=username, password=password, status=status, dates=dates)
+            if code == 'successful':
+                return redirect('/payment', code=304)
+            else:
+                return jsonify({'error': 'internal error try again later'})
     return render_template('register.html')
 
 
 
+
+@app.route('/get_users', methods=['GET', 'POST'])
+def get_users():
+    session = Session()
+    users = session.query(Users).all()
+    data = []
+    for user in users:
+        data.append({'name': user.name, 'status': user.status})
+    session.close()
+    return jsonify({'users': data})
+
+
+@app.route('/updateUsers', methods=['GET', 'POST'])
+def upadate():
+    session = Session()
+    if request.method == 'POST':
+        data = request.get_json()
+        print(data)
+
+
+
+
+
+username = 'omotomiwa'
+@app.route(f'/admin/{username}')
+def admin():
+    return render_template('admin.html')
+
+
+
+
+@app.route('/payment', methods=['GET', 'POST'])
+def payment():
+    return render_template('payment.html')
 
 
 if __name__ == "__main__":

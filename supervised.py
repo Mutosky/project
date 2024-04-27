@@ -127,9 +127,13 @@ def predictionalgorithm(team1id, team2id):
     #needed data for displaying
 
     teamData = testdata[['event_date', 'match_outcome', 'team1_id', 'team2_id']]
-    print(teamData)
+    probability_list = []
 
-    return probability, teamData
+   # changed to list because nparry can be passed in json to frontend javascript 
+    for matchs in probability:
+        for proba in matchs:
+            probability_list.append(proba)
+    return probability_list, teamData
 
 
 

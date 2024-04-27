@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 20px;
-    font-family: 'Open Sans', Helvetica, Arial, sans-serif
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .container {
@@ -33,6 +33,10 @@ body {
     padding: 20px 40px;
 }
 
+.select-T{
+    max-height: 50px;
+    overflow-y: auto;
+}
 
 .select_team label {
     margin-bottom: 10px;
@@ -48,6 +52,7 @@ body {
     color: white;
     margin-bottom: 20px;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 
@@ -107,8 +112,28 @@ body {
 .team-div h1 {
     font-size: 24px;
     text-transform: capitalize;
-
 }
+
+.bar-chart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.bar-container{
+    width: 25%;
+}
+
+.bar-containers{
+    width: 25%;
+}
+
+.line-chart{
+    padding-bottom: 50px;
+}
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 function lineChart(match1, match2, match3, match4, match5, winData, lossData, drawData, elementId) {
     const ctx = document.getElementById(elementId).getContext('2d');
+    ctx.innerHTML = '';
 
     // Sample data for wins, losses, and draws (replace with your actual data)
 
@@ -36,7 +37,6 @@ function lineChart(match1, match2, match3, match4, match5, winData, lossData, dr
         type: 'line',
         data: data,
         options: {
-            // Optional options for customization (e.g., title, legend, scales)
         },
     });
     return {
@@ -44,13 +44,19 @@ function lineChart(match1, match2, match3, match4, match5, winData, lossData, dr
     }
 }
 
+
+
+
+
+
 function pieChart(label1, label2, label3, data1, data2, data3, elementid) {
     const ctx = document.getElementById(elementid).getContext('2d');
+    ctx.innerHTML = '';
     const data = {
         labels: [label1, label2, label3],
         datasets: [{
             data: [data1, data2, data3],
-            backgroundColor: ['blue', 'orange', 'red']
+            backgroundColor: ['green', 'red', 'brown']
         }]
     };
 
@@ -58,8 +64,10 @@ function pieChart(label1, label2, label3, data1, data2, data3, elementid) {
         type: 'pie',
         data: data,
         option: {
-            //optional
-        }
+            maintainAspectRatio: false,
+            width: 400,
+            height: 400
+        },
     });
     return {
         myChart
@@ -129,8 +137,8 @@ async function getSelectedTeams(){
         const h2hData = jsonData['H2H_data']['last_match_probability'];
         const last5MatchAway = jsonData['Lastfivematchdata']['AwayTeam'];
         const last5MatchHome = jsonData['Lastfivematchdata']['HomeTeam'];
-        const dates = last5MatchHome['date']
-        const dates2 = last5MatchAway['date']
+        const dates = last5MatchHome['date'];
+        const dates2 = last5MatchAway['date'];
 
 
         const homeTeamData={
@@ -147,11 +155,24 @@ async function getSelectedTeams(){
             'draw': last5MatchAway['draw'],
             'Id': 'away-myChart'
         }
-        
 
-        const homeTeam = h2hData[1] * 100
-        const awayTeam = h2hData[0] * 100
-        const draw = h2hData[2] * 100
+        const homeTeam = h2hData[1] * 100;
+        const awayTeam = h2hData[0] * 100;
+        const draw = h2hData[2] * 100;
+
+        const teamHome = jsonData['H2H_data']['team1'][0];
+        const teamAway = jsonData['H2H_data']['team2'][0];
+
+        const text = document.getElementById('home-label');
+        const text1 = document.getElementById('away-label');
+        const text2 = document.getElementById('home-lastfive');
+        const text3 = document.getElementById('away-lastfive');
+
+        text.innerHTML = '';
+        text1.innerHTML = '';
+        text2.innerHTML = '';
+        text3.innerHTML = '';
+
 
         let label1 = 'draw';
         let label2 = 'Home';
@@ -160,13 +181,26 @@ async function getSelectedTeams(){
         let data2 = homeTeam;
         let data3 = awayTeam;
         let elementid = 'chart-container';
-        console.log(jsonData)
 
-        pieChart(label1, label2, label3, data1, data2, data3, elementid)
-        lineChart(dates[0], dates[1], dates[2], dates[3], dates[4], homeTeamData['win'], homeTeamData['loss'], homeTeamData['draw'], homeTeamData['Id'])
-        console.log(typeof homeTeamData['win'])
-        lineChart(dates2[0], dates2[1], dates2[2], dates2[3], dates2[4], awayTeamData['win'], awayTeamData['loss'], awayTeamData['draw'], awayTeamData['Id'])
+        pieChart(label1, label2, label3, data1, data2, data3, elementid);
+        lineChart(dates[0], dates[1], dates[2], dates[3], dates[4], homeTeamData['win'], homeTeamData['loss'], homeTeamData['draw'], homeTeamData['Id']);
+        lineChart(dates2[0], dates2[1], dates2[2], dates2[3], dates2[4], awayTeamData['win'], awayTeamData['loss'], awayTeamData['draw'], awayTeamData['Id']);
+
+        pieChart('win', 'loss', 'draw', homeTeamData['win'][0]*100, homeTeamData['loss'][0]*100, homeTeamData['draw'][0]*100, 'bar-container');
+        pieChart('win', 'loss', 'draw', awayTeamData['win'][0]*100, awayTeamData['loss'][0]*100, awayTeamData['draw'][0]*100, 'bar-containers');
+        
+        text.innerHTML = `${teamHome} last match`;
+        text1.innerHTML = `${teamAway} last match`;
+        text2.innerHTML = `${teamHome} last five match`;
+        text3.innerHTML = `${teamAway} last five match`;
+
+
+        const matchList = document.getElementById('');
+        matchList.innerHTML = '';
+
+
+
+
 
     }
 }
-
