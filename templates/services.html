@@ -9,6 +9,25 @@
 </head>
 
 <body>
+    <div class="navbar">
+        <div class="toggle-btn" onkeypress="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
+                <li><a href="{{url_for('logout')}}">logout</a></li>
+                {% else %}
+                <li><a href="{{url_for('login')}}">login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <h1>{{current_user}}</h1>
     <div class="welcome">
         <div class="welcome-message">
             <h1>welcome To Fas</h1>

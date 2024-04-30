@@ -8,6 +8,25 @@
     <title>payment</title>
 </head>
 <body>
+    <div class="navbar">
+        <div class="toggle-btn" onkeypress="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
+                    <li><a href="{{url_for('logout')}}">logout</a></li>
+                {% else %}
+                    <li><a href="{{url_for('login')}}">login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+   
 <div class="payment-section">
     <div class="innner-div">
         <h1>payment</h1>
@@ -20,4 +39,5 @@
     </div>
 </div>
 </body>
+<script src="main.js"></script>
 </html>

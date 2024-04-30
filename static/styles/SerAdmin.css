@@ -1,0 +1,264 @@
+*{
+    color: white;
+}
+
+.welcome{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(33, 116, 65);
+    padding: 60px 0px;
+}
+
+.welcome-message{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+}
+
+.welcome-message h1 {
+    font-size: 60px;
+    padding: 0px 50px;
+    font-family: 'Open Sans',
+        Helvetica,
+        Arial,
+        sans-serif;
+    text-transform: capitalize;
+}
+
+.welcome-message p{
+    font-size: 11px;
+    padding: 0px 50px;
+    font-family: 'Open Sans',
+            Helvetica,
+            Arial,
+            sans-serif;
+    margin-top: -30px;
+}
+
+.welcome-message button{
+    width: 90px;
+    height: 40px;
+    margin: 0px 50px;
+    background-color: rgb(33, 116, 65);
+    border-radius: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
+}
+
+.containers{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.contain {
+    background-color: rgb(33, 116, 65);
+    width: 250px;
+    height: 300px;
+    border-radius: 10px;
+    margin-top: -80px;
+    margin-left: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.contain h1{
+    font-family: 'Open Sans',
+            Helvetica,
+            Arial,
+            sans-serif;
+    text-transform: capitalize;
+    font-size: 25px;
+}
+
+.contain p {
+    font-family: 'Open Sans',
+        Helvetica,
+        Arial,
+        sans-serif;
+    text-transform: lowercase;
+    padding: 10px 10px;
+    font-size: 12px;
+}
+
+.contain img{
+    width: 50px;
+    height: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+}
+
+.search-barcon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.admin {
+    font-family: sans-serif;
+    padding-right: 100px;
+}
+.search-bar{
+    width: 500px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px 10px;
+    margin: 10px 10px;
+}
+
+.search-bar input{
+    color: black;
+    background: transparent;
+    flex: 1;
+    border: none;
+    font-size: 20px;
+    padding: 20px 10px;
+    outline: none;
+}
+
+.search-bar button h1{
+    color: black;
+    padding: 5px 5px;
+}
+
+.search-bar button{
+    border: 0;
+    border-radius: 10px 10px 10px 10px;
+    width: 80px;
+    height: 60px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.users {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.users li{
+    color: black;
+    padding: 20px 10px;
+    border-radius: 10px 10px;
+    background-color: rgba(255, 255, 255, 0.641);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
+    margin: 10px;
+}
+
+.users button{
+    color: black;
+    padding: 5px 5px;
+    margin-left: 50px;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.navbar {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 20px;
+}
+
+.toggle-btn {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.toggle-btn span {
+    height: 3px;
+    width: 25px;
+    background-color: #000000;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+.menu {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    display: inline;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #000000;
+    padding: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .toggle-btn {
+        display: flex;
+    }
+
+    .menu {
+        display: none;
+        width: 100%;
+    }
+
+    .menu.active {
+        display: block;
+    }
+}

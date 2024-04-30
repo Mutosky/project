@@ -1,11 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.css')}}">
     <title>Admin</title>
 </head>
+
 <body>
-    
+    <div class="navbar">
+        <div class="toggle-btn" om="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
+                    <li><a href="{{url_for('logout')}}">logout</a></li>
+                {% else %}
+                    <li><a href="{{url_for('login')}}">login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="container" style="background-image: url({{url_for('static', filename='background.jpg')}});">
+        <div class="search-barcon">
+            <h1 id="Admin" class="admin">Admin name</h1>
+            <form action="" class="search-bar">
+                <input type="text" id="search-input" placeholder="search users">
+                <button type="button">
+                    <h2>search</h2>
+                </button>
+            </form>
+        </div>
+        <div class="users">
+            <ul class="userList" id="userList"></ul>
+        </div>
+    </div>
 </body>
+<script>
+    async function displayUser() {
+        const respond = await fetch('/get_users');
+        const data = await respond.json();
+        const users = data['users'];
+        const adminName = document.getElementById('Admin')
+        adminName.innerHTML = data['admin']
+        const userList = document.getElementById('userList');
+        userList.innerHTML = '';
+        users.forEach(user => {
+            const li = document.createElement('li');
+            const button = document.createElement('button');
+            button.textContent = user.status === 'active' ? 'deactivate' : 'activate';
+            button.addEventListener('click', () => updateStatus(user.name, user.status));
+            li.textContent = user.name;
+            li.appendChild(button);
+            userList.appendChild(li);
+        });
+    }
+
+    displayUser();
+
+    async function updateStatus(username, status) {
+        const respond = await fetch('/updateUsers', {
+            method: 'POST',
+            body: JSON.stringify({name: username, status: status}),
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        const data = await respond.json()
+        alert(data['status'])
+
+        displayUser();
+    }
+
+    function filtersUser() {
+        const searchInput = document.getElementById('search-input').value.toLowerCase();
+        const usersList = document.getElementById('userList');
+        const users = usersList.getElementsByTagName('li');
+   
+        for (let value of users) {
+            const username = value.textContent.toLocaleLowerCase();
+            if (username.includes(searchInput)){
+                value.style.display = 'block';
+            } else {
+                value.style.display = 'none';
+            }
+        }
+    }
+
+    document.getElementById('search-input').addEventListener('input', filtersUser)
+</script>
+
 </html>
