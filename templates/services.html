@@ -10,7 +10,10 @@
 
 <body>
     <div class="navbar">
-        <div class="toggle-btn" onkeypress="toggleMenu()">
+        <div class="userss">
+            <h1 class="displayname">SmartStake</h1>
+        </div>
+        <div class="toggle-btn" onclick="toggleMenu()">
             <span></span>
             <span></span>
             <span></span>
@@ -20,21 +23,24 @@
                 <li><a href="{{url_for('home')}}">Home</a></li>
                 {% if current_user.is_authenticated %}
                 <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
-                <li><a href="{{url_for('logout')}}">logout</a></li>
+                <li><a class="log" href="{{url_for('logout')}}">logout</a></li>
                 {% else %}
-                <li><a href="{{url_for('login')}}">login</a></li>
+                <li><a class="log" href="{{url_for('login')}}">login</a></li>
                 {% endif %}
             </ul>
         </div>
     </div>
-    <h1>{{current_user}}</h1>
     <div class="welcome">
         <div class="welcome-message">
-            <h1>welcome To Fas</h1>
+            <h1>welcome To SmartStake</h1>
             <p>Welcome to our football analysis website! Input the two teams, and instantly access detailed performance insights. From
             head-to-head stats to player metrics, our platform helps you make informed predictions and strategic decisions. Join us
             and elevate your understanding of the beautiful game</p>
-            <button>get started</button>
+            {% if current_user.is_authenticated %}
+            <button><a href="{{url_for('footballanalysis')}}">get started</a></button>
+            {% else %}
+            <button><a href="{{url_for('login')}}">get started</a></button>
+            {% endif %}
         </div>
         <div class="welcome-message">
             <img src="{{url_for('static', filename='football_player.png')}}" alt="">
@@ -80,5 +86,5 @@
             </div>
     </div>
 </body>
-
+<script src="{{url_for('static', filename='main.js')}}"></script>
 </html>

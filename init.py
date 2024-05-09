@@ -1,13 +1,9 @@
+from flask_login import LoginManager, UserMixin
 from sqlalchemy import create_engine, Column, Float, String, Integer, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from datetime import date
 from flask import Flask
 
-def flaskinit():
-    app = Flask(__name__)
-    app.config['SECRET_KEY'] = "football-site-key"
-    return app
 
 teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle United": "3100",
          "Sheffield United": "3074", "Lens": "3821", "AFC Bournemouth": "3071", "Tottenham Hotspur": "164", "Everton": "3073", "Monaco": "3817",
@@ -25,6 +21,13 @@ teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle U
          "Juventus": "96", "Manchester United": "102", "Real Valladolid": "7262", "Liverpool": "84", "Espanyol": "7268", "Elche": "7274", "Al Hilal": "366", "Al Ahly": "585",
          "Cacereño": "6805", "Celtic": "127", "Shakhtar Donetsk": "78", "Eintracht Frankfurt": "3945", "América": "284", "Levante": "7259", "Alcoyano": "7249",
          "Bayern Munich": "72"}
+
+
+def flaskinit():
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = "football-site-key"
+    return app
+
 
 engine = create_engine('sqlite:///database.db',
                        connect_args={"check_same_thread": False})
@@ -58,6 +61,45 @@ def add_user(username, password, dates, status='deactivated'):
     else: return 'no data found'
 
 
+def get_user(username='unknown', admin=False):
+    session = Session()
+    try:
+        if admin == True:
+            status='Admin'
+            userData = session.query(Users).filter_by(status=status).first()
+        else:
+            userData = session.query(Users).filter_by(name=username).first()
+        return userData
+    except Exception as e:
+        return e
+    finally: session.close()
+    
+
+def get_allusers():
+    session = Session()
+    try:
+        alldata = session.query(Users).all()
+        return alldata
+    except Exception as e:
+        return e
+    finally: session.close()
+    
+
+def updateUser(username, status):
+    session = Session()
+    newStatus = 'active' if status == 'deactivated' else 'deactivated'
+    try: 
+        userData = session.query(Users).filter_by(name=username).first()
+        if userData:
+            userData.status = newStatus
+            session.commit()
+            return 'succesful'
+    except Exception as e:
+        return e
+    finally: session.close()
+
+
+
 def login_users(username, password):
     if username and password:
         try: 
@@ -69,4 +111,3 @@ def login_users(username, password):
         except Exception as e:
             return f'error {e}'
         finally: session.close()
-

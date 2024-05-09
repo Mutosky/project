@@ -10,7 +10,10 @@
 
 <body>
     <div class="navbar">
-        <div class="toggle-btn" om="toggleMenu()">
+        <div class="userss">
+            <h1 class="displayname">username</h1>
+        </div>
+        <div class="toggle-btn" onclick="toggleMenu()">
             <span></span>
             <span></span>
             <span></span>
@@ -19,10 +22,10 @@
             <ul>
                 <li><a href="{{url_for('home')}}">Home</a></li>
                 {% if current_user.is_authenticated %}
-                    <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
-                    <li><a href="{{url_for('logout')}}">logout</a></li>
+                <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
+                <li><a class="log" href="{{url_for('logout')}}">logout</a></li>
                 {% else %}
-                    <li><a href="{{url_for('login')}}">login</a></li>
+                <li><a class="log" href="{{url_for('login')}}">login</a></li>
                 {% endif %}
             </ul>
         </div>

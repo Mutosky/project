@@ -7,8 +7,9 @@
     display: flex;
     flex-direction: row;
     background-color: rgb(33, 116, 65);
-    padding: 60px 0px;
 }
+
+
 
 .welcome-message{
     display: flex;
@@ -46,6 +47,10 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
 }
 
+.welcome-message button a{
+    text-decoration: none;
+}
+
 .containers{
     width: 100%;
     display: flex;
@@ -78,6 +83,7 @@
 }
 
 .contain p {
+    text-align: center;
     font-family: 'Open Sans',
         Helvetica,
         Arial,
@@ -90,6 +96,14 @@
 .contain img{
     width: 50px;
     height: 50px;
+}
+
+
+.userss {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: right;
 }
 
 
@@ -208,9 +222,13 @@
 
 
 .navbar {
-    background-color: #ffffff;
+    background-color: rgb(33, 116, 65);
     color: #000000;
     padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .toggle-btn {
@@ -227,15 +245,16 @@
     border-radius: 3px;
 }
 
-.menu {
-    display: flex;
-    justify-content: flex-end;
+
+
+.displayname {
+    text-transform: uppercase;
+    font-family:  Arial, sans-serif;
+    font-size: 30px;
 }
 
 .menu ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
 }
 
 .menu ul li {
@@ -244,21 +263,132 @@
 
 .menu ul li a {
     text-decoration: none;
-    color: #000000;
+    font-family:  Arial, sans-serif;
     padding: 10px;
 }
 
+.log{
+    width: 20px;
+    height: 3px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px 10px;
+}
+
+
+
+
 @media screen and (max-width: 768px) {
     .toggle-btn {
-        display: flex;
-    }
-
+            display: flex;
+        }
+    
     .menu {
-        display: none;
-        width: 100%;
-    }
+            display: none;
+        }
+    
+        .menu.show {
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .menu ul {
+            margin: 0;
+            padding: 10px 10px;
+    
+        }
+    
+        .menu ul li {
+            display: flex;
+            padding: 10px 10px;
+            color: white;
+            cursor: pointer;
+        }
+    
+        .menu ul li :hover {
+            border-bottom: solid black 2px;
+        }
 
-    .menu.active {
-        display: block;
-    }
+
+        .welcome {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .welcome-message {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .welcome-message p {
+            font-size: 10px;
+            font-family: 'Open Sans',
+                Helvetica,
+                Arial,
+                sans-serif;
+            margin-top: 10px;
+        }
+
+        .welcome-message h1 {
+            text-align: center;
+            font-size: 20px;
+            padding: 20px 20px;
+            font-family: 'Open Sans',
+                Helvetica,
+                Arial,
+                sans-serif;
+            text-transform: capitalize;
+        }
+
+        .containers {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contain {
+            background-color: rgb(33, 116, 65);
+            width: 250px;
+            height: 300px;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .welcome-message {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome-message p {
+            font-size: 10px;
+            font-family: 'Open Sans',
+                Helvetica,
+                Arial,
+                sans-serif;
+            margin-top: 10px;
+        }
+
+        .welcome-message img{
+            width: 300px;
+            height: 300px;
+        }
+        .displayname {
+            text-transform: uppercase;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+        }
+        .log {
+            width: 20px;
+            height: 3px;
+            background-color: transparent;
+        }
 }

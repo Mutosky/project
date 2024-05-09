@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Football Match Analyzer</title>
     <link rel="stylesheet" href="{{url_for('static', filename = 'styles/styles.css')}}">
@@ -10,7 +10,10 @@
 
 <body>
     <div class="navbar">
-        <div class="toggle-btn" onkeypress="toggleMenu()">
+        <div class="userss">
+            <h1 class="displayname">SmartStake</h1>
+        </div>
+        <div class="toggle-btn" onclick="toggleMenu()">
             <span></span>
             <span></span>
             <span></span>
@@ -20,9 +23,9 @@
                 <li><a href="{{url_for('home')}}">Home</a></li>
                 {% if current_user.is_authenticated %}
                 <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
-                <li><a href="{{url_for('logout')}}">logout</a></li>
+                <li><a class="log" href="{{url_for('logout')}}">logout</a></li>
                 {% else %}
-                <li><a href="{{url_for('login')}}">login</a></li>
+                <li><a class="log" href="{{url_for('login')}}">login</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -207,42 +210,54 @@
         <div class="description">
             <h1>all H2H matchs</h1>
             <div class="paragraph">
-                <p id="match-details"></p>
-                <ul id="match-list"></ul>
+                <ul id="date-list" class="itemList"></ul>
+                <ul id="outcome-list" class="itemList"></ul>
             </div>
         </div>
     </div>
     <div class="last-fivematch" id="last-fivematch">
+        <h1 class="innerLabel">last five match probability</h1>
         <div class="team-div">
-            <h1 id="home-lastfive" class="label"></h1>
+            <h1 id="home-lastfive" class="label">__</h1>
             <div class="line-chart">
                 <canvas id="home-myChart"></canvas>
             </div>
-            <h1 id="home-label" class="label"></h1>
+            <h1 id="home-label" class="label">__</h1>
             <div class="bar-chart">
                 <canvas class="bar-container" id="bar-container" width="400" height="400"></canvas>
             </div>
         </div>
         <div class="team-div">
-            <h1 id="away-lastfive" class="label"></h1>
+            <h1 id="away-lastfive" class="label">__</h1>
             <div class="line-chart">
                 <canvas id="away-myChart"></canvas>
             </div>
-            <h1 id="away-label" class="label"></h1>
+            <h1 id="away-label" class="label">__</h1>
             <div class="bar-chart">
                 <canvas class="bar-container" id="bar-containers" width="400" height="400"></canvas>
             </div>
         </div>
-
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/v-charts/lib/line.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
-    <script src="{{url_for('static', filename='main.js')}}"></script>
-
-
+    <div class="homeAdvantage" style="width: 100%;">
+        <h1 id="dataLabel" class="label">__</h1>
+        <div class="cover">
+        <div class="lineChart">
+            <canvas id="homeAdata"></canvas>
+        </div>
+        <div class="homeADataDiv">
+            <ul id="homeAList" class="itemList"></ul>
+            <ul id="homeAListB" class="itemList"></ul>
+        </div>
+        </div>
+    </div>
+    <div id="throbber-overlay" class="throbber-overlay">
+        <div id="throbber" class="throbber"></div>
+    </div>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/v-charts/lib/line.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
+<script src="{{url_for('static', filename='main.js')}}"></script>
 </html>

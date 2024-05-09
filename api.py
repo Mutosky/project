@@ -4,11 +4,16 @@ from datetime import date
 
 
 today = date.today()
-api_key = "c0bbeb584e5287c7d142f75486275a19f48090969411a85d6b5721ed35e090bd"
+api_key = "36f72dca1168988298b576aebdff19ea86c3f185ceba80bab29cf95c6eb76c63"
 
 
 def pad_list(lst, max_length):
     return lst + [np.nan] * (max_length - len(lst))
+
+
+def remove_lower_than_10(numbers):
+
+    return [num for num in numbers if int(num) >= 10]
 
 
 def getTestData(teamid, teamid2):
@@ -63,7 +68,7 @@ def getTestData(teamid, teamid2):
             featurerespond = requests.get(url=featureurl)
             if featurerespond.status_code == 200:
                 if 'result' in featurerespond.json():
-                    featuredata = featurerespond.json()['result'][:1]
+                    featuredata = featurerespond.json()['result'][:3]
                     for match in featuredata:
                         homeid = match['home_team_key']
                         awayid = match['away_team_key']
@@ -172,7 +177,7 @@ def getTestData(teamid, teamid2):
                                         Attacks.append(statis['away'])
                                         Attacks2.append(statis['home'])
 
-        max_length = max(len(score), len(outcome))
+        max_length = max(len(event_date), len(outcome))
         possession = pad_list(possession, max_length)
         dangerousattacks = pad_list(dangerousattacks, max_length)
         accuracy = pad_list(accuracy, max_length)
@@ -190,9 +195,14 @@ def getTestData(teamid, teamid2):
         Attacks2 = pad_list(Attacks2, max_length)
 
 
+        print(len(outcome), len(event_date), len(team1), len(score), len(place), len(possession), len(dangerousattacks), len(accuracy), len(On_target), len(shotinsidebox), len(Corners), len(
+            Attacks), len(team2), len(score2), len(place2), len(possession2), len(dangerousattacks2), len(accuracy2), len(On_target2), len(shotinsidebox2), len(Corners2), len(Attacks2))
+
+
         return outcome, event_date, team1, score, place, possession, dangerousattacks, accuracy, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracy2, On_target2, shotinsidebox2, Corners2, Attacks2
     else:
         print(responed.status_code)
+
 
 
 def getpastfivematch(teamid= 80, trainData =False):
@@ -357,8 +367,7 @@ def getpastfivematch(teamid= 80, trainData =False):
                                 shotinsidebox2.append(statis['home'])
                             if statis['type'] == dangerous:
                                 dangerousattacks.append(statis['away'])
-                                dangerousattacks2.append(
-                                    statis['home'])
+                                dangerousattacks2.append(statis['home'])
                             if statis['type'] == target:
                                 On_target.append(statis['away'])
                                 On_target2.append(statis['home'])
@@ -370,7 +379,7 @@ def getpastfivematch(teamid= 80, trainData =False):
                                 Attacks2.append(statis['home'])
 
 
-        max_length = max(len(score), len(outcome))
+        max_length = max(len(event_date), len(outcome))
         possession = pad_list(possession, max_length)
         dangerousattacks = pad_list(dangerousattacks, max_length)
         accuracy = pad_list(accuracy, max_length)
@@ -386,9 +395,44 @@ def getpastfivematch(teamid= 80, trainData =False):
         Corners2 = pad_list(Corners2, max_length)
         Attacks2 = pad_list(Attacks2, max_length)
 
-        return outcome, event_date, team1, score, place, possession, dangerousattacks, accuracy, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracy2, On_target2, shotinsidebox2, Corners2, Attacks2, team2id
+        lowerdangerousattacks = remove_lower_than_10(dangerousattacks)
+        lowerdangerousattacks2 = remove_lower_than_10(dangerousattacks)
+        lowerAttacks = remove_lower_than_10(Attacks)
+        lowerAttacks2 = remove_lower_than_10(Attacks2)
+
+        print(len(outcome), len(event_date), len(team1), len(score), len(place), len(possession), len(lowerdangerousattacks), len(accuracy), len(On_target), len(shotinsidebox), len(Corners), len(
+            lowerAttacks), len(team2), len(score2), len(place2), len(possession2), len(lowerdangerousattacks2), len(accuracy2), len(On_target2), len(shotinsidebox2), len(Corners2), len(lowerAttacks2), len(team2id))
+
+        for attakers in dangerousattacks:
+            print(attakers)
+
+        print('\n\n')
+
+        for attakers in Attacks2:
+            print(attakers)
+
+        print('\n\n')
+
+        for attakers in Attacks:
+            print(attakers)
+
+        print('\n\n')
+
+        for attakers in dangerousattacks2:
+            print(attakers)
+
+        print('\n\n')
+
+        for poss in possession:
+            print(poss)
+
+
+        return outcome, event_date, team1, score, place, possession, lowerdangerousattacks, accuracy, On_target, shotinsidebox, Corners, lowerAttacks, team2, score2, place2, possession2, lowerdangerousattacks2, accuracy2, On_target2, shotinsidebox2, Corners2, lowerAttacks2, team2id
 
     else: print(respond.status_code)
+
+      
+
 
 
 
