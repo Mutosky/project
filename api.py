@@ -12,7 +12,6 @@ def pad_list(lst, max_length):
 
 
 def remove_lower_than_10(numbers):
-
     return [num for num in numbers if int(num) >= 10]
 
 
@@ -195,17 +194,18 @@ def getTestData(teamid, teamid2):
         Attacks2 = pad_list(Attacks2, max_length)
 
 
+
         print(len(outcome), len(event_date), len(team1), len(score), len(place), len(possession), len(dangerousattacks), len(accuracy), len(On_target), len(shotinsidebox), len(Corners), len(
             Attacks), len(team2), len(score2), len(place2), len(possession2), len(dangerousattacks2), len(accuracy2), len(On_target2), len(shotinsidebox2), len(Corners2), len(Attacks2))
 
 
-        return outcome, event_date, team1, score, place, possession, dangerousattacks, accuracy, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracy2, On_target2, shotinsidebox2, Corners2, Attacks2
+        return outcome, event_date, team1, score, place, possession, dangerousattacks, accuracy, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracy2, On_target2, shotinsidebox2, Corners2, Attacks
     else:
         print(responed.status_code)
 
 
 
-def getpastfivematch(teamid= 80, trainData =False):
+def getpastfivematch(teamid=80, trainData=False):
 
     score = []
     place = []
@@ -378,27 +378,28 @@ def getpastfivematch(teamid= 80, trainData =False):
                                 Attacks.append(statis['away'])
                                 Attacks2.append(statis['home'])
 
-
-        max_length = max(len(event_date), len(outcome))
-        possession = pad_list(possession, max_length)
-        dangerousattacks = pad_list(dangerousattacks, max_length)
-        accuracy = pad_list(accuracy, max_length)
-        On_target =  pad_list(On_target, max_length)
-        shotinsidebox = pad_list(shotinsidebox, max_length)
-        Corners = pad_list(Corners, max_length)
-        Attacks = pad_list(Attacks, max_length)
-        possession2 = pad_list(possession2, max_length)
-        dangerousattacks2 = pad_list(dangerousattacks2, max_length)
-        accuracy2 = pad_list(accuracy2, max_length)
-        On_target2 = pad_list(On_target2, max_length)
-        shotinsidebox2 = pad_list(shotinsidebox2, max_length)
-        Corners2 = pad_list(Corners2, max_length)
-        Attacks2 = pad_list(Attacks2, max_length)
-
         lowerdangerousattacks = remove_lower_than_10(dangerousattacks)
         lowerdangerousattacks2 = remove_lower_than_10(dangerousattacks)
         lowerAttacks = remove_lower_than_10(Attacks)
         lowerAttacks2 = remove_lower_than_10(Attacks2)
+
+        max_length = max(len(event_date), len(outcome))
+        possession = pad_list(possession, max_length)
+        lowerdangerousattacks = pad_list(lowerdangerousattacks, max_length)
+        accuracy = pad_list(accuracy, max_length)
+        On_target =  pad_list(On_target, max_length)
+        shotinsidebox = pad_list(shotinsidebox, max_length)
+        Corners = pad_list(Corners, max_length)
+        lowerAttacks = pad_list(lowerAttacks, max_length)
+        possession2 = pad_list(possession2, max_length)
+        lowerdangerousattacks2 = pad_list(lowerdangerousattacks2, max_length)
+        accuracy2 = pad_list(accuracy2, max_length)
+        On_target2 = pad_list(On_target2, max_length)
+        shotinsidebox2 = pad_list(shotinsidebox2, max_length)
+        Corners2 = pad_list(Corners2, max_length)
+        lowerAttacks2 = pad_list(lowerAttacks2, max_length)
+
+        
 
         print(len(outcome), len(event_date), len(team1), len(score), len(place), len(possession), len(lowerdangerousattacks), len(accuracy), len(On_target), len(shotinsidebox), len(Corners), len(
             lowerAttacks), len(team2), len(score2), len(place2), len(possession2), len(lowerdangerousattacks2), len(accuracy2), len(On_target2), len(shotinsidebox2), len(Corners2), len(lowerAttacks2), len(team2id))

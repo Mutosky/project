@@ -1,8 +1,7 @@
 function lineChart(match1, match2, match3, match4, match5, winData, lossData, drawData, elementId) {
     const ctx = document.getElementById(elementId).getContext('2d');
-    ctx.innerHTML = '';
+    const existingChart = Chart.getChart(ctx);
 
-    // Sample data for wins, losses, and draws (replace with your actual data)
 
     const labels = [match1, match2, match3, match4, match5];
 
@@ -13,35 +12,38 @@ function lineChart(match1, match2, match3, match4, match5, winData, lossData, dr
                 label: 'Wins',
                 data: winData,
                 borderColor: 'green',
-                backgroundColor: 'rgba(0, 255, 0, 0.2)', // Transparent green fill
-                fill: false, // Fill the area under the line
+                backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                fill: false,
             },
             {
                 label: 'Losses',
                 data: lossData,
                 borderColor: 'red',
-                backgroundColor: 'rgba(255, 0, 0, 0.2)', // Transparent red fill
-                fill: false, // Fill the area under the line
+                backgroundColor: 'rgba(255, 0, 0, 0.2)', 
+                fill: false, 
             },
             {
                 label: 'Draws',
                 data: drawData,
                 borderColor: 'grey',
                 backgroundColor: 'rgba(128, 128, 128, 0.2)', // Transparent grey fill
-                fill: false, // Fill the area under the line
+                fill: false, 
             },
         ],
     };
 
-    const myChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: {
-        },
-    });
-    return {
-        myChart
+    if(existingChart){
+        existingChart.data = data;
+        existingChart.update();
+    } else{
+        new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+            },
+        });
     }
+
 }
 
 
@@ -51,7 +53,8 @@ function lineChart(match1, match2, match3, match4, match5, winData, lossData, dr
 
 function pieChart(label1, label2, label3, data1, data2, data3, elementid) {
     const ctx = document.getElementById(elementid).getContext('2d');
-    ctx.innerHTML = '';
+    const existingChart = Chart.getChart(ctx);
+
     const data = {
         labels: [label1, label2, label3],
         datasets: [{
@@ -60,17 +63,19 @@ function pieChart(label1, label2, label3, data1, data2, data3, elementid) {
         }]
     };
 
-    const myChart = new Chart(ctx, {
-        type: 'pie',
-        data: data,
-        option: {
-            maintainAspectRatio: false,
-            width: 400,
-            height: 400
-        },
-    });
-    return {
-        myChart
+    if(existingChart){
+        existingChart.data = data;
+        existingChart.update();
+    } else {
+        new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            option: {
+                maintainAspectRatio: false,
+                width: 400,
+                height: 400
+            },
+        });
     }
 }
 
@@ -88,6 +93,8 @@ function signIn(){
             body: JSON.stringify({name: username, pass: password}),
             headers: {'content-Type': 'application/json'}
         });
+    } else {
+        alert('please input your username and password')
     }
 
 }
@@ -113,7 +120,9 @@ function signUp(){
         } else {
             alert('password does not match')
         }
-    } 
+    } else {
+        alert('please input all information asked')
+    }
 }
 
 
@@ -143,114 +152,104 @@ function displayMatchDetails(outcome, date, dateid, outcomeid) {
 
 }
 
+function textDisplay(teamHome, teamAway){
+    const text = document.getElementById('home-label');
+    const text1 = document.getElementById('away-label');
+    const text2 = document.getElementById('home-lastfive');
+    const text3 = document.getElementById('away-lastfive');
+    const text4 = document.getElementById('dataLabel');
+
+    text.innerHTML = `${teamHome} last match`;
+    text1.innerHTML = `${teamAway} last match`;
+    text2.innerHTML = `${teamHome} last five match`;
+    text3.innerHTML = `${teamAway} last five match`;
+    text4.innerHTML = `${teamHome} home advantage`;
+
+}
 
 async function getSelectedTeams(){
     const throbber = document.getElementById('throbber-overlay');
-    throbber.style.display = 'block'; 
 
     const selectedTeam1 = document.getElementById('Team1');
     const selectedTeam2 = document.getElementById('Team2');
+    
     const team1Selected = selectedTeam1.value;
     const team2Selected = selectedTeam2.value;
 
-    if(team1Selected && team2Selected){
-        try{
-            const response = await fetch('/footballanalysis', {
-                method: 'POST',
-                body: JSON.stringify({team1: team1Selected, team2: team2Selected}),
-                headers: {'Content-Type': 'application/json'}
-            });
-            if(!response.ok){
-                throw new Error(`Error: ${response.status}`);
+    if (team1Selected === team2Selected){
+        alert('select two different teams');
+    } else {
+        if (team1Selected && team2Selected) {
+            throbber.style.display = 'block';
+            try {
+                const response = await fetch('/footballanalysis', {
+                    method: 'POST',
+                    body: JSON.stringify({ team1: team1Selected, team2: team2Selected }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+
+                const jsonData = await response.json();
+                const h2hData = jsonData['H2H_data']['last_match_probability'];
+                const outcome = jsonData['H2H_data']['outcome'];
+                const date = jsonData['H2H_data']['date'];
+                const last5MatchAway = jsonData['Lastfivematchdata']['AwayTeam'];
+                const last5MatchHome = jsonData['Lastfivematchdata']['HomeTeam'];
+                const homeData = jsonData['homeAdvange']
+                const datesadvan = homeData['date']
+                const outcomeadvan = homeData['match_outcome']
+                const homeDates = homeData['date']
+                const dates = last5MatchHome['date'];
+                const dates2 = last5MatchAway['date'];
+
+
+                const homeTeamData = {
+                    'win': last5MatchHome['win'],
+                    'loss': last5MatchHome['loss'],
+                    'draw': last5MatchHome['draw'],
+                    'Id': 'home-myChart'
+
+                }
+
+                const awayTeamData = {
+                    'win': last5MatchAway['win'],
+                    'loss': last5MatchAway['loss'],
+                    'draw': last5MatchAway['draw'],
+                    'Id': 'away-myChart'
+                }
+
+                const homeAdvantage = {
+                    'win': homeData['win'],
+                    'loss': homeData['loss'],
+                    'draw': homeData['draw'],
+                    'Id': 'homeAdata'
+                }
+
+
+
+                pieChart('draw', 'Home', 'Away', h2hData[2] * 100, h2hData[1] * 100, h2hData[0] * 100, 'chart-container');
+                lineChart(dates[0], dates[1], dates[2], dates[3], dates[4], homeTeamData['win'], homeTeamData['loss'], homeTeamData['draw'], homeTeamData['Id']);
+                lineChart(dates2[0], dates2[1], dates2[2], dates2[3], dates2[4], awayTeamData['win'], awayTeamData['loss'], awayTeamData['draw'], awayTeamData['Id']);
+                lineChart(homeDates[0], homeDates[1], homeDates[2], homeDates[3], homeDates[4], homeAdvantage['win'], homeAdvantage['loss'], homeAdvantage['draw'], homeAdvantage['Id']);
+
+                pieChart('win', 'loss', 'draw', homeTeamData['win'][0] * 100, homeTeamData['loss'][0] * 100, homeTeamData['draw'][0] * 100, 'bar-container');
+                pieChart('win', 'loss', 'draw', awayTeamData['win'][0] * 100, awayTeamData['loss'][0] * 100, awayTeamData['draw'][0] * 100, 'bar-containers');
+
+                textDisplay(jsonData['H2H_data']['team1'][0], jsonData['H2H_data']['team2'][0])
+
+
+                let displayid1 = 'date-list';
+                let displayid2 = 'outcome-list';
+                let displayid3 = 'homeAList';
+                let displayid4 = 'homeAListB';
+                displayMatchDetails(outcome, date, displayid1, displayid2);
+                displayMatchDetails(outcomeadvan, datesadvan, displayid3, displayid4)
+
+            } finally {
+                throbber.style.display = 'none';
             }
-
-            const jsonData = await response.json();
-            const h2hData = jsonData['H2H_data']['last_match_probability'];
-            const outcome = jsonData['H2H_data']['outcome'];
-            const date = jsonData['H2H_data']['date'];
-            const last5MatchAway = jsonData['Lastfivematchdata']['AwayTeam'];
-            const last5MatchHome = jsonData['Lastfivematchdata']['HomeTeam'];
-            const homeData = jsonData['homeAdvange']
-            const datesadvan = homeData['date']
-            const outcomeadvan = homeData['match_outcome']
-            const homeDates = homeData['date']
-            const dates = last5MatchHome['date'];
-            const dates2 = last5MatchAway['date'];
-
-
-            const homeTeamData={
-                'win': last5MatchHome['win'],
-                'loss': last5MatchHome['loss'],
-                'draw': last5MatchHome['draw'],
-                'Id': 'home-myChart'
-
-            }
-
-            const awayTeamData ={
-                'win': last5MatchAway['win'],
-                'loss': last5MatchAway['loss'],
-                'draw': last5MatchAway['draw'],
-                'Id': 'away-myChart'
-            }
-
-            const homeAdvantage = {
-                'win': homeData['win'],
-                'loss': homeData['loss'],
-                'draw': homeData['draw'],
-                'Id': 'homeAdata'
-            }
-
-            const homeTeam = h2hData[1] * 100;
-            const awayTeam = h2hData[0] * 100;
-            const draw = h2hData[2] * 100;
-
-            const teamHome = jsonData['H2H_data']['team1'][0];
-            const teamAway = jsonData['H2H_data']['team2'][0];
-
-            const text = document.getElementById('home-label');
-            const text1 = document.getElementById('away-label');
-            const text2 = document.getElementById('home-lastfive');
-            const text3 = document.getElementById('away-lastfive');
-            const text4 = document.getElementById('dataLabel');
-
-            text.innerHTML = '';
-            text1.innerHTML = '';
-            text2.innerHTML = '';
-            text3.innerHTML = '';
-            text4.innerHTML = '';
-
-
-            let label1 = 'draw';
-            let label2 = 'Home';
-            let label3 = 'Away';
-            let data1 = draw;
-            let data2 = homeTeam;
-            let data3 = awayTeam;
-            let elementid = 'chart-container';
-
-            pieChart(label1, label2, label3, data1, data2, data3, elementid);
-            lineChart(dates[0], dates[1], dates[2], dates[3], dates[4], homeTeamData['win'], homeTeamData['loss'], homeTeamData['draw'], homeTeamData['Id']);
-            lineChart(dates2[0], dates2[1], dates2[2], dates2[3], dates2[4], awayTeamData['win'], awayTeamData['loss'], awayTeamData['draw'], awayTeamData['Id']);
-            lineChart(homeDates[0], homeDates[1], homeDates[2], homeDates[3], homeDates[4], homeAdvantage['win'], homeAdvantage['loss'], homeAdvantage['draw'], homeAdvantage['Id']);
-
-            pieChart('win', 'loss', 'draw', homeTeamData['win'][0]*100, homeTeamData['loss'][0]*100, homeTeamData['draw'][0]*100, 'bar-container');
-            pieChart('win', 'loss', 'draw', awayTeamData['win'][0]*100, awayTeamData['loss'][0]*100, awayTeamData['draw'][0]*100, 'bar-containers');
-            
-            text.innerHTML = `${teamHome} last match`;
-            text1.innerHTML = `${teamAway} last match`;
-            text2.innerHTML = `${teamHome} last five match`;
-            text3.innerHTML = `${teamAway} last five match`;
-            text4.innerHTML = `${teamHome} home advantage`;
-
-            let displayid1 = 'date-list';
-            let displayid2 = 'outcome-list';
-            let displayid3 = 'homeAList';
-            let displayid4 = 'homeAListB';
-            displayMatchDetails(outcome, date, displayid1, displayid2);
-            displayMatchDetails(outcomeadvan, datesadvan, displayid3, displayid4)
-        } finally {
-            throbber.style.display= 'none';
         }
-
     }
 }
