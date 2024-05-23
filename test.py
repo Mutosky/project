@@ -1,4 +1,3 @@
-from init import add_user
-from datetime import date
-
-add_user(username='tumininu', password='Tumi321#', dates=date.today())
+score = 1000
+message  = f'i scored {score}'
+print(message)

@@ -133,24 +133,16 @@ function toggleMenu() {
 }
 
 
-function displayMatchDetails(outcome, date, dateid, outcomeid) {
-    const dateLists = document.getElementById(dateid);
-    const outcomeLists = document.getElementById(outcomeid);
-    dateLists.innerHTML == '';
-    outcomeLists.innerHTML == '';
-    date.forEach(data => {
-        const list = document.createElement('li');
+function listDisplay(elementId, datas){
+    const typeList = document.getElementById(elementId);
+    typeList.innerHTML = '';
+    datas.forEach(data => {
+        list = document.createElement('li');
         list.textContent = data;
-        dateLists.appendChild(list);
-        
-    });
-    outcome.forEach(data => {
-        const list = document.createElement('li');
-        list.textContent = data;
-        outcomeLists.appendChild(list);
-    });
-
+        typeList.appendChild(list);
+    })
 }
+
 
 function textDisplay(teamHome, teamAway){
     const text = document.getElementById('home-label');
@@ -167,18 +159,59 @@ function textDisplay(teamHome, teamAway){
 
 }
 
+function similarOppponet(name, datas){
+    const opponentNameL = 'oppoName';
+    const homeTeamDate = document.getElementById('homeTD');
+    const homeTeamOutcome = document.getElementById('homeTO');
+    const awayTeamDate = document.getElementById('awayTD');
+    const awayTeamOutcome = document.getElementById('awayTO');
+    let OD  = datas['opponents']['data']; 
+
+    listDisplay(opponentNameL, name);
+
+    homeTeamDate.innerHTML = '';
+    homeTeamOutcome.innerHTML = '';
+    awayTeamDate.innerHTML = '';
+    awayTeamOutcome.innerHTML = '';
+
+    OD.forEach(data => {
+        const li1 = document.createElement('li');
+        const li2 = document.createElement('li');
+        const li3 = document.createElement('li');
+        const li4 = document.createElement('li');
+
+        li1.textContent = data.team1Date;
+        homeTeamDate.appendChild(li1);
+        li2.textContent = data.team1Outcome;
+        homeTeamOutcome.appendChild(li2)
+        li3.textContent = data.team2Date;
+        awayTeamDate.appendChild(li3)
+        li4.textContent = data.team2Outcome;
+        awayTeamOutcome.appendChild(li4)
+
+
+    })
+
+    pieChart('win', 'loss', 'draw', datas['teamOne']['win'][0] * 100, datas['teamOne']['loss'][0] * 100, datas['teamOne']['draw'][0] * 100, 'homeTeamSO');
+    pieChart('win', 'loss', 'draw', datas['teamTwo']['win'][0] * 100, datas['teamTwo']['loss'][0] * 100, datas['teamTwo']['draw'][0] * 100, 'awayTeamSO');
+}
+
+
 async function getSelectedTeams(){
     const throbber = document.getElementById('throbber-overlay');
 
     const selectedTeam1 = document.getElementById('Team1');
     const selectedTeam2 = document.getElementById('Team2');
+
+    const loading = document.getElementById('loadingState');
     
     const team1Selected = selectedTeam1.value;
     const team2Selected = selectedTeam2.value;
-
+    loading.innerHTML = 'loadin..';
     if (team1Selected === team2Selected){
         alert('select two different teams');
     } else {
+        loading.innerHTML = 'loading...';
         if (team1Selected && team2Selected) {
             throbber.style.display = 'block';
             try {
@@ -190,7 +223,7 @@ async function getSelectedTeams(){
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
-
+                loading.innerHTML='collecting data....';
                 const jsonData = await response.json();
                 const h2hData = jsonData['H2H_data']['last_match_probability'];
                 const outcome = jsonData['H2H_data']['outcome'];
@@ -200,11 +233,15 @@ async function getSelectedTeams(){
                 const homeData = jsonData['homeAdvange']
                 const datesadvan = homeData['date']
                 const outcomeadvan = homeData['match_outcome']
+                const opponentL = homeData['opponent']
                 const homeDates = homeData['date']
                 const dates = last5MatchHome['date'];
                 const dates2 = last5MatchAway['date'];
+                const similarOPP = jsonData['similarOpponent']['opponents']['name'];
+                const similarOD = jsonData['similarOpponent'];
 
 
+                loading.innerHTML='processing data.....';
                 const homeTeamData = {
                     'win': last5MatchHome['win'],
                     'loss': last5MatchHome['loss'],
@@ -228,7 +265,7 @@ async function getSelectedTeams(){
                 }
 
 
-
+                loading.innerHTML='displaying data';
                 pieChart('draw', 'Home', 'Away', h2hData[2] * 100, h2hData[1] * 100, h2hData[0] * 100, 'chart-container');
                 lineChart(dates[0], dates[1], dates[2], dates[3], dates[4], homeTeamData['win'], homeTeamData['loss'], homeTeamData['draw'], homeTeamData['Id']);
                 lineChart(dates2[0], dates2[1], dates2[2], dates2[3], dates2[4], awayTeamData['win'], awayTeamData['loss'], awayTeamData['draw'], awayTeamData['Id']);
@@ -237,15 +274,33 @@ async function getSelectedTeams(){
                 pieChart('win', 'loss', 'draw', homeTeamData['win'][0] * 100, homeTeamData['loss'][0] * 100, homeTeamData['draw'][0] * 100, 'bar-container');
                 pieChart('win', 'loss', 'draw', awayTeamData['win'][0] * 100, awayTeamData['loss'][0] * 100, awayTeamData['draw'][0] * 100, 'bar-containers');
 
-                textDisplay(jsonData['H2H_data']['team1'][0], jsonData['H2H_data']['team2'][0])
+                textDisplay(jsonData['H2H_data']['team1'][0], jsonData['H2H_data']['team2'][0]);
 
 
                 let displayid1 = 'date-list';
                 let displayid2 = 'outcome-list';
                 let displayid3 = 'homeAList';
                 let displayid4 = 'homeAListB';
-                displayMatchDetails(outcome, date, displayid1, displayid2);
-                displayMatchDetails(outcomeadvan, datesadvan, displayid3, displayid4)
+                let displayid5 = 'homeAListC';
+
+                listDisplay(displayid1, date);
+                listDisplay(displayid2, outcome);
+                listDisplay(displayid3, datesadvan);
+                listDisplay(displayid4, outcomeadvan);
+                listDisplay(displayid5, opponentL);
+
+
+
+                listDisplay('homeLFList1', last5MatchHome['opponent']);
+                listDisplay('homeLFList2', last5MatchHome['Outcome']);
+                listDisplay('homeLFList3', dates);
+                listDisplay('awayLFList1', last5MatchAway['opponent']);
+                listDisplay('awayLFList2', last5MatchAway['Outcome']);
+                listDisplay('awayLFList3', dates2);
+
+                similarOppponet(similarOPP, similarOD);
+
+                loading.innerHTML='completed!';
 
             } finally {
                 throbber.style.display = 'none';

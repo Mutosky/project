@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,9 +32,11 @@
     <div class="welcome">
         <div class="welcome-message">
             <h1>welcome To SmartStake</h1>
-            <p>Welcome to our football analysis website! Input the two teams, and instantly access detailed performance insights. From
-            head-to-head stats to player metrics, our platform helps you make informed predictions and strategic decisions. Join us
-            and elevate your understanding of the beautiful game</p>
+            <p>Welcome to our football analysis website! Input the two teams, and instantly access detailed performance
+                insights. From
+                head-to-head stats to player metrics, our platform helps you make informed predictions and strategic
+                decisions. Join us
+                and elevate your understanding of the beautiful game</p>
             {% if current_user.is_authenticated %}
             <button><a href="{{url_for('footballanalysis')}}">get started</a></button>
             {% else %}
@@ -50,41 +51,88 @@
         <div class="contain">
             <h1>Head-to-Head</h1>
             <img src="{{url_for('static', filename='ball.png')}}" alt="">
-            <p>Discover how our service works with our intuitive team selection feature! On our analysis page, you'll find a
-            user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the left side of the
-            screen to choose your home team, then to the right for your away team.</p>
+            <p>This section displays the matches played between the two selected teams, accompanied by a pie chart showing the outcome
+            probabilities of their last encounter. Analyzing head-to-head performance provides valuable insights into their
+            competitive dynamics, helping to predict future match outcomes and understand each team's strengths and weaknesses
+            against the other.</p>
         </div>
         <div class="contain">
             <h1>last five match</h1>
             <img src="{{url_for('static', filename='ball.png')}}" alt="">
-            <p>Discover how our service works with our intuitive team selection feature! On our analysis page, you'll find a
-            user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the left side of the
-            screen to choose your home team, then to the right for your away team.</p>
+            <p>This section displays the last five matches of the inputted teams using a line chart with three lines (win, draw, loss)
+            showing the probability of each outcome. Additionally, a pie chart highlights the result distribution of their most
+            recent match, providing a clear visual of their current form and performance trends.</p>
         </div>
         <div class="contain">
             <h1>home advantage</h1>
             <img src="{{url_for('static', filename='ball.png')}}" alt="">
-            <p>Discover how our service works with our intuitive team selection feature! On our analysis page, you'll find a
-            user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the left side of the
-            screen to choose your home team, then to the right for your away team.</p>
+            <p>This section focuses on the selected home team's performance. A line chart displays the outcomes (win, draw, loss) of
+            their home matches, illustrating the probability of each result. This visual analysis highlights the team's strength
+            when playing on their home ground, offering insights into their home advantage.</p>
         </div>
         <div class="contain">
             <h1>similar opponent</h1>
             <img src="{{url_for('static', filename='ball.png')}}" alt="">
-            <p>Discover how our service works with our intuitive team selection feature! On our analysis page, you'll find a
-            user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the left side of the
-            screen to choose your home team, then to the right for your away team.</p>
+            <p>This section compares the common opponents faced by both user-inputted teams. It includes a pie chart displaying the
+            probability data of match outcomes for each team against these opponents, highlighting wins, losses, and draws. This
+            visual analysis helps to understand each team's performance against shared competitors.</p>
         </div>
     </div>
-    <div class="analysis-cover">
-            <div class="div">
-                <h1>Head-to-Head</h1>
-                <div class="content">
-                    <img src="" alt="">
-                    <p></p>
-                </div>
+
+    <!-- how it works (what the buttons) the row and column of the line chart -->
+    <div class="outtertool">
+        <div class="innertext">
+            <h1 class="Htext">TOOL</h1>
+        </div>
+        <div class="tool">
+            <div class="content">
+                <video id="toolvideo" autoplay loop muted playsinline>
+                    <source src="{{url_for('static', filename='linechart.mov')}}">
+                </video>
+                <p>Discover how our service works with our intuitive team selection feature! On our analysis page,
+                    you'll find a
+                    user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the
+                    left side of the
+                    screen to choose your home team, then to the right for your away team.</p>
             </div>
+            <div class="content">
+                <video id="toolvideo" autoplay loop muted playsinline>
+                    <source src="{{url_for('static', filename='piechart.mov')}}">
+                </video>
+                <p>Discover how our service works with our intuitive team selection feature! On our analysis page,
+                    you'll find a
+                    user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the
+                    left side of the
+                    screen to choose your home team, then to the right for your away team.</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="outtertool">
+        <div class="innertext">
+            <h1 class="Htext">about us</h1>
+        </div>
+        <div class="tool">
+            <div class="content">
+                <img src="{{url_for('static', filename='about.png')}}" alt="">
+                <p>Discover how our service works with our intuitive team selection feature! On our analysis page,
+                    you'll find a
+                    user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the
+                    left side of the
+                    screen to choose your home team, then to the right for your away team.</p>
+
+            </div>
+            <div class="content">
+                <img src="{{url_for('static', filename='about3.png')}}" alt="">
+                <p>Discover how our service works with our intuitive team selection feature! On our analysis page,
+                    you'll find a
+                    user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the
+                    left side of the
+                    screen to choose your home team, then to the right for your away team.</p>
+            </div>
+        </div>
     </div>
 </body>
 <script src="{{url_for('static', filename='main.js')}}"></script>
+
 </html>

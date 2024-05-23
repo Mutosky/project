@@ -1,10 +1,11 @@
 import requests
 import numpy as np
-from datetime import date
+from datetime import date, timedelta
 
 
 today = date.today()
-api_key = "36f72dca1168988298b576aebdff19ea86c3f185ceba80bab29cf95c6eb76c63"
+today = today - timedelta(days=1)
+api_key = "5218e35066bd174fcc60095f853f4a3e8bf62785177f49e61af1f888c01e10ba"
 
 
 def pad_list(lst, max_length):
@@ -13,6 +14,13 @@ def pad_list(lst, max_length):
 
 def remove_lower_than_10(numbers):
     return [num for num in numbers if int(num) >= 10]
+
+def replace(data):
+    for i in range(len(data)):
+        if data[i] == '':
+            data[i] = 0
+    return data
+
 
 
 def getTestData(teamid, teamid2):
@@ -112,29 +120,61 @@ def getTestData(teamid, teamid2):
 
                                 for statis in stat:
                                     if statis['type'] == ballpos:
-                                        possession.append(
-                                            statis['home'].replace('%', ''))
-                                        possession2.append(
-                                            statis['away'].replace('%', ''))
+                                        inputData3 = statis['away'].replace('%', '')
+                                        inputData4 = statis['home'].replace('%', '')
+                                        data3 = 0 if inputData3 == '' else inputData3
+                                        data4 = 0 if inputData4 == '' else inputData4
+                                        print(data3, data4)
+                                        possession.append(data3)
+                                        possession2.append(data4)
                                     if statis['type'] == passaccu:
-                                        accuracy.append(statis['home'])
-                                        accuracy2.append(statis['away'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        accuracy.append(inputdata)
+                                        accuracy2.append(inputData2)
                                     if statis['type'] == shotinside:
-                                        shotinsidebox.append(statis['home'])
-                                        shotinsidebox2.append(statis['away'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        shotinsidebox.append(inputdata)
+                                        shotinsidebox2.append(inputData2)
                                     if statis['type'] == dangerous:
-                                        dangerousattacks.append(statis['home'])
-                                        dangerousattacks2.append(
-                                            statis['away'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        dangerousattacks.append(inputdata)
+                                        dangerousattacks2.append(inputData2)
                                     if statis['type'] == target:
-                                        On_target.append(statis['home'])
-                                        On_target2.append(statis['away'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        On_target.append(inputdata)
+                                        On_target2.append(inputData2)
                                     if statis['type'] == Corner:
-                                        Corners.append(statis['home'])
-                                        Corners2.append(statis['away'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        Corners.append(inputdata)
+                                        Corners2.append(inputData2)
                                     if statis['type'] == Attack:
-                                        Attacks.append(statis['home'])
-                                        Attacks2.append(statis['away'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        Attacks.append(inputdata)
+                                        Attacks2.append(inputData2)
 
                             elif awayid == teamid:
                                 team1.append(awayname)
@@ -152,29 +192,61 @@ def getTestData(teamid, teamid2):
 
                                 for statis in stat:
                                     if statis['type'] == ballpos:
-                                        possession.append(
-                                            statis['away'].replace('%', ''))
-                                        possession2.append(
-                                            statis['home'].replace('%', ''))
+                                        inputData3 = statis['away'].replace('%', '')
+                                        inputData4 = statis['home'].replace('%', '')
+                                        data3 = 0 if inputData3 == '' else inputData3
+                                        data4 = 0 if inputData4 == '' else inputData4
+                                        print(data3, data4)
+                                        possession.append(data3)
+                                        possession2.append(data4)
                                     if statis['type'] == passaccu:
-                                        accuracy.append(statis['away'])
-                                        accuracy2.append(statis['home'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        accuracy.append(inputdata)
+                                        accuracy2.append(inputData2)
                                     if statis['type'] == shotinside:
-                                        shotinsidebox.append(statis['away'])
-                                        shotinsidebox2.append(statis['home'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        shotinsidebox.append(inputdata)
+                                        shotinsidebox2.append(inputData2)
                                     if statis['type'] == dangerous:
-                                        dangerousattacks.append(statis['away'])
-                                        dangerousattacks2.append(
-                                            statis['home'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        dangerousattacks.append(inputdata)
+                                        dangerousattacks2.append(inputData2)
                                     if statis['type'] == target:
-                                        On_target.append(statis['away'])
-                                        On_target2.append(statis['home'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        On_target.append(inputdata)
+                                        On_target2.append(inputData2)
                                     if statis['type'] == Corner:
-                                        Corners.append(statis['away'])
-                                        Corners2.append(statis['home'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        Corners.append(inputdata)
+                                        Corners2.append(inputData2)
                                     if statis['type'] == Attack:
-                                        Attacks.append(statis['away'])
-                                        Attacks2.append(statis['home'])
+                                        inputdata = statis['away']
+                                        inputData2 = statis['home']
+                                        inputdata = 0 if inputdata == '' else inputdata
+                                        inputData2 = 0 if inputData2 == '' else inputData2
+                                        print(inputdata, inputData2)
+                                        Attacks.append(inputdata)
+                                        Attacks2.append(inputData2)
 
         max_length = max(len(event_date), len(outcome))
         possession = pad_list(possession, max_length)
@@ -244,12 +316,13 @@ def getpastfivematch(teamid=80, trainData=False):
     Attack = 'Attacks'
 
 
-    url = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2023-09-01&to={today}&teamId={teamid}'
+    url = f'https://apiv2.allsportsapi.com/football/?met=Fixtures&APIkey={api_key}&from=2024-04-01&to={today}&teamId={teamid}'
 
     respond  = requests.get(url=url)
     if respond.status_code ==  200:
         if 'result' in respond.json():
             featuredata = respond.json()['result']
+            print(featuredata)
             for match in featuredata:
                 homeid = match['home_team_key']
                 awayid = match['away_team_key']
@@ -306,29 +379,61 @@ def getpastfivematch(teamid=80, trainData=False):
 
                         for statis in stat:
                             if statis['type'] == ballpos:
-                                possession.append(
-                                    statis['home'].replace('%', ''))
-                                possession2.append(
-                                    statis['away'].replace('%', ''))
+                                inputData = statis['home'].replace('%', '')
+                                inputData2 = statis['away'].replace('%', '')
+                                data = 0 if inputData == '' else inputData
+                                data2 = 0 if inputData2 == '' else inputData2
+                                print(data, data2)
+                                possession.append(data)
+                                possession2.append(data2)
                             if statis['type'] == passaccu:
-                                accuracy.append(statis['home'])
-                                accuracy2.append(statis['away'])
+                                inputData = statis['home'].replace('%', '')
+                                inputData2 = statis['away'].replace('%', '')
+                                data = 0 if inputData == '' else inputData
+                                data2 = 0 if inputData2 == '' else inputData2
+                                print(data, data2)
+                                accuracy.append(data)
+                                accuracy2.append(data2)
                             if statis['type'] == shotinside:
-                                shotinsidebox.append(statis['home'])
-                                shotinsidebox2.append(statis['away'])
+                                inputData = statis['home'].replace('%', '')
+                                inputData2 = statis['away'].replace('%', '')
+                                data = 0 if inputData == '' else inputData
+                                data2 = 0 if inputData2 == '' else inputData2
+                                print(data, data2)
+                                shotinsidebox.append(data)
+                                shotinsidebox2.append(data2)
                             if statis['type'] == dangerous:
-                                dangerousattacks.append(statis['home'])
-                                dangerousattacks2.append(
-                                    statis['away'])
+                                inputData = statis['home'].replace('%', '')
+                                inputData2 = statis['away'].replace('%', '')
+                                data = 0 if inputData == '' else inputData
+                                data2 = 0 if inputData2 == '' else inputData2
+                                print(data, data2)
+                                dangerousattacks.append(data)
+                                dangerousattacks2.append(data2)
                             if statis['type'] == target:
-                                On_target.append(statis['home'])
-                                On_target2.append(statis['away'])
+                                inputData = statis['home'].replace('%', '')
+                                inputData2 = statis['away'].replace('%', '')
+                                data = 0 if inputData == '' else inputData
+                                data2 = 0 if inputData2 == '' else inputData2
+                                print(data, data2)
+                                On_target.append(data)
+                                On_target2.append(data2)
                             if statis['type'] == Corner:
-                                Corners.append(statis['home'])
-                                Corners2.append(statis['away'])
+                                inputData = statis['home'].replace('%', '')
+                                inputData2 = statis['away'].replace('%', '')
+                                data = 0 if inputData == '' else inputData
+                                data2 = 0 if inputData2 == '' else inputData2
+                                print(data, data2)
+                                Corners.append(data)
+                                Corners2.append(data2)
                             if statis['type'] == Attack:
-                                Attacks.append(statis['home'])
-                                Attacks2.append(statis['away'])
+                                inputData = statis['home'].replace('%', '')
+                                inputData2 = statis['away'].replace('%', '')
+                                data = 0 if inputData == '' else inputData
+                                data2 = 0 if inputData2 == '' else inputData2
+                                print(data, data2)
+                                Attacks.append(data)
+                                Attacks2.append(data2)
 
                     elif awayid == teamid:
                         team1.append(teamid)
@@ -355,28 +460,62 @@ def getpastfivematch(teamid=80, trainData=False):
 
                         for statis in stat:
                             if statis['type'] == ballpos:
-                                possession.append(
-                                    statis['away'].replace('%', ''))
-                                possession2.append(
-                                    statis['home'].replace('%', ''))
+                                inputData3 = statis['away'].replace('%', '')
+                                inputData4 = statis['home'].replace('%', '')
+                                data3 = 0 if inputData3 == '' else inputData3
+                                data4 = 0 if inputData4 == '' else inputData4
+                                print(data3, data4)
+                                possession.append(data3)
+                                possession2.append(data4)
                             if statis['type'] == passaccu:
-                                accuracy.append(statis['away'])
-                                accuracy2.append(statis['home'])
+                                inputdata = statis['away']
+                                inputData2 = statis['home']
+                                inputdata = 0 if inputdata == '' else inputdata
+                                inputData2 = 0 if inputData2 == '' else inputData2
+                                print(inputdata, inputData2)
+                                accuracy.append(inputdata)
+                                accuracy2.append(inputData2)
                             if statis['type'] == shotinside:
-                                shotinsidebox.append(statis['away'])
-                                shotinsidebox2.append(statis['home'])
+                                inputdata = statis['away']
+                                inputData2 = statis['home']
+                                inputdata = 0 if inputdata == '' else inputdata
+                                inputData2 = 0 if inputData2 == '' else inputData2
+                                print(inputdata, inputData2)
+                                shotinsidebox.append(inputdata)
+                                shotinsidebox2.append(inputData2)
                             if statis['type'] == dangerous:
-                                dangerousattacks.append(statis['away'])
-                                dangerousattacks2.append(statis['home'])
+                                inputdata = statis['away']
+                                inputData2 = statis['home']
+                                inputdata = 0 if inputdata == '' else inputdata
+                                inputData2 = 0 if inputData2 == '' else inputData2
+                                print(inputdata, inputData2)
+                                dangerousattacks.append(inputdata)
+                                dangerousattacks2.append(inputData2)
                             if statis['type'] == target:
-                                On_target.append(statis['away'])
-                                On_target2.append(statis['home'])
+                                inputdata = statis['away']
+                                inputData2 = statis['home']
+                                inputdata = 0 if inputdata == '' else inputdata
+                                inputData2 = 0 if inputData2 == '' else inputData2
+                                print(inputdata, inputData2)
+                                On_target.append(inputdata)
+                                On_target2.append(inputData2)
                             if statis['type'] == Corner:
-                                Corners.append(statis['away'])
-                                Corners2.append(statis['home'])
+                                inputdata = statis['away']
+                                inputData2 = statis['home']
+                                inputdata = 0 if inputdata == '' else inputdata
+                                inputData2 = 0 if inputData2 == '' else inputData2
+                                print(inputdata, inputData2)
+                                Corners.append(inputdata)
+                                Corners2.append(inputData2)
                             if statis['type'] == Attack:
-                                Attacks.append(statis['away'])
-                                Attacks2.append(statis['home'])
+                                inputdata = statis['away']
+                                inputData2 = statis['home']
+                                inputdata = 0 if inputdata == '' else inputdata
+                                inputData2 = 0 if inputData2 == '' else inputData2
+                                print(inputdata, inputData2)
+                                Attacks.append(inputdata)
+                                Attacks2.append(inputData2)
+
 
         lowerdangerousattacks = remove_lower_than_10(dangerousattacks)
         lowerdangerousattacks2 = remove_lower_than_10(dangerousattacks)
@@ -404,28 +543,6 @@ def getpastfivematch(teamid=80, trainData=False):
         print(len(outcome), len(event_date), len(team1), len(score), len(place), len(possession), len(lowerdangerousattacks), len(accuracy), len(On_target), len(shotinsidebox), len(Corners), len(
             lowerAttacks), len(team2), len(score2), len(place2), len(possession2), len(lowerdangerousattacks2), len(accuracy2), len(On_target2), len(shotinsidebox2), len(Corners2), len(lowerAttacks2), len(team2id))
 
-        for attakers in dangerousattacks:
-            print(attakers)
-
-        print('\n\n')
-
-        for attakers in Attacks2:
-            print(attakers)
-
-        print('\n\n')
-
-        for attakers in Attacks:
-            print(attakers)
-
-        print('\n\n')
-
-        for attakers in dangerousattacks2:
-            print(attakers)
-
-        print('\n\n')
-
-        for poss in possession:
-            print(poss)
 
 
         return outcome, event_date, team1, score, place, possession, lowerdangerousattacks, accuracy, On_target, shotinsidebox, Corners, lowerAttacks, team2, score2, place2, possession2, lowerdangerousattacks2, accuracy2, On_target2, shotinsidebox2, Corners2, lowerAttacks2, team2id

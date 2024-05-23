@@ -139,9 +139,23 @@ body {
 .paragraph{
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.paragraph ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.paragraph ul + ul{
+    margin-left: 5px;
 }
 
 .itemList li {
+    font-size: 14px;
     text-decoration: none;
     color: white;
     padding: 10px 20px;
@@ -162,11 +176,60 @@ body {
     width: 50%;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
  .lineChart {
-     width: 50%;
+    padding-top: 10px;
+    width: 50%;
+    background-color: rgba(228, 209, 209, 0.841);
+    margin-bottom: 20px;
  }
+
+ .SOsection{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(33, 116, 65);
+    border-radius: 10px 10px 10px 10px;
+    margin-top: 60px;
+ }
+
+ .SOpiechart{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+ }
+
+.SOlists{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+}
+
+.homeADataDiv ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.homeADataDiv ul + ul {
+    margin-left: 5px;
+}
+.SOpiechart canvas {
+    background-color: rgba(228, 209, 209, 0.841);
+    border-radius: 20px 20px;
+    margin-top: 20px;
+}
+.homeAdvantage{
+    padding-top: 10px;
+    padding-bottom: 20px;
+    background-color: rgb(33, 116, 65);
+    border-radius: 10px 10px 10px 10px;
+}
+
 
 
 
@@ -180,6 +243,7 @@ body {
 
 
  .throbber-overlay {
+     color: white;
      position: fixed;
      top: 0;
      left: 0;
@@ -474,5 +538,43 @@ body {
     }
     .lineChart{
         width: 100%;
+    }
+
+    .SOsection {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .SOpiechart {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+    }
+
+    .SOpiechart canvas{
+        background-color: rgba(228, 209, 209, 0.841);
+        border-radius: 20px 20px;
+        margin-top: 20px;
+    }
+    .SOlists {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 40px;
+    }
+    .SOlists ul{
+        padding: 5px 5px;
+        margin: 0;
+        list-style: none;
+    }
+
+    .SOlists li {
+        font-size: 10px;
     }
 }

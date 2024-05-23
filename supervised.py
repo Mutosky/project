@@ -190,6 +190,7 @@ def homeAdvantage(teamid):
 def similarOpponent(teamid, team2id):
     team1Data = datas(teamid=teamid)
     team2Data = datas(teamid=team2id)
+    
 
     # columns for the new dataframes so i can use the concatinate function
     columu = ['event_date', 'match_outcome', 'team1_id', 'team1_possession',
@@ -209,8 +210,16 @@ def similarOpponent(teamid, team2id):
             if i == j:
                 listSimilar.append(j)
 
+    
+    outcome_mapping = {'Loss': 0, 'Win': 2, 'Draw': 1}
+    team1Data['numerical_outcome'] = team1Data['match_outcome'].map(outcome_mapping)
+    team2Data['numerical_outcome'] = team2Data['match_outcome'].map(outcome_mapping)
+    team1Data = team1Data.sort_values(by='event_date', ascending=False)
+    team2Data = team2Data.sort_values(by='event_date', ascending=False)
+
     # converted the data to set so as to remove duplicates
-    similarTeams = list(set(listSimilar))
+    similarTeams = list(set(listSimilar))[:5]
+    datalist = []
 
     for name in similarTeams:
         inini = team1Data[team1Data['team2_id'] == str(name)].head(n=1)
@@ -218,11 +227,19 @@ def similarOpponent(teamid, team2id):
         team1df = pd.concat([team1df, inini], ignore_index=True)
         ininis = team2Data[team2Data['team2_id'] == str(name)].head(n=1)
         team2df = pd.concat([team2df, ininis], ignore_index=True)
-    print(team1df[['event_date', 'team2_id', 'match_outcome']])
-    print(team2df[['event_date', 'team2_id', 'match_outcome']])
+        datalist.append({'team1Outcome': str(inini['match_outcome'].values[0]), 'team1Date': str(inini['event_date'].values[0]),
+                         'team2Outcome': str(ininis['match_outcome'].values[0]), 'team2Date': str(ininis['event_date'].values[0])
+                         })
 
-    model = modeltraining(data=team1Data)
-
-    prediction = model.predict()
-    return prediction
+    team1df = team1df.drop(
+        columns=['event_date', 'match_outcome', 'team1_id', 'team2_id'])
+    team2df = team2df.drop(
+        columns=['event_date', 'match_outcome', 'team1_id', 'team2_id'])
     
+    model = modeltraining(data=team1Data)
+    team1prediction = model.predict_proba(X=team1df)
+    team2prediction = model.predict_proba(X=team2df)
+
+    return team1prediction, team2prediction, datalist, similarTeams
+
+

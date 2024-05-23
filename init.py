@@ -93,7 +93,7 @@ def updateUser(username, status):
         if userData:
             userData.status = newStatus
             session.commit()
-            return 'succesful'
+            return 'successful'
     except Exception as e:
         return e
     finally: session.close()
@@ -111,3 +111,20 @@ def login_users(username, password):
         except Exception as e:
             return f'error {e}'
         finally: session.close()
+
+def authAdmin(name, password):
+    if name and password:
+        try:
+            session = Session()
+            user = session.query(Users).filter_by(name=name, password=password).first()
+            print(user.name, user.status)
+            if user:
+                if user.status == 'Admin':
+                    return 'successful'
+            else: return None
+        except Exception as e:
+            print('error in try')
+            return f'error {e}'
+        finally: session.close()
+                
+    

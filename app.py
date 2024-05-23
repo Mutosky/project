@@ -1,5 +1,5 @@
-from init import flaskinit, teams, add_user, login_users, get_allusers, get_user, updateUser
-from supervised import pastfivematch, Head2Head, put_in_list, needData, loop, homeAdvantage
+from init import flaskinit, teams, add_user, login_users, get_allusers, get_user, updateUser, authAdmin
+from supervised import pastfivematch, Head2Head, put_in_list, needData, loop, homeAdvantage, similarOpponent
 from flask import request, jsonify, render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, UserMixin,LoginManager
 from datetime import date
@@ -50,14 +50,11 @@ def footballanalysis():
             team1id = int(teams[data['team1']])
             team2id = int(teams[data['team2']])
 
-            try:
-                probability, match_data = Head2Head(
-                    teamid=team1id,
-                    team2id=team2id
-                )
-            except Exception as e:
-                if e:
-                    print(f'\n\n error ------------ \n\n {e}')
+
+            probability, match_data = Head2Head(
+                teamid=team1id,
+                team2id=team2id
+            )
 
             Team1_probability, team1outcome = pastfivematch(
                 teamid=team1id
@@ -73,24 +70,29 @@ def footballanalysis():
                 data2=team2outcome
             )
 
-            homeOutcome, _, eventDate, _ = geetin(data=neededData)
+            homeOutcome, opponent, eventDate, _ = geetin(data=neededData)
 
             outcome = loop(data=match_data['match_outcome'])
             date = loop(data=match_data['event_date'])
             team1 = loop(data=match_data['team1_id'])
             team2 = loop(data=match_data['team2_id'])
+
+            team1prediction, team2prediction, datalist, similarTeams = similarOpponent(team1id, team2id)
+            
             
             win1, loss1, draw1 = put_in_list(data=Team1_probability)
             win2, loss2, draw2 = put_in_list(data=Team2_probability)
+            win3, loss3, draw3 = put_in_list(data=team1prediction)
+            win4, loss4, draw4 = put_in_list(data=team2prediction)
             homeWin, homeLoss, homeDraw = put_in_list(data=homeProbability)
 
             return jsonify({'H2H_data': {'last_match_probability': probability, 'outcome': outcome, 'date': date, 'team1': team1, 'team2': team2}, 
                             'Lastfivematchdata': {'HomeTeam': {'win': win1, 'loss': loss1, 'draw': draw1, 'opponent': team1OpponentName, 'Outcome': team1MatchOutcome, 'date': team1MatchDate}, 
                                                 'AwayTeam': {'win': win2, 'loss': loss2, 'draw': draw2, 'opponent': team2OpponentName, 'Outcome': team2MatchOutcome, 'date': team2MatchDate}},
-                            'homeAdvange': {'win': homeWin, 'loss': homeLoss, 'draw': homeDraw, 'date': eventDate, 'match_outcome': homeOutcome},
-                            'similarOpponent': {'teamOne': {'win': 'win', 'loss': 'lossses', 'draw': 'cap'},
-                                                'teamTwo': {'win': 'win', 'loss': 'lossses', 'draw': 'cap'},
-                                                'opponents': {'name': 'olododo', 'date': 'matchdate'}}
+                            'homeAdvange': {'win': homeWin, 'loss': homeLoss, 'draw': homeDraw, 'date': eventDate, 'match_outcome': homeOutcome, 'opponent': opponent},
+                            'similarOpponent': {'teamOne': {'win': win3, 'loss': loss3, 'draw': draw3},
+                                                'teamTwo': {'win': win4, 'loss': loss4, 'draw': draw4},
+                                                'opponents': {'name': similarTeams, 'data': datalist}}
                                 })
         else:
             return jsonify({'error': 'not data found'})
@@ -109,8 +111,7 @@ def home():
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = 'Error this account is not active make payment in payment page or if payment has already been made wait for confirmation'
+def login(): 
     if request.method == 'POST':
         userData = request.get_json()
         if userData:
@@ -123,10 +124,11 @@ def login():
                 status = code.status
                 if status == 'active':
                     user = User(username)
+                    print(user)
                     login_user(user=user)
                     return redirect(url_for('home'))
-                elif status == 'Admin': return redirect('/admin')
-                else: return jsonify({'error': error})
+                elif status == 'Admin': return redirect(url_for('admin'))
+                else: return redirect(url_for('payment'))
     return render_template('register.html')
 
 
@@ -148,7 +150,8 @@ def register():
     return render_template('register.html')
 
 
-
+def adminpage():
+    return render_template('admin.html')
 
 @app.route('/get_users', methods=['GET'])
 def get_users():
@@ -176,9 +179,20 @@ def upadate():
 
 
 
-@app.route('/admin', methods = ['GET'])
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
-    return render_template('admin.html')
+    if request.method == 'POST':
+        data = request.get_json()
+        username = data['name']
+        password = data['password']
+        respond = authAdmin(name=username, password=password)
+        if respond == 'successful':
+            return redirect(url_for('home'))
+        elif respond == None:
+            return 'error user not found', 404
+    return render_template('adminLogin.html')
+
+
 
 
 @app.route('/logout')
@@ -192,9 +206,6 @@ def payment():
     return render_template('payment.html')
 
 
-@app.route('/throbber', methods=['GET', 'POST'])
-def example():
-    return render_template('example.html')
 
 
 if __name__ == "__main__":

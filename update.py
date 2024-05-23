@@ -250,6 +250,11 @@ def predictionalgorithm2(team1id, team2id):
     return Team1_probability, team1outcome, Team2_probability, team2outcome
 
 
+
+
+
+
+
 def advanges(team1id):
     outcome, event_date, team1, score, place, possession, dangerousattacks, accuracies, On_target, shotinsidebox, Corners, Attacks, team2, score2, place2, possession2, dangerousattacks2, accuracies2, On_target2, shotinsidebox2, Corners2, Attacks2, team2ids = getpastfivematch(
         teamid=team1id)

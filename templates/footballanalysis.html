@@ -226,6 +226,11 @@
             <div class="bar-chart">
                 <canvas class="bar-container" id="bar-container" width="400" height="400"></canvas>
             </div>
+            <div class="paragraph">
+                <ul id="homeLFList1"></ul>
+                <ul id="homeLFList2"></ul>
+                <ul id="homeLFList3"></ul>
+            </div>
         </div>
         <div class="team-div">
             <h1 id="away-lastfive" class="label">__</h1>
@@ -235,6 +240,11 @@
             <h1 id="away-label" class="label">__</h1>
             <div class="bar-chart">
                 <canvas class="bar-container" id="bar-containers" width="400" height="400"></canvas>
+            </div>
+            <div class="paragraph">
+                <ul id="awayLFList1"></ul>
+                <ul id="awayLFList2"></ul>
+                <ul id="awayLFList3"></ul>
             </div>
         </div>
     </div>
@@ -247,10 +257,26 @@
         <div class="homeADataDiv">
             <ul id="homeAList" class="itemList"></ul>
             <ul id="homeAListB" class="itemList"></ul>
+            <ul id="homeAListC" class="itemList"></ul>
         </div>
         </div>
     </div>
+    <div class="SOsection">
+        <h1 class="label">similar opponent</h1>
+        <div class="SOpiechart">
+            <canvas id="homeTeamSO"></canvas>
+            <canvas id="awayTeamSO"></canvas>
+        </div>
+        <div class="SOlists">
+            <ul id="oppoName" class="itemList"></ul>
+            <ul id="homeTD" class="itemList"></ul>
+            <ul id="homeTO" class="itemList"></ul>
+            <ul id="awayTD" class="itemList"></ul>
+            <ul id="awayTO" class="itemList"></ul>
+        </div>
+    </div>
     <div id="throbber-overlay" class="throbber-overlay">
+        <h1 id="loadingState">__</h1>
         <div id="throbber" class="throbber"></div>
     </div>
 </body>
