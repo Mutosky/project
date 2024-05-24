@@ -23,6 +23,10 @@ teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle U
          "Bayern Munich": "72"}
 
 
+def flaskinit():
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = "football-site-key"
+    return app
 
 
 engine = create_engine('sqlite:///database.db',
