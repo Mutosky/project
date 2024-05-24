@@ -2,4 +2,9 @@ list.txt
 note.txt
 users.py
 update.py
-myenv
+test.py
+myenv/
+my-lambda-package/
+my-lambda-package.zip
+__pycache__/
+unusedFiles/
