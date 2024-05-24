@@ -1,11 +1,12 @@
 from init import flaskinit, teams, add_user, login_users, get_allusers, get_user, updateUser, authAdmin
 from supervised import pastfivematch, Head2Head, put_in_list, needData, loop, homeAdvantage, similarOpponent
-from flask import request, jsonify, render_template, redirect, url_for
+from flask import request, jsonify, render_template, redirect, url_for,Flask
 from flask_login import login_required, login_user, logout_user, UserMixin,LoginManager
 from datetime import date
 
-app = flaskinit()
 
+app = Flask(__name__)
+app.config['SECRET_KEY'] = "football-site-key"
 login_manager = LoginManager()
 login_manager.init_app(app=app)
 
