@@ -203,7 +203,7 @@ def admin():
 
 
 @app.route('/admins', methods=['GET', 'POST'])
-def admin():
+def admins():
     return render_template('admin.html')
 
 
