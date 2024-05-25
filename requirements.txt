@@ -1,7 +1,4 @@
 Flask==3.0.1
 Flask-Login==0.6.3
-numpy==1.26.3
-pandas==2.2.0
 requests==2.31.0
-scikit-learn==1.4.0
 SQLAlchemy==2.0.29
