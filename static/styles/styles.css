@@ -12,6 +12,11 @@ body {
     align-items: center;
 }
 
+.container select{
+    color: rgb(0, 0, 0);
+    text-transform: capitalize;
+}
+
 .container h1 {
     text-transform: uppercase;
     color: black;
