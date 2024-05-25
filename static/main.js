@@ -223,6 +223,7 @@ async function getSelectedTeams(){
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
                 }
+                
                 loading.innerHTML='collecting data....';
                 const jsonData = await response.json();
                 const h2hData = jsonData['H2H_data']['last_match_probability'];

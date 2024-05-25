@@ -55,16 +55,11 @@ def footballanalysis():
             team2id = int(teams[data['team2']])
             json = {'team1': team1id, 'team2': team2id}
 
-            H2Hdata = requests.post(url=urlHead2Head, json=json)
-            PFMdata = requests.post(url=urlPastFiveMatch, json=json)
-            PFM2data = requests.post(url=urlPastFiveMatch, json=json)
-            SMOdata = requests.post(url=urlSimilarOpponent, json=json)
-            HAGdata = requests.post(url=urlHomeAdvantages, json=json)
-            print(H2Hdata.json())
-            print(PFM2data.json())
-            print(PFMdata.json())
-            print(SMOdata.json())
-            print(HAGdata.json())
+            H2Hdata = requests.post(url=urlHead2Head, json=json, timeout=30)
+            PFMdata = requests.post(url=urlPastFiveMatch, json=json, timeout=30)
+            PFM2data = requests.post(url=urlPastFiveMatch, json=json, timeout=30)
+            SMOdata = requests.post(url=urlSimilarOpponent, json=json, timeout=30 )
+            HAGdata = requests.post(url=urlHomeAdvantages, json=json, timeout=30)
 
             probability = H2Hdata.json()['datalist']
             outcome = H2Hdata.json()['match_outcome']
