@@ -161,8 +161,6 @@ def register():
     return render_template('register.html')
 
 
-def adminpage():
-    return render_template('admin.html')
 
 @app.route('/get_users', methods=['GET'])
 def get_users():
@@ -198,12 +196,15 @@ def admin():
         password = data['password']
         respond = authAdmin(name=username, password=password)
         if respond == 'successful':
-            return redirect(url_for('home'))
+            return render_template('admin.html')
         elif respond == None:
             return 'error user not found', 404
     return render_template('adminLogin.html')
 
 
+@app.route('/admins', methods=['GET', 'POST'])
+def admin():
+    return render_template('admin.html')
 
 
 @app.route('/logout')
