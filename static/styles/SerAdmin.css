@@ -1,6 +1,7 @@
 body{
     color: white;
     margin: 0;
+    padding: 0;
 }
 
 .welcome{
@@ -58,8 +59,8 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .contain {
@@ -378,6 +379,12 @@ body{
         .menu.show {
             display: flex;
             flex-direction: column;
+            position: absolute;
+            background-color: #ffffff7f;
+            box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.421), 0 6px 20px 0 rgba(255, 255, 255, 0.421);
+            border-radius: 5px 5px;
+            width: 80%;
+            left: 0;
         }
     
         .menu ul {
