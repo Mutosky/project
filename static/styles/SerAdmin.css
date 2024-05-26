@@ -79,11 +79,8 @@ body{
 }
 
 .contain h1{
-    font-family: 'Open Sans',
-            Helvetica,
-            Arial,
-            sans-serif;
-    text-transform: capitalize;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-transform: uppercase;
     font-size: 25px;
 }
 
@@ -112,11 +109,9 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 .tool {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
-    background-color: white;
     width: 90%;
     border-radius: 10px 10px;
     margin-top: 20px;
@@ -140,25 +135,54 @@ body{
 
 }
 .outtertool p {
-    font-size: 15px;
+    font-size: 12px;
     padding: 0px 50px;
     font-family: 'Open Sans',
         Helvetica,
         Arial,
         sans-serif;
     color: #000000;
+    text-align: center;
 }
 #toolvideo{
-    width: 50%;
-    height: 50%;
+    width: 30%;
+    height: 30%;
     object-fit: cover;
     pointer-events: none;
+    border-radius: 10px 10px;
 }
 .content {
     margin: 10px 20px;
     display: flex;
     flex-direction: row;
 }
+
+.content {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 30px;
+}
+.content2 {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+.content video {
+    width: 50%;
+}
+.content p {
+    width: 50%;
+    padding-left: -10px;
+    padding-right: -10px;
+}
+.content2 video {
+    width: 50%;
+}
+
+.content2 p {
+    width: 50%;
+}
+
 
 .content img{
     width: 400px;
@@ -167,6 +191,7 @@ body{
 
 .innertext{
     border-bottom: solid black 2px;
+    text-align: left;
 }
 
 
@@ -434,6 +459,7 @@ body{
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
 
         .welcome-message p {
@@ -442,7 +468,9 @@ body{
                 Helvetica,
                 Arial,
                 sans-serif;
-            margin-top: 10px;
+            margin-top: -25px;
+            text-align: center;
+            margin-bottom: 10px;
         }
 
         .welcome-message img{
@@ -472,6 +500,27 @@ body{
             margin: 0px 0px;
             flex-direction: column;
             align-items: center;
+        }
+
+        .content video{
+            width: 100%;
+        }
+        .content2 video {
+            width: 100%;
+        }
+        .content p {
+            width: 100%;
+        }
+        .content2 p {
+            width: 100%;
+        }
+
+        .content2 {
+            width: 100%;
+            margin: 0px 0px;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
         }
         #toolvideo {
             width: 100%;

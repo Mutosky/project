@@ -21,6 +21,7 @@
             <ul>
                 <li><a href="{{url_for('home')}}">Home</a></li>
                 {% if current_user.is_authenticated %}
+                <li><a href="#aboutus" class="scroll-button">About Us</a></li>
                 <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
                 <li><a class="log" href="{{url_for('logout')}}">logout</a></li>
                 {% else %}
@@ -32,11 +33,7 @@
     <div class="welcome">
         <div class="welcome-message">
             <h1>welcome To SmartStake</h1>
-            <p>Welcome to our football analysis website! Input the two teams, and instantly access detailed performance
-                insights. From
-                head-to-head stats to player metrics, our platform helps you make informed predictions and strategic
-                decisions. Join us
-                and elevate your understanding of the beautiful game</p>
+            <p>Unlock insights. Predict matchups. Dominate your fantasy league.</p>
             {% if current_user.is_authenticated %}
             <button><a href="{{url_for('footballanalysis')}}">get started</a></button>
             {% else %}
@@ -51,31 +48,26 @@
         <div class="contain">
             <h1>Head-to-Head</h1>
             <img src="{{url_for('static', filename='ball.png')}}" alt="">
-            <p>This section displays the matches played between the two selected teams, accompanied by a pie chart showing the outcome
-            probabilities of their last encounter. Analyzing head-to-head performance provides valuable insights into their
-            competitive dynamics, helping to predict future match outcomes and understand each team's strengths and weaknesses
-            against the other.</p>
+            <p>See how these teams fare against each other. Analyze past matches and predict future outcomes!</p>
         </div>
         <div class="contain">
             <h1>last five match</h1>
             <img src="{{url_for('static', filename='ball.png')}}" alt="">
-            <p>This section displays the last five matches of the inputted teams using a line chart with three lines (win, draw, loss)
-            showing the probability of each outcome. Additionally, a pie chart highlights the result distribution of their most
-            recent match, providing a clear visual of their current form and performance trends.</p>
+            <p>Visualize the uses a line chart to show win, draw, and loss probabilities for the last five games. A pie chart breaks down the
+            results of their most recent match, giving you a quick view of both teams' current form.</p>
         </div>
         <div class="contain">
             <h1>home advantage</h1>
             <img src="{{url_for('static', filename='ball.png')}}" alt="">
-            <p>This section focuses on the selected home team's performance. A line chart displays the outcomes (win, draw, loss) of
-            their home matches, illustrating the probability of each result. This visual analysis highlights the team's strength
-            when playing on their home ground, offering insights into their home advantage.</p>
+            <p>A section showing a chart of the team's wins, draws, and losses at home. This helps see how well they play on their
+            home field.</p>
         </div>
         <div class="contain">
             <h1>similar opponent</h1>
             <img src="{{url_for('static', filename='ball.png')}}" alt="">
-            <p>This section compares the common opponents faced by both user-inputted teams. It includes a pie chart displaying the
-            probability data of match outcomes for each team against these opponents, highlighting wins, losses, and draws. This
-            visual analysis helps to understand each team's performance against shared competitors.</p>
+            <p>This section shows how each team fared against the teams they both played.
+            
+            A pie chart breaks down their wins, losses, and draws for a quick comparison.</p>
         </div>
     </div>
 
@@ -89,50 +81,63 @@
                 <video id="toolvideo" autoplay loop muted playsinline>
                     <source src="{{url_for('static', filename='linechart.mov')}}">
                 </video>
-                <p>Discover how our service works with our intuitive team selection feature! On our analysis page,
-                    you'll find a
-                    user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the
-                    left side of the
-                    screen to choose your home team, then to the right for your away team.</p>
+                <p>This video dives into the magic of filtering line charts. See how you can easily analyze wins, losses, and draws with
+                just a click!
+                
+                Press the win button and watch the winning streak come to life. Feeling strategic? Filter out losses and focus on your
+                team's dominance. Don't want to see draws? No problem, a single click hides them, revealing the most impactful trends in
+                your data.
+                
+                Master the art of filtering and gain deeper insights from your line charts!</p>
             </div>
-            <div class="content">
+            <div class="content2">
                 <video id="toolvideo" autoplay loop muted playsinline>
                     <source src="{{url_for('static', filename='piechart.mov')}}">
                 </video>
-                <p>Discover how our service works with our intuitive team selection feature! On our analysis page,
-                    you'll find a
-                    user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the
-                    left side of the
-                    screen to choose your home team, then to the right for your away team.</p>
+                <p>Unlock interactive insights! Dive into this pie chart and filter results with ease.
+                
+                See it in action: Explore wins, losses, or draws with a single click.
+                Dynamic data visualization: Watch as pie chart slices update based on your selection.
+                Focus on what matters: Filter out draws to analyze wins and losses in isolation.
+                This video demonstrates how you can use interactive buttons to filter a pie chart and gain deeper insights from your
+                data.</p>
             </div>
         </div>
     </div>
     </div>
-    <div class="outtertool">
+    <div id="aboutus" class="outtertool">
         <div class="innertext">
             <h1 class="Htext">about us</h1>
         </div>
         <div class="tool">
             <div class="content">
                 <img src="{{url_for('static', filename='about.png')}}" alt="">
-                <p>Discover how our service works with our intuitive team selection feature! On our analysis page,
-                    you'll find a
-                    user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the
-                    left side of the
-                    screen to choose your home team, then to the right for your away team.</p>
+                <p>SMARTSTAKE is your one-stop shop for in-depth football analysis. We empower you to make smarter betting decisions by
+                providing a comprehensive view of upcoming matches.</p>
 
             </div>
             <div class="content">
                 <img src="{{url_for('static', filename='about3.png')}}" alt="">
-                <p>Discover how our service works with our intuitive team selection feature! On our analysis page,
-                    you'll find a
-                    user-friendly section dedicated to selecting teams for analysis. To begin, simply navigate to the
-                    left side of the
-                    screen to choose your home team, then to the right for your away team.</p>
+                <p>Furthermore, we go beyond basic stats. Our team of passionate football analysts delves into the data, dissecting player
+                performance trends, team strategies, and historical matchups. With SMARTSTAKE, you get a deeper understanding of the
+                factors influencing the outcome, allowing you to place informed bets and elevate your chances of success.</p>
+
+                <p>Looking ahead, we're committed to continuously enhancing your experience. We're actively seeking user feedback to
+                develop innovative features and further refine our analysis tools. Join the SMARTSTAKE community and become a betting
+                mastermind!</p>
             </div>
         </div>
     </div>
 </body>
 <script src="{{url_for('static', filename='main.js')}}"></script>
-
+<script>
+    document
+        .querySelector(".scroll-button")
+        .addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector("#aboutus").scrollIntoView({
+                behavior: "smooth",
+            });
+        });
+</script>
 </html>
