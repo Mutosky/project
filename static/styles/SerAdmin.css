@@ -105,7 +105,7 @@ body{
     flex-direction: column;
     align-items: right;
 }
-.outtertool{
+.homesection{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -134,7 +134,7 @@ body{
     padding: 0;
 
 }
-.outtertool p {
+.homesection p {
     font-size: 12px;
     padding: 0px 50px;
     font-family: 'Open Sans',
@@ -487,7 +487,7 @@ body{
             height: 3px;
             background-color: transparent;
         }
-        .outtertool {
+        .homesection {
             display: flex;
             flex-direction: column;
             align-items: center;
