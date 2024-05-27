@@ -139,9 +139,9 @@ def login():
                     user = User(username)
                     print(user)
                     login_user(user=user)
-                    return redirect(url_for('home'))
-                elif status == 'Admin': return redirect(url_for('admin'))
-                else: return redirect(url_for('payment'))
+                    return jsonify({'redirect': url_for('home')})
+                elif status == 'Admin': return jsonify({'redirect': url_for('admin')})
+                else: return jsonify({'redirect': url_for('payment')})
     return render_template('register.html')
 
 
@@ -157,7 +157,9 @@ def register():
             dates = date.today()
             code = add_user(username=username, password=password, dates=dates)
             if code == 'successful':
-                return redirect(url_for('payment'))
+                user= User(username)
+                login_user(user=user)
+                return jsonify({'redirect': url_for('payment')})
             else:
                 return jsonify({'error': 'internal error try again later'})
     return render_template('register.html')
@@ -165,6 +167,7 @@ def register():
 
 
 @app.route('/get_users', methods=['GET'])
+@login_required
 def get_users():
     users = get_allusers()
     data = []
@@ -176,6 +179,7 @@ def get_users():
 
 
 @app.route('/updateUsers', methods=['GET', 'POST'])
+@login_required
 def upadate():
     if request.method == 'POST':
         data = request.get_json()
@@ -189,7 +193,6 @@ def upadate():
 
 
 
-
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
@@ -198,13 +201,16 @@ def admin():
         password = data['password']
         respond = authAdmin(name=username, password=password)
         if respond == 'successful':
-            return render_template('admin.html')
+            user = User(username)
+            login_user(user=user)
+            return jsonify({'redirect': url_for('admins')})
         elif respond == None:
             return 'error user not found', 404
     return render_template('adminLogin.html')
 
 
 @app.route('/admins', methods=['GET', 'POST'])
+@login_required
 def admins():
     return render_template('admin.html')
 
@@ -215,7 +221,22 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+@app.route('/deleteUser', methods=['GET', 'DELETE'])
+@login_required
+def delete():
+    if request.method == 'DELETE':
+        username = request.get_json()['name']
+        status = updateUser(username=username, delete=True)
+        if status == 'successful':
+            return jsonify({'status': 'user deleted successful'})
+        elif status == 'unable to delete admin':
+            return jsonify({'status': status})
+        else:
+            return jsonify({'status': 'not a user'})
+
+
 @app.route('/payment', methods=['GET', 'POST'])
+@login_required
 def payment():
     return render_template('payment.html')
 

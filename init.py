@@ -84,18 +84,30 @@ def get_allusers():
     finally: session.close()
     
 
-def updateUser(username, status):
+def updateUser(username, status='', delete=False):
     session = Session()
-    newStatus = 'active' if status == 'deactivated' else 'deactivated'
-    try: 
-        userData = session.query(Users).filter_by(name=username).first()
-        if userData:
-            userData.status = newStatus
-            session.commit()
-            return 'successful'
-    except Exception as e:
-        return e
-    finally: session.close()
+    if delete == True:
+        user_to_delete = session.query(Users).filter_by(name=username).first()
+        if user_to_delete:
+            if user_to_delete.status == 'Admin':
+                return 'unable to delete admin'
+            else:
+                session.delete(user_to_delete)
+                session.commit()
+                return 'successful'
+        else:
+            return 'user not found'
+    elif delete == False:
+        newStatus = 'active' if status == 'deactivated' else 'deactivated'
+        try: 
+            userData = session.query(Users).filter_by(name=username).first()
+            if userData:
+                userData.status = newStatus
+                session.commit()
+                return 'successful'
+        except Exception as e:
+            return e
+        finally: session.close()
 
 
 

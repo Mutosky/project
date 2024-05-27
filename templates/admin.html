@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.v1.css')}}">
     <title>Admin</title>
 </head>
 
@@ -34,7 +34,6 @@
     </div>
     <div class="container" style="background-image: url({{url_for('static', filename='background.jpg')}});">
         <div class="search-barcon">
-            <h1 id="Admin" class="admin">Admin name</h1>
             <form action="" class="search-bar">
                 <input type="text" id="search-input" placeholder="search users">
                 <button type="button">
@@ -52,19 +51,32 @@
         const respond = await fetch('/get_users');
         const data = await respond.json();
         const users = data['users'];
-        const adminName = document.getElementById('Admin')
-        adminName.innerHTML = data['admin']
         const userList = document.getElementById('userList');
         userList.innerHTML = '';
         users.forEach(user => {
             const li = document.createElement('li');
             const button = document.createElement('button');
+            const Dbutton = document.createElement('button');
+            Dbutton.textContent = 'delete';
             button.textContent = user.status === 'active' ? 'deactivate' : 'activate';
+            Dbutton.addEventListener('click', () => deleteUser(user.name))
             button.addEventListener('click', () => updateStatus(user.name, user.status));
             li.textContent = user.name;
             li.appendChild(button);
+            li.appendChild(Dbutton)
             userList.appendChild(li);
         });
+    }
+    async function deleteUser(username) {
+        const respond = await fetch('/deleteUser', {
+            method: 'DELETE',
+            body: JSON.stringify({name: username}),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await respond.json();
+        alert(data['status'])
+
+        displayUser();
     }
 
     displayUser();
@@ -97,7 +109,8 @@
         }
     }
 
-    document.getElementById('search-input').addEventListener('input', filtersUser)
+    document.getElementById('search-input').addEventListener('input', filtersUser);
 </script>
+<script src="{{url_for('static', filename='main.v1.js')}}"></script>
 
 </html>

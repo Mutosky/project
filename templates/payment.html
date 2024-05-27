@@ -4,27 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/styles.v1.css')}}">
     <title>payment</title>
 </head>
 <body>
     <div class="navbar">
-        <h1 class="displayname">username</h1>
-        <div class="toggle-btn" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="userss">
+            <h1 class="displayname">SmartStake</h1>
         </div>
-        <div class="menu">
-            <ul>
-                <li><a href="{{url_for('home')}}">Home</a></li>
-                {% if current_user.is_authenticated %}
-                <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
-                <li><a class="log" href="{{url_for('logout')}}">logout</a></li>
-                {% else %}
-                <li><a class="log" href="{{url_for('login')}}">login</a></li>
-                {% endif %}
-            </ul>
+        <div class="innerMain">
+            <div class="toggle-btn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
+                    <li><a class="log" href="{{url_for('logout')}}">logout</a></li>
+                    {% else %}
+                    <li><a class="log" href="{{url_for('login')}}">login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </div>
    
@@ -41,5 +45,5 @@
     </div>
 </div>
 </body>
-<script src="{{url_for('static', filename='main.js')}}"></script>
+<script src="{{url_for('static', filename='main.v1.js')}}"></script>
 </html>

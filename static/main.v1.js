@@ -92,7 +92,15 @@ function signIn(){
             method: 'POST',
             body: JSON.stringify({name: username, pass: password}),
             headers: {'content-Type': 'application/json'}
-        });
+        })
+        .then(respond => respond.json())
+        .then(data => {
+            if(data.redirect){
+                window.location.href = data.redirect;
+            } else if(data.error){
+                alert(data.error);
+            }
+        })
     } else {
         alert('please input your username and password')
     }
@@ -115,7 +123,15 @@ function signUp(){
                 method: 'POST',
                 body: JSON.stringify({name: username, pass: password}),
                 headers: {'content-type': 'application/json'}
-            });
+            })
+            .then(respond => respond.json())
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
 
         } else {
             alert('password does not match')

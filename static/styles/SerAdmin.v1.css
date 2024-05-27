@@ -111,6 +111,11 @@ body{
     flex-direction: column;
     align-items: center;
     margin-top: 50px;
+    background-color: aliceblue;
+    border-radius: 20px 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
+    width: 80%;
+    align-self: center;
 }
 .tool {
     width: 90%;
@@ -119,12 +124,12 @@ body{
     margin-bottom: 40px;
     padding: 5px 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 .Htext {
 
     color: black;
-    font-size: 40px;
+    font-size: 30px;
         padding: 0px 50px;
         font-family: 'Open Sans',
             Helvetica,
@@ -146,35 +151,41 @@ body{
     text-align: center;
 }
 #toolvideo{
-    width: 30%;
-    height: 30%;
+    width: 400px;
+    height: 200px;
     object-fit: cover;
     pointer-events: none;
     border-radius: 10px 10px;
 }
-.content {
-    margin: 10px 20px;
-    display: flex;
-    flex-direction: row;
+#toolvideo2 {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    pointer-events: none;
+    border-radius: 10px 10px;
 }
+
 
 .content {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
     margin-top: 30px;
+    align-items: center;
+    justify-content: center;
 }
 .content2 {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-top: 30px;
+    align-items: center;
+    justify-content: center;
 }
 .content video {
     width: 50%;
 }
 .content p {
     width: 50%;
-    padding-left: -10px;
-    padding-right: -10px;
+    text-align: left;
 }
 .content2 video {
     width: 50%;
@@ -186,13 +197,20 @@ body{
 
 
 .content img{
-    width: 400px;
+    width: 200px;
     height: 400px;
 }
 
 .innertext{
     border-bottom: solid black 2px;
     text-align: left;
+}
+
+.coverSS{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
 
@@ -269,7 +287,7 @@ body{
 }
 
 .users {
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: column;
 }
@@ -380,7 +398,7 @@ body{
             display: flex;
             flex-direction: column;
             position: absolute;
-            background-color: #ffffff7f;
+            background-color: #000000b0;
             box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.421), 0 6px 20px 0 rgba(255, 255, 255, 0.421);
             border-radius: 5px 5px;
             width: 80%;
