@@ -175,41 +175,59 @@ function textDisplay(teamHome, teamAway){
 
 }
 
-function similarOppponet(name, datas){
-    const opponentNameL = 'oppoName';
-    const homeTeamDate = document.getElementById('homeTD');
-    const homeTeamOutcome = document.getElementById('homeTO');
-    const awayTeamDate = document.getElementById('awayTD');
-    const awayTeamOutcome = document.getElementById('awayTO');
+function similarOppponet(datas){
+    const opponentNameL = document.getElementById('oppoName');
     let OD  = datas['opponents']['data']; 
 
-    listDisplay(opponentNameL, name);
-
-    homeTeamDate.innerHTML = '';
-    homeTeamOutcome.innerHTML = '';
-    awayTeamDate.innerHTML = '';
-    awayTeamOutcome.innerHTML = '';
-
+    opponentNameL.innerHTML = '';
     OD.forEach(data => {
-        const li1 = document.createElement('li');
-        const li2 = document.createElement('li');
-        const li3 = document.createElement('li');
-        const li4 = document.createElement('li');
+        const button = document.createElement('button');
+        const list = document.createElement('li')
+        const h11 = document.createElement('h2');
+        const h12 = document.createElement('h2');
+        const h13 = document.createElement('h2');
+        const h14 = document.createElement('h2');
 
-        li1.textContent = data.team1Date;
-        homeTeamDate.appendChild(li1);
-        li2.textContent = data.team1Outcome;
-        homeTeamOutcome.appendChild(li2)
-        li3.textContent = data.team2Date;
-        awayTeamDate.appendChild(li3)
-        li4.textContent = data.team2Outcome;
-        awayTeamOutcome.appendChild(li4)
+        button.textContent = data.name;
+        button.addEventListener('click', () => piedatachange(OD, datas, data.name))
+        h11.textContent = data.team1Date;
+        h12.textContent = data.team1Outcome;
+        h13.textContent = data.team2Date;
+        h14.textContent = data.team2Outcome;
+
+        list.appendChild(button);
+        list.appendChild(h11);
+        list.appendChild(h12);
+        list.appendChild(h13);
+        list.appendChild(h14);
+        opponentNameL.appendChild(list)
 
 
     })
 
     pieChart('win', 'loss', 'draw', datas['teamOne']['win'][0] * 100, datas['teamOne']['loss'][0] * 100, datas['teamOne']['draw'][0] * 100, 'homeTeamSO');
     pieChart('win', 'loss', 'draw', datas['teamTwo']['win'][0] * 100, datas['teamTwo']['loss'][0] * 100, datas['teamTwo']['draw'][0] * 100, 'awayTeamSO');
+}
+
+function piedatachange(OD, datas, name){
+    console.log(OD.name);
+    if (name === OD[0].name){
+        pieChart('win', 'loss', 'draw', datas['teamOne']['win'][0] * 100, datas['teamOne']['loss'][0] * 100, datas['teamOne']['draw'][0] * 100, 'homeTeamSO');
+        pieChart('win', 'loss', 'draw', datas['teamTwo']['win'][0] * 100, datas['teamTwo']['loss'][0] * 100, datas['teamTwo']['draw'][0] * 100, 'awayTeamSO');
+    } else if (name === OD[1].name) {
+        pieChart('win', 'loss', 'draw', datas['teamOne']['win'][1] * 100, datas['teamOne']['loss'][1] * 100, datas['teamOne']['draw'][1] * 100, 'homeTeamSO');
+        pieChart('win', 'loss', 'draw', datas['teamTwo']['win'][1] * 100, datas['teamTwo']['loss'][1] * 100, datas['teamTwo']['draw'][1] * 100, 'awayTeamSO');
+    } else if (name === OD[2].name) {
+        pieChart('win', 'loss', 'draw', datas['teamOne']['win'][2] * 100, datas['teamOne']['loss'][2] * 100, datas['teamOne']['draw'][2] * 100, 'homeTeamSO');
+        pieChart('win', 'loss', 'draw', datas['teamTwo']['win'][2] * 100, datas['teamTwo']['loss'][2] * 100, datas['teamTwo']['draw'][2] * 100, 'awayTeamSO');
+    } else if (name === OD[3].name) {
+        pieChart('win', 'loss', 'draw', datas['teamOne']['win'][3] * 100, datas['teamOne']['loss'][0] * 100, datas['teamOne']['draw'][3] * 100, 'homeTeamSO');
+        pieChart('win', 'loss', 'draw', datas['teamTwo']['win'][3] * 100, datas['teamTwo']['loss'][0] * 100, datas['teamTwo']['draw'][3] * 100, 'awayTeamSO');
+    } else if (name === OD[4].name) {
+        pieChart('win', 'loss', 'draw', datas['teamOne']['win'][4] * 100, datas['teamOne']['loss'][0] * 100, datas['teamOne']['draw'][4] * 100, 'homeTeamSO');
+        pieChart('win', 'loss', 'draw', datas['teamTwo']['win'][4] * 100, datas['teamTwo']['loss'][0] * 100, datas['teamTwo']['draw'][4] * 100, 'awayTeamSO');
+    } 
+
 }
 
 
@@ -254,7 +272,6 @@ async function getSelectedTeams(){
                 const homeDates = homeData['date']
                 const dates = last5MatchHome['date'];
                 const dates2 = last5MatchAway['date'];
-                const similarOPP = jsonData['similarOpponent']['opponents']['name'];
                 const similarOD = jsonData['similarOpponent'];
 
 
@@ -315,7 +332,7 @@ async function getSelectedTeams(){
                 listDisplay('awayLFList2', last5MatchAway['Outcome']);
                 listDisplay('awayLFList3', dates2);
 
-                similarOppponet(similarOPP, similarOD);
+                similarOppponet(similarOD);
 
                 loading.innerHTML='completed!';
 

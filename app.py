@@ -1,10 +1,9 @@
-from init import flaskinit, teams, add_user, login_users, get_allusers, get_user, updateUser, authAdmin
+from init import app, teams, add_user, login_users, get_allusers, get_user, updateUser, authAdmin
 from flask import request, jsonify, render_template, redirect, url_for
-from flask_login import login_required, login_user, logout_user, UserMixin, LoginManager
+from flask_login import login_required, login_user, logout_user, UserMixin, LoginManager, current_user
 import requests
 from datetime import date
 
-app = flaskinit()
 
 login_manager = LoginManager()
 login_manager.init_app(app=app)
@@ -56,12 +55,11 @@ def footballanalysis():
             json = {'team1': team1id, 'team2': team2id}
             json2 = {'team1': team2id}
 
-
-            H2Hdata = requests.post(url=urlHead2Head, json=json, timeout=10)
-            PFMdata = requests.post(url=urlPastFiveMatch, json=json, timeout=10)
-            PFM2data = requests.post(url=urlPastFiveMatch, json=json2, timeout=10)
-            SMOdata = requests.post(url=urlSimilarOpponent, json=json, timeout=10)
-            HAGdata = requests.post(url=urlHomeAdvantages, json=json, timeout=10)
+            H2Hdata = requests.post(url=urlHead2Head, json=json)
+            PFMdata = requests.post(url=urlPastFiveMatch, json=json)
+            PFM2data = requests.post(url=urlPastFiveMatch, json=json2)
+            SMOdata = requests.post(url=urlSimilarOpponent, json=json)
+            HAGdata = requests.post(url=urlHomeAdvantages, json=json)
 
             probability = H2Hdata.json()['datalist']
             outcome = H2Hdata.json()['match_outcome']
@@ -88,15 +86,14 @@ def footballanalysis():
             win4 = SMOdata.json()['team2']['win']
             loss4 = SMOdata.json()['team2']['loss']
             draw4 = SMOdata.json()['team2']['draw']
-            similarTeams = SMOdata.json()['opponent']['name']
-            datalist = SMOdata.json()['opponent']['date']
+            datalist = SMOdata.json()['opponent']['data']
 
             homeWin = HAGdata.json()['win']
             homeLoss = HAGdata.json()['loss']
             homeDraw = HAGdata.json()['draw']
             eventDate = HAGdata.json()['date']
             homeOutcome = HAGdata.json()['outcome']
-            opponent = HAGdata.json()['date']
+            opponent = HAGdata.json()['opponent']
 
 
             return jsonify({'H2H_data': {'last_match_probability': probability, 'outcome': outcome, 'date': dates, 'team1': team1, 'team2': team2},
@@ -105,7 +102,7 @@ def footballanalysis():
                             'homeAdvange': {'win': homeWin, 'loss': homeLoss, 'draw': homeDraw, 'date': eventDate, 'match_outcome': homeOutcome, 'opponent': opponent},
                             'similarOpponent': {'teamOne': {'win': win3, 'loss': loss3, 'draw': draw3},
                                                 'teamTwo': {'win': win4, 'loss': loss4, 'draw': draw4},
-                                                'opponents': {'name': similarTeams, 'data': datalist}}
+                                                'opponents': {'data': datalist}}
                             })
         else:
             return jsonify({'error': 'not data found'})
@@ -159,7 +156,7 @@ def register():
             if code == 'successful':
                 user= User(username)
                 login_user(user=user)
-                return jsonify({'redirect': url_for('payment')})
+                return jsonify({'redirect': url_for('home')})
             else:
                 return jsonify({'error': 'internal error try again later'})
     return render_template('register.html')
@@ -186,7 +183,7 @@ def upadate():
         username = data['name']
         status = data['status']
         update = updateUser(username=username, status=status)
-        if update == 'succesful':
+        if update == 'successful':
             return jsonify({'status': 'users status has been changed successfully'})
         else: return jsonify({'status': 'user not found'})
     

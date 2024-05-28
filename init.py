@@ -1,8 +1,11 @@
 from sqlalchemy import create_engine, Column, Float, String, Integer, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os
+from dotenv import load_dotenv
 from flask import Flask
 
+load_dotenv()
 
 teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle United": "3100",
          "Sheffield United": "3074", "Lens": "3821", "AFC Bournemouth": "3071", "Tottenham Hotspur": "164", "Everton": "3073", "Monaco": "3817",
@@ -21,16 +24,15 @@ teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle U
          "Cacereño": "6805", "Celtic": "127", "Shakhtar Donetsk": "78", "Eintracht Frankfurt": "3945", "América": "284", "Levante": "7259", "Alcoyano": "7249",
          "Bayern Munich": "72"}
 
+dbPassword = os.getenv('PASSWORD')
+secretKey = os.getenv('SECRET_KEY')
 
-def flaskinit():
-    app = Flask(__name__)
-    app.config['SECRET_KEY'] = "football-site-key"
-    return app
+app = Flask(__name__)
+app.config['SECRET_KEY'] = secretKey
 
 
-engine = create_engine('sqlite:///database.db',
-                       connect_args={"check_same_thread": False})
-Session = sessionmaker(bind=engine)
+engine = create_engine(f'postgresql://default:{dbPassword}@ep-wispy-waterfall-a4h1vshm.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require')
+Session = sessionmaker(autoflush=False, bind=engine)
 Base = declarative_base()
 
 class Users(Base):
@@ -107,7 +109,7 @@ def updateUser(username, status='', delete=False):
                 return 'successful'
         except Exception as e:
             return e
-        finally: session.close()
+    session.close()
 
 
 
@@ -134,7 +136,7 @@ def authAdmin(name, password):
                     return 'successful'
             else: return None
         except Exception as e:
-            print('error in try')
+            print(f'error in try{e}')
             return f'error {e}'
         finally: session.close()
                 
