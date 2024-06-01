@@ -43,10 +43,6 @@ def geetin(data):
 @app.route('/footballanalysis', methods=['GET', 'POST'])
 @login_required
 def footballanalysis():
-    urlPastFiveMatch = 'http://fpsapi.pythonanywhere.com/pastfivematch'
-    urlHead2Head = 'http://fpsapi.pythonanywhere.com/Head2Head'
-    urlSimilarOpponent = 'http://fpsapi.pythonanywhere.com/similaropponent'
-    urlHomeAdvantages = 'http://fpsapi.pythonanywhere.com/homeadvantage'
     if request.method == 'POST':
         data = request.get_json()
         if "team1" and "team2" in data:                
@@ -55,50 +51,104 @@ def footballanalysis():
             json = {'team1': team1id, 'team2': team2id}
             json2 = {'team1': team2id}
 
-            H2Hdata = requests.post(url=urlHead2Head, json=json)
-            PFMdata = requests.post(url=urlPastFiveMatch, json=json)
-            PFM2data = requests.post(url=urlPastFiveMatch, json=json2)
-            SMOdata = requests.post(url=urlSimilarOpponent, json=json)
-            HAGdata = requests.post(url=urlHomeAdvantages, json=json)
+            try: 
+                url = 'http://fpsapi.pythonanywhere.com/pastfivematch'
+                PFMdata = requests.post(url=url, json=json, timeout=10)
+                if PFMdata.status_code == 200:
+                    win1 = PFMdata.json()['win']
+                    loss1 = PFMdata.json()['loss']
+                    draw1 = PFMdata.json()['draw']
+                    team1OpponentName = PFMdata.json()['opponent']
+                    team1MatchOutcome = PFMdata.json()['outcome']
+                    team1MatchDate = PFMdata.json()['date']
+                else:
+                    print(PFMdata.status_code)
+            except TimeoutError as e:
+                print(e)
 
-            probability = H2Hdata.json()['datalist']
-            outcome = H2Hdata.json()['match_outcome']
-            dates = H2Hdata.json()['event_date']
-            team1 = H2Hdata.json()['team1_id']
-            team2 = H2Hdata.json()['team2_id']
+            try:
+                url2 = 'http://fpsapi.pythonanywhere.com/similaropponent'
+                SMOdata = requests.post(url=url2, json=json, timeout=10)
+                if SMOdata.status_code == 200:
+                    print(SMOdata.json())
 
-            win1 = PFMdata.json()['win']
-            loss1 = PFMdata.json()['loss']
-            draw1 = PFMdata.json()['draw']
-            team1OpponentName = PFMdata.json()['opponent']
-            team1MatchOutcome = PFMdata.json()['outcome']
-            team1MatchDate = PFMdata.json()['date']
-            win2 = PFM2data.json()['win']
-            loss2 = PFM2data.json()['loss']
-            draw2 = PFM2data.json()['draw']
-            team2OpponentName = PFM2data.json()['opponent']
-            team2MatchOutcome = PFM2data.json()['outcome']
-            team2MatchDate = PFM2data.json()['date']
+                    win3 = SMOdata.json()['team1']['win']
+                    loss3 = SMOdata.json()['team1']['loss']
+                    draw3 = SMOdata.json()['team1']['draw']
+                    win4 = SMOdata.json()['team2']['win']
+                    loss4 = SMOdata.json()['team2']['loss']
+                    draw4 = SMOdata.json()['team2']['draw']
+                    datalist = SMOdata.json()['opponent']['data']
+                else:
+                    print(SMOdata.status_code)
+            except TimeoutError as e:
+                print(e)
+            
+            try:
+                url3 = 'http://fpsapi.pythonanywhere.com/homeadvantage'
+                HAGdata = requests.post(url=url3, json=json, timeout=10)
+                if HAGdata.status_code == 200:
+                    print(HAGdata.json())
 
-            win3 = SMOdata.json()['team1']['win']
-            loss3 = SMOdata.json()['team1']['loss']
-            draw3 = SMOdata.json()['team1']['draw']
-            win4 = SMOdata.json()['team2']['win']
-            loss4 = SMOdata.json()['team2']['loss']
-            draw4 = SMOdata.json()['team2']['draw']
-            datalist = SMOdata.json()['opponent']['data']
+                    homeWin = HAGdata.json()['win']
+                    homeLoss = HAGdata.json()['loss']
+                    homeDraw = HAGdata.json()['draw']
+                    eventDate = HAGdata.json()['date']
+                    homeOutcome = HAGdata.json()['outcome']
+                    opponent = HAGdata.json()['opponent']
+                else:
+                    print(HAGdata.status_code)
+            except TimeoutError as e:
+                print(e)
+            
+            try:
+                url = 'http://fpsapi.pythonanywhere.com/pastfivematch'
+                PFM2data = requests.post(url=url, json=json2, timeout=10)
+                if PFM2data.status_code == 200:
+                    print(PFM2data.json())
 
-            homeWin = HAGdata.json()['win']
-            homeLoss = HAGdata.json()['loss']
-            homeDraw = HAGdata.json()['draw']
-            eventDate = HAGdata.json()['date']
-            homeOutcome = HAGdata.json()['outcome']
-            opponent = HAGdata.json()['opponent']
+                    win2 = PFM2data.json()['win']
+                    loss2 = PFM2data.json()['loss']
+                    draw2 = PFM2data.json()['draw']
+                    team2OpponentName = PFM2data.json()['opponent']
+                    team2MatchOutcome = PFM2data.json()['outcome']
+                    team2MatchDate = PFM2data.json()['date']
+                else:
+                    print(PFMdata.status_code)
+            except TimeoutError as e:
+                print(e)
+
+            try:
+                url = 'http://fpsapi.pythonanywhere.com/Head2Head'
+                H2Hdata = requests.post(url=url, json=json, timeout=10)
+                if H2Hdata.status_code == 200:
+                    print(H2Hdata.json())
+
+                    probability = H2Hdata.json()['datalist']
+                    outcome = H2Hdata.json()['match_outcome']
+                    dates = H2Hdata.json()['event_date']
+                    team1 = H2Hdata.json()['team1_id']
+                    team2 = H2Hdata.json()['team2_id']
+                else:
+                    print(H2Hdata.status_code)
+            except Exception as e:
+                if e:
+                    print('error')
+                    probability = 'None'
+                    outcome = 'None'
+                    dates = 'None'
+                    team1 = 'None'
+                    team2 = 'None'
+                
+
+                
+
+                
 
 
             return jsonify({'H2H_data': {'last_match_probability': probability, 'outcome': outcome, 'date': dates, 'team1': team1, 'team2': team2},
                             'Lastfivematchdata': {'HomeTeam': {'win': win1, 'loss': loss1, 'draw': draw1, 'opponent': team1OpponentName, 'Outcome': team1MatchOutcome, 'date': team1MatchDate},
-                                                  'AwayTeam': {'win': win2, 'loss': loss2, 'draw': draw2, 'opponent': team2OpponentName, 'Outcome': team2MatchOutcome, 'date': team2MatchDate}},
+                                                'AwayTeam': {'win': win2, 'loss': loss2, 'draw': draw2, 'opponent': team2OpponentName, 'Outcome': team2MatchOutcome, 'date': team2MatchDate}},
                             'homeAdvange': {'win': homeWin, 'loss': homeLoss, 'draw': homeDraw, 'date': eventDate, 'match_outcome': homeOutcome, 'opponent': opponent},
                             'similarOpponent': {'teamOne': {'win': win3, 'loss': loss3, 'draw': draw3},
                                                 'teamTwo': {'win': win4, 'loss': loss4, 'draw': draw4},
@@ -106,8 +156,11 @@ def footballanalysis():
                             })
         else:
             return jsonify({'error': 'not data found'})
-                
     return render_template('footballanalysis.html')
+
+
+
+
 
 
 

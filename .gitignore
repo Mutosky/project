@@ -8,3 +8,4 @@ my-lambda-package/
 my-lambda-package.zip
 __pycache__/
 unusedFiles/
+test.js

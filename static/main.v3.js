@@ -230,6 +230,24 @@ function piedatachange(OD, datas, name){
 
 }
 
+function displayH2H(data){
+    if (data['last_match_probability'] === 'None'){
+        let displayid1 = 'date-list';
+        let displayid2 = 'outcome-list';
+        listDisplay(displayid1, ['no', 'data', 'found']);
+        listDisplay(displayid2, ['having', 'problem', 'getting', 'H2H data']);
+    } else{
+        const outcome = data['outcome'];
+        const h2hData = data['last_match_probability'];
+        const date = data['date'];
+        pieChart('draw', 'Home', 'Away', h2hData[2] * 100, h2hData[1] * 100, h2hData[0] * 100, 'chart-container');
+        let displayid1 = 'date-list';
+        let displayid2 = 'outcome-list';
+        listDisplay(displayid1, date);
+        listDisplay(displayid2, outcome);
+    }
+}
+
 
 async function getSelectedTeams(){
     const throbber = document.getElementById('throbber-overlay');
@@ -241,28 +259,24 @@ async function getSelectedTeams(){
     
     const team1Selected = selectedTeam1.value;
     const team2Selected = selectedTeam2.value;
-    loading.innerHTML = 'loadin..';
+    loading.innerHTML = 'loading..';
     if (team1Selected === team2Selected){
         alert('select two different teams');
     } else {
         loading.innerHTML = 'loading...';
         if (team1Selected && team2Selected) {
             throbber.style.display = 'block';
+            loading.innerHTML = 'collecting data....';
             try {
                 const response = await fetch('/footballanalysis', {
                     method: 'POST',
                     body: JSON.stringify({ team1: team1Selected, team2: team2Selected }),
                     headers: { 'Content-Type': 'application/json' }
                 });
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
+
                 
-                loading.innerHTML='collecting data....';
                 const jsonData = await response.json();
-                const h2hData = jsonData['H2H_data']['last_match_probability'];
-                const outcome = jsonData['H2H_data']['outcome'];
-                const date = jsonData['H2H_data']['date'];
+                const h2hData = jsonData['H2H_data'];
                 const last5MatchAway = jsonData['Lastfivematchdata']['AwayTeam'];
                 const last5MatchHome = jsonData['Lastfivematchdata']['HomeTeam'];
                 const homeData = jsonData['homeAdvange']
@@ -298,9 +312,10 @@ async function getSelectedTeams(){
                     'Id': 'homeAdata'
                 }
 
+                displayH2H(h2hData);
+
 
                 loading.innerHTML='displaying data';
-                pieChart('draw', 'Home', 'Away', h2hData[2] * 100, h2hData[1] * 100, h2hData[0] * 100, 'chart-container');
                 lineChart(dates[0], dates[1], dates[2], dates[3], dates[4], homeTeamData['win'], homeTeamData['loss'], homeTeamData['draw'], homeTeamData['Id']);
                 lineChart(dates2[0], dates2[1], dates2[2], dates2[3], dates2[4], awayTeamData['win'], awayTeamData['loss'], awayTeamData['draw'], awayTeamData['Id']);
                 lineChart(homeDates[0], homeDates[1], homeDates[2], homeDates[3], homeDates[4], homeAdvantage['win'], homeAdvantage['loss'], homeAdvantage['draw'], homeAdvantage['Id']);
@@ -311,14 +326,10 @@ async function getSelectedTeams(){
                 textDisplay(jsonData['H2H_data']['team1'][0], jsonData['H2H_data']['team2'][0]);
 
 
-                let displayid1 = 'date-list';
-                let displayid2 = 'outcome-list';
                 let displayid3 = 'homeAList';
                 let displayid4 = 'homeAListB';
                 let displayid5 = 'homeAListC';
 
-                listDisplay(displayid1, date);
-                listDisplay(displayid2, outcome);
                 listDisplay(displayid3, datesadvan);
                 listDisplay(displayid4, outcomeadvan);
                 listDisplay(displayid5, opponentL);

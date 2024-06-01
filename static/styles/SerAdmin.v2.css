@@ -1,3 +1,4 @@
+
 body{
     color: white;
     margin: 0;
@@ -210,7 +211,6 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
 }
 
 
@@ -348,7 +348,18 @@ body{
     background-color: #000000;
     margin-bottom: 5px;
     border-radius: 3px;
+    transition: 1s;
 }
+.toggle-btn:hover span:nth-child(1){
+    transform: translateY(-8px) rotate(45deg);
+}
+.toggle-btn:hover span:nth-child(3) {
+    transform: translateY(-15px) rotate(-45deg);
+}
+.toggle-btn:hover span:nth-child(2) {
+    display: none;
+}
+
 
 
 
@@ -374,11 +385,9 @@ body{
     padding: 10px;
     color: white;
 }
-
-.log{
-    width: 20px;
-    height: 3px;
-    background-color: rgb(0, 0, 0);
+.menu ul li :hover {
+    background-color: azure;
+    color: black;
     border-radius: 10px 10px;
 }
 
@@ -408,7 +417,8 @@ body{
         .menu ul {
             margin: 0;
             padding: 10px 10px;
-    
+            width: 100%;
+
         }
     
         .menu ul li {
@@ -416,10 +426,13 @@ body{
             padding: 10px 10px;
             color: white;
             cursor: pointer;
+            width: 100%;
+            max-width: 100%;
         }
     
         .menu ul li :hover {
-            border-bottom: solid black 2px;
+            background-color: azure;
+            color: black;
         }
 
 
