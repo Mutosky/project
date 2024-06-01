@@ -323,7 +323,7 @@ async function getSelectedTeams(){
                 pieChart('win', 'loss', 'draw', homeTeamData['win'][0] * 100, homeTeamData['loss'][0] * 100, homeTeamData['draw'][0] * 100, 'bar-container');
                 pieChart('win', 'loss', 'draw', awayTeamData['win'][0] * 100, awayTeamData['loss'][0] * 100, awayTeamData['draw'][0] * 100, 'bar-containers');
 
-                textDisplay(jsonData['H2H_data']['team1'][0], jsonData['H2H_data']['team2'][0]);
+                textDisplay(team1Selected, team2Selected);
 
 
                 let displayid3 = 'homeAList';
