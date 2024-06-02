@@ -303,20 +303,6 @@ body {
 
 
 
-.navbar
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -411,17 +397,6 @@ body {
     margin-bottom: 5px;
     border-radius: 3px;
     transition: 1s;
-}
-.toggle-btn:hover span:nth-child(1) {
-    transform: translateY(-8px) rotate(45deg);
-}
-
-.toggle-btn:hover span:nth-child(3) {
-    transform: translateY(-15px) rotate(-45deg);
-}
-
-.toggle-btn:hover span:nth-child(2) {
-    display: none;
 }
 
 

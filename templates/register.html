@@ -64,6 +64,61 @@
             document.querySelector('.cont').classList.toggle('s--signup');
         });
     </script>
-    <script src="{{url_for('static', filename='main.v4.js')}}"></script>
+    <script>
+        function signIn() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                fetch('/login', {
+                    method: 'POST',
+                    body: JSON.stringify({ name: username, pass: password }),
+                    headers: { 'content-Type': 'application/json' }
+                })
+                    .then(respond => respond.json())
+                    .then(data => {
+                        if (data.redirect) {
+                            window.location.href = data.redirect;
+                        } else if (data.error) {
+                            alert(data.error);
+                        }
+                    })
+            } else {
+                alert('please input your username and password')
+            }
+
+        }
+
+
+        function signUp() {
+            const username = document.getElementById('username-signup').value;
+            const password = document.getElementById('password-signup').value;
+            const conPassword = document.getElementById('conpassword-signup').value;
+
+            if (username && password && conPassword) {
+                if (password === conPassword) {
+                    fetch('/signup', {
+                        method: 'POST',
+                        body: JSON.stringify({ name: username, pass: password }),
+                        headers: { 'content-type': 'application/json' }
+                    })
+                        .then(respond => respond.json())
+                        .then(data => {
+                            if (data.redirect) {
+                                window.location.href = data.redirect;
+                            } else if (data.error) {
+                                alert(data.error);
+                            }
+                        })
+
+                } else {
+                    alert('password does not match')
+                }
+            } else {
+                alert('please input all information asked')
+            }
+        }
+
+    </script>
 </body>
 </html>
