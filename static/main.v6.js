@@ -106,12 +106,16 @@ function textDisplay(teamHome, teamAway){
     const text2 = document.getElementById('home-lastfive');
     const text3 = document.getElementById('away-lastfive');
     const text4 = document.getElementById('dataLabel');
+    const SMopponentN = document.getElementById('team1opponent');
+    const SMopponentN2 = document.getElementById('team2opponent');
 
     text.innerHTML = `${teamHome} last match`;
     text1.innerHTML = `${teamAway} last match`;
     text2.innerHTML = `${teamHome} last five match`;
     text3.innerHTML = `${teamAway} last five match`;
     text4.innerHTML = `${teamHome} home advantage`;
+    SMopponentN.innerHTML = teamHome;
+    SMopponentN2.innerHTML = teamAway;
 
 }
 
@@ -126,6 +130,7 @@ async function similarOppponet(team1Name, team2Name){
     });
     const datas = await respond.json();
     const opponentNameL = document.getElementById('oppoName');
+
     let OD  = datas['opponent']['data']; 
 
     opponentNameL.innerHTML = '';
@@ -153,7 +158,6 @@ async function similarOppponet(team1Name, team2Name){
 
 
     })
-
     pieChart('win', 'loss', 'draw', datas['team1']['win'][0] * 100, datas['team1']['loss'][0] * 100, datas['team1']['draw'][0] * 100, 'homeTeamSO');
     pieChart('win', 'loss', 'draw', datas['team2']['win'][0] * 100, datas['team2']['loss'][0] * 100, datas['team2']['draw'][0] * 100, 'awayTeamSO');
 }
@@ -298,14 +302,15 @@ async function getSelectedTeams(){
         if (team1Selected && team2Selected) {
             throbber.style.display = 'block';
             loadings(true);
+            textDisplay(team1Selected, team2Selected);
             await displayHAT(team1Selected);
             await displayH2H(team1Selected, team2Selected);
             await displayPFM(team1Selected);
             await similarOppponet(team1Selected, team2Selected);
             await displayPFM2(team2Selected);
-
             loadings(false);
             throbber.style.display = 'none';
+            alert('data received successfully');
         }
     }
 }

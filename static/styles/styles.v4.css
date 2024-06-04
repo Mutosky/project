@@ -48,7 +48,14 @@ body {
 
 .label {
     margin-bottom: 10px;
-    font-size: 24px;
+    font-size: 17px;
+    text-transform: capitalize;
+    padding-left: 20px;
+}
+
+.label2{
+    margin-bottom: 10px;
+    font-size: 22px;
     text-transform: capitalize;
 }
 
@@ -117,6 +124,8 @@ body {
 .team-div {
     padding: 10px 20px;
     width: 50%;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -135,7 +144,7 @@ body {
 }
 
 .line-chart{
-    padding-bottom: 50px;
+    padding-bottom: 10px;
 }
 
 .userss{
@@ -169,6 +178,13 @@ body {
     color: white;
     padding: 10px 20px;
 }
+
+.itemList2 li {
+    font-size: 14px;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+}
 .innerLabel {
     text-transform: uppercase;
     font-size: 20px;
@@ -181,7 +197,6 @@ body {
 }
 
 .homeADataDiv {
-    background-color: rgb(33, 116, 65);
     width: 50%;
     display: flex;
     flex-direction: row;
@@ -192,7 +207,6 @@ body {
  .lineChart {
     padding-top: 10px;
     width: 50%;
-    background-color: rgba(228, 209, 209, 0.841);
     margin-bottom: 20px;
  }
 
@@ -202,7 +216,7 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: rgb(33, 116, 65);
+    background-color: antiquewhite;
     border-radius: 10px 10px 10px 10px;
     margin-top: 60px;
  }
@@ -224,18 +238,22 @@ body {
     margin: 0;
     list-style: none;
 }
+
 .homeADataDiv ul + ul {
     margin-left: 5px;
 }
 .SOpiechart canvas {
-    background-color: rgba(228, 209, 209, 0.841);
+    background-color: rgba(239, 239, 239, 0.835);
     border-radius: 20px 20px;
     margin-top: 20px;
 }
 .homeAdvantage{
     padding-top: 10px;
     padding-bottom: 20px;
-    background-color: rgb(33, 116, 65);
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px 10px 10px 10px;
 }
 
@@ -267,6 +285,13 @@ body {
  }
 
 
+.loadingState{
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    margin-left: -50px;
+}
+
 
 .throbber {
     border: 16px solid #f3f3f3;
@@ -280,7 +305,7 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    margin-left: -40px;
+    margin-left: -45px;
     /* Half of the width */
     margin-top: -40px;
 }
@@ -516,7 +541,11 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
+        justify-content: center;
+        width: 90%;
+        border-radius: 10px 10px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
     .head2head h1 {
         font-size: 20px;
@@ -524,6 +553,10 @@ body {
     }
     .team-div {
         width: 100%;
+        flex-direction: column;
+        padding: 0px 0px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     .log {
         width: 20px;
@@ -546,6 +579,7 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 90%;
     }
 
     .SOpiechart {
@@ -577,5 +611,14 @@ body {
 
     .SOlists li {
         font-size: 10px;
+    }
+    .centerDiv{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    } 
+    .homeAdvantage {
+        flex-direction: column;
     }
 }

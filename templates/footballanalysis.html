@@ -215,6 +215,7 @@
             </div>
         </div>
     </div>
+    <div class="centerDiv">
     <div class="last-fivematch" id="last-fivematch">
         <h1 class="innerLabel">last five match probability</h1>
         <div class="team-div">
@@ -248,32 +249,37 @@
             </div>
         </div>
     </div>
-    <div class="homeAdvantage" style="width: 100%;">
-        <h1 id="dataLabel" class="label">__</h1>
+    </div>
+    <div class="centerDiv">
+    <div class="homeAdvantage" style="width: 90%;">
+        <h1 id="dataLabel" class="label2">__</h1>
         <div class="cover">
         <div class="lineChart">
             <canvas id="homeAdata"></canvas>
         </div>
         <div class="homeADataDiv">
-            <ul id="homeAList" class="itemList"></ul>
-            <ul id="homeAListB" class="itemList"></ul>
-            <ul id="homeAListC" class="itemList"></ul>
+            <ul id="homeAList" class="itemList2"></ul>
+            <ul id="homeAListB" class="itemList2"></ul>
+            <ul id="homeAListC" class="itemList2"></ul>
         </div>
         </div>
     </div>
     <div class="SOsection">
-        <h1 class="label">similar opponent</h1>
+        <h1 class="label2">similar opponent</h1>
         <div class="SOpiechart">
+            <h3 id="team1opponent" class="label2">__</h3>
             <canvas id="homeTeamSO"></canvas>
+            <h3 id="team2opponent" class="label2">__</h3>
             <canvas id="awayTeamSO"></canvas>
         </div>
         <div class="SOlists">
-            <ul id="oppoName" class="itemList"></ul>
+            <ul id="oppoName" class="itemList2"></ul>
         </div>
     </div>
     <div id="throbber-overlay" class="throbber-overlay">
-        <h1 id="loadingState">__</h1>
+        <h1 id="loadingState" class="loadingState">__</h1>
         <div id="throbber" class="throbber"></div>
+    </div>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
