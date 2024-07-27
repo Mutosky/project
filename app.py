@@ -48,7 +48,7 @@ def Head_to_Head():
         url = 'http://fpsapi.pythonanywhere.com/Head2Head'
         json = {'team1': team1, 'team2': team2}
         try:
-            responds = requests.post(url=url, json=json, timeout=10)
+            responds = requests.post(url=url, json=json, timeout=6)
             if responds.status_code == 200:
                 return responds.json()
         except Exception as e:
