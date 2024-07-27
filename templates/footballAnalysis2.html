@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Football Match Analyzer</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'styles/styles.v5.css')}}">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="userss">
+            <h1 class="displayname">SmartStake</h1>
+        </div>
+        <div class="innerMain">
+            <div class="toggle-btn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{url_for('footballanalysis')}}">Club</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional</a></li>
+                    <li><a href="{{url_for('admins')}}">admin</a></li>
+                    <li><a href="{{url_for('logout')}}">logout</a></li>
+                    {% else %}
+                    <li><a href="{{url_for('footballanalysis')}}">Club Analysis</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional Analysis</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1>analysis</h1>
+        <div class="inner">
+            <div class="select_team">
+                <div class="select-T">
+                    <select id="Team1" class="select-item">
+                        <option value="">Home Team</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="Czech Republic">Czech Republic</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="England">England</option>
+                        <option value="Finland">Finland</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="North Macedonia">North Macedonia</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Scotland">Scotland</option>
+                        <option value="Slovakia">Slovakia</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="Wales">Wales</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="vs">
+                <h1>vs</h1>
+            </div>
+            <div class="select_team">
+                <div class="select-T">
+                    <select id="Team2" class="select-item">
+                        <option value="place">Away Team</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="Czech Republic">Czech Republic</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="England">England</option>
+                        <option value="Finland">Finland</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="North Macedonia">North Macedonia</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Scotland">Scotland</option>
+                        <option value="Slovakia">Slovakia</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="Wales">Wales</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button onclick="getSelectedTeams()" id="analyze_team" class="select-button">Start Analysis</button>
+        </div>
+        <div class="note">
+            <p>please ensure: that the home team and away team are correctly selected</p>
+        </div>
+    </div>
+    <div class="head2headin">
+        <h1 class="headerText">Head-to-Head</h1>
+        <div class="H2HdataDiv">
+            <div class="H2Hcharts" id="H2Hcharts">
+            </div>
+            <div class="H2Hdata" id="H2Hdata">
+            </div>
+        </div>
+    </div>
+    <div class="pastfivematchout">
+        <h1 class="headerText">past five match</h1>
+        <div class="PFMdataDiv">
+            <div class="PFMdata" id="homePFM">
+            </div>
+            <div class="PFMdata" id="awayPFM">
+            </div>
+        </div>
+    </div>
+    <div class="placeAdvantageOut">
+        <h1 class="headerText">HOME & AWAY</h1>
+        <div class="conver">
+            <div class="TeamPlacePlay" id="homeAdvantage">
+            </div>
+            <div class="TeamPlacePlay" id="awayAdvantage">
+            </div>
+        </div>
+    </div>
+    <div class="similarOpponentout">
+        <h1 class="headerText">similar opponent</h1>
+        <div id="SMOdata">
+        </div>
+    </div>
+    <div class="finalPredictionOut">
+        <h1 class="headerText">
+            final result
+        </h1>
+        <div class="finalRcover">
+            <div class="teamFR"></div>
+            <div class="teamFR"></div>
+            <div class="teamFR"></div>
+        </div>
+    </div>
+    <div id="throbber-overlay" class="throbber-overlay">
+        <h1 id="loadingState" class="loadingState">__</h1>
+        <div id="throbber" class="throbber"></div>
+    </div>
+</body>
+<script src="{{url_for('static', filename='main.v7.js')}}"></script>
+
+</html>

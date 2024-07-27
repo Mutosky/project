@@ -46,13 +46,14 @@ body{
     height: 40px;
     margin: 0px 50px;
     background-color: rgb(33, 116, 65);
+    color: white;
     border-radius: 50px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
 }
 
 .welcome-message button a{
-    text-decoration: none;
     color: white;
+    text-decoration: none;
 }
 
 .containers{
@@ -107,113 +108,395 @@ body{
     flex-direction: column;
     align-items: right;
 }
-.homesection{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    background-color: aliceblue;
-    border-radius: 20px 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
-    width: 80%;
-    align-self: center;
-}
-.tool {
-    width: 90%;
-    border-radius: 10px 10px;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    padding: 5px 10px;
-    display: flex;
-    flex-direction: row;
-}
+
 .Htext {
-
+    width: 1000px;
     color: black;
-    font-size: 30px;
-        padding: 0px 50px;
-        font-family: 'Open Sans',
-            Helvetica,
-            Arial,
-            sans-serif;
-        text-transform: uppercase;
-    margin: 0;
-    padding: 0;
-
-}
-.homesection p {
-    font-size: 12px;
+    font-size: 25px;
     padding: 0px 50px;
     font-family: 'Open Sans',
         Helvetica,
         Arial,
         sans-serif;
-    color: #000000;
-    text-align: center;
-}
-#toolvideo{
-    width: 400px;
-    height: 200px;
-    object-fit: cover;
-    pointer-events: none;
-    border-radius: 10px 10px;
-}
-#toolvideo2 {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    pointer-events: none;
-    border-radius: 10px 10px;
-}
-
-
-.content {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-    align-items: center;
-    justify-content: center;
-}
-.content2 {
-    display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-    align-items: center;
-    justify-content: center;
-}
-.content video {
-    width: 50%;
-}
-.content p {
-    width: 50%;
-    text-align: left;
-}
-.content2 video {
-    width: 50%;
-}
-
-.content2 p {
-    width: 50%;
-}
-
-
-.content img{
-    width: 200px;
-    height: 400px;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
 }
 
 .innertext{
     border-bottom: solid black 2px;
-    text-align: left;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
 }
 
 .coverSS{
+    margin-top: 10px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.DailyGamesC {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
+    border-radius: 10px 10px;
+    padding: 10px 10px ;
+}
+.divPrediction{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    color: #000000;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.DailyGamesC div h1{
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.DailyGamesC div img{
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+}
+.DailyGamesC button{
+    width: 40%;
+    height: 30px;
+    margin-right: 30px;
+}
+.outcomeDiv{
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.DailyGamesC a{
+    padding-bottom: 10px;
+}
+
+.odds{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.innerOdds {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
+    border-radius: 10px 10px;
+    padding: 10px 10px;
+    width: 39%;
+    margin-bottom: 50px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 
+.innerOdds button{
+    width: 40%;
+    height: 30px;
+    margin-right: 5px;
+}
+
+.divPrediction2 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    color: black;
+    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+}
+.innerOdds div img{
+    width: 20px;
+    height:20px;
+    border-radius: 100%;
+}
+.innerOdds div h1{
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.clickdiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.click{
+    width: 80%;
+    background-color: green;
+    border: solid #000000 1px;
+    color: white;
+    height: 50px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: 5;
+
+}
+.click:hover{
+    width: 70%;
+    height: 40px;
+    background-color: white;
+    color: #000000;
+}
+
+.oddText{
+    margin-right: 20px;
+}
+
+.services{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.servicesInner{
+    margin-top: -20px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 30px;
+}
+.servicesInner div{
+    margin-top: 0px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #d3d3d3;
+    width: 30%;
+    padding: 10px 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.servicesInner div i {
+    font-size: 50px;
+    color: #000000;
+}
+.servicesInner div h2{
+    font-size: 20px;
+    color: #000000;
+    text-transform: uppercase;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+.servicesInner div p{
+    margin-top: -10px;
+    font-size: 14px;
+    font-family: 'Open Sans',
+            Helvetica,
+            Arial,
+            sans-serif;
+    color: #6c6c6c;
+    text-align: center;
+}
+.predictedGames{
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.InnerBoxes{
+    width: 80%;
+    background-color: #d3d3d3;
+    padding: 30px 30px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.InnerBoxes ul{
+    list-style: none;
+    color: #000000;
+    margin-left: -20px;
+    margin-right: -20px;
+}
+.InnerBoxes ul span li{
+    width: 100%;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+    border-bottom: 1px black solid;
+    background-color: #d3d3d3;
+}
+.InnerBoxes ul span{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.InnerBoxes ul li {
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 13px;
+    font-family: 'Open Sans',
+            Helvetica,
+            Arial,
+            sans-serif;
+    margin-bottom: 10px;
+    background-color: #848484;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.selectPage{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: aliceblue;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+
+/* option buttons */
+.optionPage{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.694);
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.innerContents{
+    display: flex;
+    flex-direction: column;     
+}
+
+
+.button1{
+    height: 40px;
+    width: 100px;
+    border-radius: 5px 5px;
+    border: none;
+    color: white;
+    background-color: rgb(33, 116, 65);
+    margin-bottom: 10px;
+
+}
+
+.button1 a{
+    color: white;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+.button1 a:hover{
+    color: #000000;
+    text-decoration: none;
+}
+.button1:hover{
+    border: solid black 2px;
+    background-color: white;
+    color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.progress-container {
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.label {
+    display: inline-block;
+    width: 33%;
+    font-weight: bold;
+    color: white;
+}
+
+.progress-bar {
+    display: flex;
+    height: 20px;
+    margin-top: 10px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #d3d3d3;
+}
+
+.progress {
+    height: 100%;
+}
+
+.win {
+    background-color: green;
+}
+
+.draw {
+    background-color: gray;
+}
+
+.loss {
+    background-color: red;
+}
+
+.ids {
+    width: 50%;
+}
 
 
 
@@ -299,6 +582,7 @@ body{
     background-color: rgba(255, 255, 255, 0.641);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
     margin: 10px;
+    list-style: none;
 }
 
 .users button{
@@ -400,7 +684,7 @@ body{
             background-color: #000000b0;
             box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.421), 0 6px 20px 0 rgba(255, 255, 255, 0.421);
             border-radius: 5px 5px;
-            width: 80%;
+            width: 100%;
             left: 0;
         }
     
@@ -559,6 +843,46 @@ body{
         .content img {
             width: 200px;
             height: 400px;
+        }
+        .DailyGamesC {
+            flex-direction: column;
+        }
+        .odds {
+            flex-direction: column;
+        }
+        .innerOdds {
+            width: 80%;
+            margin-right: 0px;
+        }
+        .DailyGamesC button {
+            height: 40px;
+        }
+        .innerOdds button {
+            height: 40px;
+        }
+        .servicesInner{
+            flex-direction: column;
+        }
+        .servicesInner div{
+            width: 90%;
+            margin-top: 20px;
+        }
+        .InnerBoxes ul li{
+            font-size: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .InnerBoxes ul span li{
+            font-size: 15px;
+        }
+        .Htext{
+            font-size: 20px;
+        }
+        .InnerBoxes u{
+            margin-left: -10px;
+            margin-right: -10px;
         }
 
 }

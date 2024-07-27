@@ -1,11 +1,14 @@
-from sqlalchemy import create_engine, Column, Float, String, Integer, Date
+from sqlalchemy import create_engine, Column, Float, String, Integer, Date, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from datetime import date
+
 import os
 from dotenv import load_dotenv
 from flask import Flask
 
 load_dotenv()
+
 
 teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle United": "3100",
          "Sheffield United": "3074", "Lens": "3821", "AFC Bournemouth": "3071", "Tottenham Hotspur": "164", "Everton": "3073", "Monaco": "3817",
@@ -22,7 +25,9 @@ teams = {"Udinese": " 4984", "FC Porto": "81", "Inter Milan": "79", "Newcastle U
          "Sporting Braga": "156", "Valencia": "7272", "Rayo Vallecano": "7264", "Osasuna": "7269", "Real Sociedad": "153", "Celta Vigo": "7290", "Athletic Bilbao": "7258",
          "Juventus": "96", "Manchester United": "102", "Real Valladolid": "7262", "Liverpool": "84", "Espanyol": "7268", "Elche": "7274", "Al Hilal": "366", "Al Ahly": "585",
          "Cacereño": "6805", "Celtic": "127", "Shakhtar Donetsk": "78", "Eintracht Frankfurt": "3945", "América": "284", "Levante": "7259", "Alcoyano": "7249",
-         "Bayern Munich": "72"}
+         "Bayern Munich": "72", "Italy": "3", "England": "16", "Denmark": "7", "Spain": "19", "Czech Republic": "13", "Ukraine": "12", "Belgium": "6", "Switzerland": "2", 
+         "Germany": "21", "Sweden": "17", "Ukraine": "12", "Croatia": "14", "France": "22", "Netherlands": "10", "Portugal": "23", "Wales": "4", "Austria": "9", "Poland": "18",
+        "Slovakia": "20", "Hungary": "24", "Scotland": "15", "North Macedonia": "11", "Russia": "5", "Finland": "8", "Turkey": "1"}
 
 dbPassword = os.getenv('PASSWORD')
 secretKey = os.getenv('SECRET_KEY')
@@ -35,6 +40,7 @@ engine = create_engine(f'postgresql://default:{dbPassword}@ep-wispy-waterfall-a4
 Session = sessionmaker(autoflush=False, bind=engine)
 Base = declarative_base()
 
+
 class Users(Base):
     __tablename__ = 'users'
     
@@ -44,7 +50,82 @@ class Users(Base):
     status = Column(String, nullable=True)
     dates = Column(Date)
 
+class DailyGames(Base):
+    __tablename__ = 'dailygames'
+
+    id = Column(Integer, primary_key=True)
+    homeTeam = Column(String, nullable=False)
+    awayTeam = Column(String, nullable=False)
+    date = Column(Date, nullable=False)
+    odds = Column(String, nullable=True)
+    inputodds = Column(Integer, nullable=False)
+    oddscolume = Column(String, nullable=False)
+
+
+
 Base.metadata.create_all(engine)
+
+
+
+def checkAvalibleGames():
+    session = Session()
+    try:
+        allGames = session.query(DailyGames).all()
+        return allGames
+    except Exception as e:
+        return e
+    finally:
+        session.close()
+    
+
+def clearGames():
+    session = Session()
+    try:
+        all_games = session.query(DailyGames).all()
+        if all_games:
+            for game in all_games:
+                HomeTeam = game.homeTeam
+                AwayTeam = game.awayTeam
+                game_to_delete = session.query(DailyGames).filter_by(homeTeam=HomeTeam, awayTeam=AwayTeam).first()
+                if game_to_delete:
+                    session.delete(game_to_delete)
+                    session.commit()
+                    return 'game deleted successfully'
+                else: return 'no game found'
+        else: return 'no games to delete'
+    except Exception as e:
+        return e
+    finally:
+        session.close()
+
+
+
+        
+def addGame(HomeTeam, AwayTeam, InputOdds, predictedOutcome, odds=None):
+    session = Session()
+    try:
+        game = session.query(DailyGames).filter_by(homeTeam=HomeTeam, awayTeam=AwayTeam).first()
+        if game:
+            return 'already added'
+        else:
+            if odds == None:
+                session.add(DailyGames(
+                    homeTeam=HomeTeam, awayTeam=AwayTeam, date=date.today(), inputodds=InputOdds))
+                session.commit()
+                return 'successful'
+            else:
+                session.add(DailyGames(homeTeam=HomeTeam, awayTeam=AwayTeam,
+                            date=date.today(), odds=odds, inputodds=InputOdds, oddscolume=predictedOutcome))
+                session.commit()
+                return 'successful'
+                
+    except Exception as e:
+        return e
+    finally:
+        session.close()
+
+
+
 
 
 def add_user(username, password, dates, status='deactivated'):
@@ -140,4 +221,6 @@ def authAdmin(name, password):
             return f'error {e}'
         finally: session.close()
                 
+
     
+

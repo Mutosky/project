@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Football Match Analyzer</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'styles/styles.v5.css')}}">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="userss">
+            <h1 class="displayname">SmartStake</h1>
+        </div>
+        <div class="innerMain">
+            <div class="toggle-btn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu">
+                <ul>
+                <li><a href="{{url_for('home')}}">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li><a href="{{url_for('footballanalysis')}}">Club</a></li>
+                <li><a href="{{url_for('regionalAnalysis')}}">Regional</a></li>
+                <li><a href="{{url_for('admins')}}">admin</a></li>
+                <li><a href="{{url_for('logout')}}">logout</a></li>
+                {% else %}
+                <li><a href="{{url_for('footballanalysis')}}">Club Analysis</a></li>
+                <li><a href="{{url_for('regionalAnalysis')}}">Regional Analysis</a></li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1 id="HomeTeam"></h1>
+        <h1 id="">VS</h1>
+        <h1 id="AwayTeam"></h1>
+    </div>
+    <div class="head2headin">
+        <h1 class="headerText">Head-to-Head</h1>
+        <div class="H2HdataDiv">
+            <div class="H2Hcharts" id="H2Hcharts">
+            </div>
+            <div class="H2Hdata" id="H2Hdata">
+            </div>
+        </div>
+    </div>
+    <div class="pastfivematchout">
+        <h1 class="headerText">past five match</h1>
+        <div class="PFMdataDiv">
+            <div class="PFMdata" id="homePFM">
+            </div>
+            <div class="PFMdata" id="awayPFM">
+            </div>
+        </div>
+    </div>
+    <div class="placeAdvantageOut">
+        <h1 class="headerText">HOME & AWAY</h1>
+        <div class="conver">
+            <div class="TeamPlacePlay" id="homeAdvantage">
+            </div>
+            <div class="TeamPlacePlay" id="awayAdvantage">
+            </div>
+        </div>
+    </div>
+    <div class="similarOpponentout">
+        <h1 class="headerText">similar opponent</h1>
+        <div id="SMOdata">
+        </div>
+    </div>
+    <div class="finalPredictionOut">
+        <h1 class="headerText">
+            final result
+        </h1>
+        <div class="finalRcover">
+            <div class="teamFR"></div>
+            <div class="teamFR"></div>
+            <div class="teamFR"></div>
+        </div>
+    </div>
+    <div id="displayNow" class="displayNow">
+        <h1 id="loadingState" class="loadingState">__</h1>
+        <div id="throbber" class="throbber"></div>
+    </div>
+</body>
+<script src="{{url_for('static', filename='main.v7.js')}}"></script>
+<script>
+    displayData();
+</script>
+</html>

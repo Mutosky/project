@@ -106,6 +106,9 @@
                         .then(data => {
                             if (data.redirect) {
                                 window.location.href = data.redirect;
+                                if(data.alert){
+                                    alert(data.alert)
+                                }
                             } else if (data.error) {
                                 alert(data.error);
                             }

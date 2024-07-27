@@ -1,12 +1,14 @@
-* {
-    overflow-x: hidden;
-}
 body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
-
+.userss {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+}
 .container {
     background-color: rgb(33, 116, 65);
     width: 100%;
@@ -70,191 +72,160 @@ body {
     margin-top: 20px;
     cursor: pointer;
 }
-
-
 .note {
     padding: 20px 40px;
 }
 
-.head2head {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
+.head2headin{
+    margin-top: 30px;
     width: 100%;
-    height: 20%;
-    border-radius: 20px 20px;
-}
-
-.chart {
-    background-color: rgb(233, 233, 233);
-    width: 50%;
-    height: 20%;
-    padding: 10px 20px;
-    border-radius: 20px 0px 0px 20px;
-}
-
-.description {
-    background-color: rgb(33, 116, 65);
-    width: 50%;
-    padding: 10px 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    border-radius: 0px 20px 20px 0px;
-}
-
-.head2head h1{
-    font-size: 24px;
-    text-transform: capitalize;
-}
-
-.description p {
-    font-size: 20px;
-    text-transform: lowercase;
-}
-
-.last-fivematch{
-    background-color: antiquewhite;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    margin-bottom: 60px;
-}
-
-.team-div {
-    padding: 10px 20px;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-
-.bar-chart {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.bar-container{
-    width: 25%;
-}
-
-.bar-container{
-    width: 25%;
-}
-
-.line-chart{
-    padding-bottom: 10px;
-}
-
-.userss{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-}
-
-.paragraph{
-    display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
-}
-
-.paragraph ul{
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.paragraph ul + ul{
-    margin-left: 5px;
-}
-
-.itemList li {
-    font-size: 14px;
-    text-decoration: none;
-    color: white;
-    padding: 10px 20px;
-}
-
-.itemList2 li {
-    font-size: 14px;
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-    padding: 10px 20px;
-}
-.innerLabel {
-    text-transform: uppercase;
-    font-size: 20px;
+    background-color: rgb(232, 227, 227);
+    border-radius: 20px 20px;
     margin-bottom: 30px;
 }
-.cover{
-    display: flex;
-    flex-direction: row;
+.H2HdataDiv{
     width: 100%;
-}
-
-.homeADataDiv {
-    width: 50%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
- .lineChart {
-    padding-top: 10px;
-    width: 50%;
     margin-bottom: 20px;
- }
-
- .SOsection{
+}
+.H2Hcharts{
+    width: 35%;
+    background-color: transparent;
+    padding: 10px 10px;
+}
+.H2Hdata{
+    background-color: rgb(210, 210, 210);
+    padding: 10px 10px;
+    width: 55%;
+    border-radius: 10px;
+}
+.pastfivematchout{
+    background-color: rgb(232, 227, 227);
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: antiquewhite;
-    border-radius: 10px 10px 10px 10px;
-    margin-top: 60px;
- }
-
- .SOpiechart{
-    width: 30%;
     display: flex;
     flex-direction: column;
- }
-
-.SOlists{
-    width: 70%;
+    align-items: center;
+    border-radius: 20px 20px;
+    margin-bottom: 30px;
+}
+.headerText{
+    font-size: 20px;
+    color: black;
+    text-transform: uppercase;
+}
+.PFMdataDiv{
     display: flex;
     flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 20px;
 }
-
-.homeADataDiv ul{
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-
-.homeADataDiv ul + ul {
-    margin-left: 5px;
-}
-.SOpiechart canvas {
-    background-color: rgba(239, 239, 239, 0.835);
-    border-radius: 20px 20px;
-    margin-top: 20px;
-}
-.homeAdvantage{
-    padding-top: 10px;
-    padding-bottom: 20px;
-    background-color: antiquewhite;
+.PFMdata{
+    width: 40%;
+    background-color: rgb(210, 210, 210);
+    padding: 10px 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 10px 10px 10px 10px;
+}
+.placeAdvantageOut{
+    width: 100%;
+    background-color: rgb(232, 227, 227);
+    border-radius: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.conver{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.TeamPlacePlay{
+    width: 40%;
+    background-color: rgb(210, 210, 210);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+    border-radius: 20px;
+    padding: 10px;
+}
+.similarOpponentout{
+    width: 100%;
+    background-color: rgb(232, 227, 227);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px 20px;
+    margin-bottom: 30px;
+}
+#SMOdata{
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.SMOcontain{
+    background-color: rgb(210, 210, 210);
+    width: 30%;
+    border-radius: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+.opponentname{
+    font-size: 20px;
+}
+.teamName{
+    font-size: 15px;
+    margin-left: -100px;
+}
+.finalPredictionOut{
+    width: 100%;
+    background-color: rgb(232, 227, 227);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.finalRcover{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.teamFR{
+    padding: 10px;
+    background-color: rgb(210, 210, 210);
+    width: 25%;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 20px 20px;
 }
 
 
@@ -266,7 +237,20 @@ body {
 
 
 
-
+ .displayNow {
+     color: white;
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: rgb(0, 0, 0);
+     /* Semi-transparent background */
+     z-index: 9999;
+     /* Ensure it's above other content */
+     display: none;
+     /* Hide initially */
+ }
 
 
  .throbber-overlay {
@@ -322,6 +306,62 @@ body {
 
 
 
+
+
+
+
+
+
+
+
+
+.dataDisplay{
+    margin-bottom: 20px;
+}
+.progress-container {
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+}
+.textDiv{
+    width: 90%;
+    text-align: left;
+}
+.textDiv h1{
+    font-size: 10px;
+}
+
+.label {
+    display: inline-block;
+    width: 20%;
+    font-weight: bold;
+    color: black;
+}
+
+.progress-bar {
+    display: flex;
+    height: 20px;
+    margin-top: 10px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #d3d3d3;
+}
+
+.progress {
+    height: 100%;
+}
+
+.win {
+    background-color: green;
+}
+
+.draw {
+    background-color: gray;
+}
+
+.loss {
+    background-color: red;
+}
 
 
 
@@ -470,7 +510,7 @@ body {
         background-color: #000000b0;
         box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.421), 0 6px 20px 0 rgba(255, 255, 255, 0.421);
         border-radius: 5px 5px;
-        width: 80%;
+        width: 100%;
         left: 0;
     }
 
@@ -497,35 +537,7 @@ body {
         align-items: center;
     }
 
-    .head2head {
-        margin-top: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        height: 20%;
-        border-radius: 20px 20px;
-        margin-bottom: 40px;
-    }
-    .chart {
-        background-color: rgb(233, 233, 233);
-        width: 80%;
-        height: 20%;
-        padding: 10px 20px;
-        border-radius: 20px 20px 20px 20px;
-        margin-bottom: 30px;
-    }
 
-    .description {
-        background-color: rgb(33, 116, 65);
-        width: 80%;
-        height: 20%;
-        padding: 10px 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border-radius: 20px 20px 20px 20px;
-    }
     .displayname {
         text-transform: uppercase;
         font-family: Arial, sans-serif;
@@ -537,88 +549,53 @@ body {
         align-items: center;
         padding: 10px 20px;
     }
-    .last-fivematch {
-        display: flex;
+    .H2HdataDiv{
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        width: 90%;
-        border-radius: 10px 10px;
-        padding-top: 20px;
-        padding-bottom: 20px;
     }
-    .head2head h1 {
-        font-size: 20px;
-        text-transform: capitalize;
+    .H2Hcharts{
+        width: 80%;
+
     }
-    .team-div {
-        width: 100%;
+    .H2Hdata{
+        width: 80%;
+        margin-top: 20px;
+    }
+    .PFMdataDiv{
         flex-direction: column;
-        padding: 0px 0px;
-        margin-top: 10px;
+        align-items: center;
+    }
+    .PFMdata{
+        width: 90%;
+        margin-left: 0px;
+        margin-right: 0px;
         margin-bottom: 10px;
     }
-    .log {
-        width: 20px;
-        height: 3px;
-        background-color: transparent;
-    }
-    .cover {
-        display: flex;
-        flex-direction: column;
-    }
-    .homeADataDiv{
-        width: 100%;
-    }
-    .lineChart{
-        width: 100%;
-    }
-
-    .SOsection {
-        width: 100%;
-        display: flex;
+    .conver{
+        padding-top: 20px;
         flex-direction: column;
         align-items: center;
+    }
+    .TeamPlacePlay{
+        width: 90%;
+        margin: 0px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    #SMOdata{
+        flex-direction: column;
+        width: 100%;
+    }
+    .SMOcontain{
         width: 90%;
     }
-
-    .SOpiechart {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 80%;
-    }
-
-    .SOpiechart canvas{
-        background-color: rgba(228, 209, 209, 0.841);
-        border-radius: 20px 20px;
-        margin-top: 20px;
-    }
-    .SOlists {
-        margin-top: 20px;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 40px;
-    }
-    .SOlists ul{
-        padding: 5px 5px;
-        margin: 0;
-        list-style: none;
-    }
-
-    .SOlists li {
-        font-size: 10px;
-    }
-    .centerDiv{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    } 
-    .homeAdvantage {
+    .finalRcover{
         flex-direction: column;
     }
+    .teamFR{
+        width: 90%;
+        margin: 0px;
+        margin-bottom: 10px;
+    }
+
 }

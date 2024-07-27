@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.v3.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.v4.css')}}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>services</title>
 </head>
 
@@ -24,10 +25,14 @@
                     <li><a href="{{url_for('home')}}">Home</a></li>
                     {% if current_user.is_authenticated %}
                     <li><a href="#aboutus" class="scroll-button">About Us</a></li>
-                    <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
+                    <li><a href="{{url_for('footballanalysis')}}">Club</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional</a></li>
+                    <li><a href="{{url_for('admins')}}">admin</a></li>
                     <li><a href="{{url_for('logout')}}">logout</a></li>
                     {% else %}
-                    <li><a href="{{url_for('login')}}">login</a></li>
+                    <li><a href="#aboutus" class="scroll-button">About Us</a></li>
+                    <li><a href="{{url_for('footballanalysis')}}">Club Analysis</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional Analysis</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -37,11 +42,7 @@
         <div class="welcome-message">
             <h1>welcome To SmartStake</h1>
             <p>Unlock insights. Predict matches. Dominate your fantasy league.</p>
-            {% if current_user.is_authenticated %}
-            <button><a href="{{url_for('footballanalysis')}}">get started</a></button>
-            {% else %}
-            <button><a href="{{url_for('login')}}">get started</a></button>
-            {% endif %}
+            <button onclick="selecTion()">get started</button>
         </div>
         <div class="welcome-message">
             <img src="{{url_for('static', filename='football_player.png')}}" alt="">
@@ -73,53 +74,98 @@
                 A pie chart breaks down their wins, losses, and draws for a quick comparison.</p>
         </div>
     </div>
-
-    <!-- how it works (what the buttons) the row and column of the line chart -->
     <div class="coverSS">
-        <div class="homesection">
-            <div class="innertext">
-                <h1 class="Htext">TOOL</h1>
-            </div>
-            <div class="tool">
-                <div class="content">
-                    <video id="toolvideo" autoplay loop muted playsinline>
-                        <source src="{{url_for('static', filename='linechart.mov')}}">
-                    </video>
-                    <p>See how you can easily analyze wins, losses, and draws with just a click!</p>
+        <div class="odds">
+            <div class="innerOdds" , id="twoOddsDisplay">
+                <div class="innertext">
+                    <h1 class="Htext">Two odds</h1>
                 </div>
-                <div class="content2">
-                    <video id="toolvideo2" autoplay loop muted playsinline>
-                        <source src="{{url_for('static', filename='piechart.mov')}}">
-                    </video>
-                    <p>Unlock interactive insights! Dive into this pie chart and filter results with ease.</p>
+            </div>
+            <div class="innerOdds" id="fiveOddsDisplay">
+                <div class="innertext">
+                    <h1 class="Htext">five odds</h1>
                 </div>
             </div>
         </div>
     </div>
     <div class="coverSS">
-        <div id="aboutus" class="homesection">
+        <div id="dailygames" class="DailyGamesC">
             <div class="innertext">
-                <h1 class="Htext">about us</h1>
+                <h1 class="Htext">daily games</h1>
             </div>
-            <div class="tool">
-                <div class="content">
-                    <img src="{{url_for('static', filename='about.png')}}" alt="">
-                    <p>SMARTSTAKE is your one-stop shop for in-depth football analysis. We empower you to make smarter
-                        betting decisions by
-                        providing a comprehensive view of upcoming matches.</p>
-
-                </div>
-                <div class="content">
-                    <img src="{{url_for('static', filename='about3.png')}}" alt="">
-                    <p>With SMARTSTAKE, you get a deeper understanding of the
-                        factors influencing the outcome, allowing you to place informed bets and elevate your chances of
-                        success.</p>
-                </div>
+        </div>
+    </div>
+    <div class="services">
+        <div class="innertext">
+            <h1 class="Htext">our services</h1>
+        </div>
+        <div class="servicesInner">
+            <div>
+                <i class='bx bxs-crown'></i>
+                <h2> high win rates</h2>
+                <p>We give accurate probabilities therefor increasing wins by 80%.</p>
             </div>
+            <div>
+                <i class='bx bx-brain'></i>
+                <h2>ai prediction</h2>
+                <p>With our AI model we are able to give accurate probabilties.</p>
+            </div>
+            <div>
+                <i class='bx bx-star'></i>
+                <h2>daily games</h2>
+                <p>We offer good insight on hot game played daily games.</p>
+            </div>
+        </div>
+    </div>
+    <div class="predictedGames">
+        <div class="innertext">
+            <h1 class="Htext">predicted games</h1>
+        </div>
+        <div class="InnerBoxes">
+            <ul>
+                <span>
+                    <li>home vs away </li>
+                </span>
+                <li>Inter Milan vs Newcastle United</li>
+                <li>Inter Milan vs Newcastle United</li>
+                <li>Inter Milan vs Newcastle United</li>
+                <li>Inter Milan vs Newcastle United</li>
+                <li>Inter Milan vs Newcastle United</li>
+                <li>Inter Milan vs Newcastle United</li>
+            </ul>
+            <ul> 
+                <span>
+                    <li> prediction </li>
+                </span>
+                <li>home or draw / 1 <img src="" alt=""></li>
+                <li>home or draw / 1 <img src="" alt=""></li>
+                <li>home or draw / 1 <img src="" alt=""></li>
+                <li>home or draw / 1 <img src="" alt=""></li>
+                <li>home or draw / 1 <img src="" alt=""></li>
+                <li>home or draw / 1 <img src="" alt=""></li>
+            </ul>
+            <ul>
+                <span>
+                    <li>outcome</li>
+                </span>
+                <li>home won / <img src="" alt=""></li>
+                <li>away won / <img src="" alt=""></li>
+                <li>away won / <img src="" alt=""></li>
+                <li>home won / <img src="" alt=""></li>
+                <li>draw / <img src="" alt=""></li>
+                <li>home won / <img src="" alt=""></li>
+            </ul>
+        </div>
+    </div>
+    <!--how it works (what the buttons) the row and column of the line chart -->
+    <div class="optionPage" id="optionPage">
+        <div class="innerContents">
+            <button class="button1"><a href="{{url_for('footballanalysis')}}">clubs</a></button>
+            <button class="button1"><a href="{{url_for('regionalAnalysis')}}">country</a></button>
         </div>
     </div>
 </body>
-<script src="{{url_for('static', filename='main.v6.js')}}"></script>
+<script src="{{url_for('static', filename='main.v7.js')}}"></script>
 <script>
     document
         .querySelector(".scroll-button")
@@ -129,6 +175,164 @@
                 behavior: "smooth",
             });
         });
+
+
+    function ifStatment(matchStatus, originalIcon, predicOutcome, predicText) {
+        if (matchStatus == "home" && predicOutcome == "home or draw") {
+            originalIcon.src = "{{ url_for('static', filename = 'check.png')}}";
+        } else if (matchStatus == "away" && predicOutcome == "away or draw") {
+            originalIcon.src = "{{ url_for('static', filename = 'check.png')}}";
+        } else if (matchStatus == "draw" && predicOutcome == "away or draw") {
+            originalIcon.src = "{{ url_for('static', filename = 'check.png')}}";
+        } else if (matchStatus == "draw" && predicOutcome == "home or draw") {
+            originalIcon.src = "{{ url_for('static', filename = 'check.png')}}";
+        } else {
+            originalIcon.src = "{{ url_for('static', filename = 'cancel.png')}}";
+            originalIcon.style.backgroundColor = 'red';
+        }
+        if (predicOutcome === "home or draw") {
+            predicText.textContent = 1;
+        } else if (predicOutcome === "away or draw") {
+            predicText.textContent = 2;
+        } else {
+            predicText.textContent = '';
+        }
+        return [predicText, originalIcon]
+    }
+    async function displaydailygames() {
+        boxId = document.getElementById('dailygames');
+        const respond = await fetch('/getAllGames');
+        const awaitRespond = await respond.json();
+        const datas = awaitRespond['data'];
+        datas.forEach(data => {
+            const button = document.createElement('button');
+            const predictedIcon = document.createElement('img');
+            const originalIcon = document.createElement('img');
+            const h1 = document.createElement('h1');
+            const divContainer = document.createElement('div');
+            const prediction = document.createElement('div');
+            const predicText = document.createElement('h1');
+            const matchStatus = "home";
+            const predicOutcome = data.predictedOutcome;
+            divContainer.className = 'divPrediction';
+            prediction.className = 'outcomeDiv';
+            h1.className = "oddText";
+            button.textContent = `${data.homeTeam} vs ${data.awayTeam}`;
+            predictedIcon.src = "{{url_for('static', filename='cancel.png')}}";
+            originalIcon.style.backgroundColor = 'green';
+            const [predicText1, originalIcon1] = ifStatment(matchStatus, originalIcon, predicOutcome, predicText);
+            h1.textContent = data.GameOdds;
+            button.addEventListener('click', () => displayAnalysis(data.homeTeam, data.awayTeam));
+
+            prediction.appendChild(predicText1);
+            prediction.appendChild(predictedIcon);
+            divContainer.appendChild(button);
+            divContainer.appendChild(prediction);
+            divContainer.appendChild(h1);
+            divContainer.appendChild(originalIcon1);
+            boxId.appendChild(divContainer);
+        })
+        display2Odds(datas);
+        display5Odds(datas);
+    }
+    displaydailygames();
+    function display2Odds(datas) {
+        boxId = document.getElementById('twoOddsDisplay');
+        datas.forEach(data => {
+            const button = document.createElement('button');
+            const predictedIcon = document.createElement('img');
+            const originalIcon = document.createElement('img');
+            const h1 = document.createElement('h1');
+            const divContainer = document.createElement('div');
+            const prediction = document.createElement('div');
+            const predicText = document.createElement('h1');
+            prediction.className = 'outcomeDiv';
+            divContainer.className = 'divPrediction2';
+            const matchStatus = "home";
+            const predicOutcome = data.predictedOutcome;
+            h1.className = "oddText";
+            if (data.odds === 'twoOdds') {
+                h1.textContent = data.GameOdds;
+                button.textContent = `${data.homeTeam} vs ${data.awayTeam}`;
+                predictedIcon.src = "{{url_for('static', filename='cancel.png')}}";
+                originalIcon.style.backgroundColor = 'green';
+                const [predicText1, originalIcon1] = ifStatment(matchStatus, originalIcon, predicOutcome, predicText);
+                button.addEventListener('click', () => displayAnalysis(data.homeTeam, data.awayTeam));
+                prediction.appendChild(predicText)
+                prediction.appendChild(predictedIcon);
+                divContainer.appendChild(button);
+                divContainer.appendChild(prediction);
+                divContainer.appendChild(h1);
+                divContainer.appendChild(originalIcon);
+
+            } else if (data.odds === 'bothOdds') {
+                h1.textContent = data.GameOdds;
+                button.textContent = `${data.homeTeam} vs ${data.awayTeam}`;
+                predictedIcon.src = "{{url_for('static', filename='cancel.png')}}";
+                originalIcon.style.backgroundColor = 'green';
+                const [predicText1, originalIcon1] = ifStatment(matchStatus, originalIcon, predicOutcome, predicText);
+                button.addEventListener('click', () => displayAnalysis(data.homeTeam, data.awayTeam));
+                prediction.appendChild(predicText)
+                prediction.appendChild(predictedIcon);
+                divContainer.appendChild(button);
+                divContainer.appendChild(prediction);
+                divContainer.appendChild(h1);
+                divContainer.appendChild(originalIcon);
+            } else {
+                return;
+            }
+            boxId.appendChild(divContainer);
+
+        })
+    }
+    function display5Odds(datas) {
+        boxId = document.getElementById('fiveOddsDisplay');
+        datas.forEach(data => {
+            const button = document.createElement('button');
+            const predictedIcon = document.createElement('img');
+            const originalIcon = document.createElement('img');
+            const h1 = document.createElement('h1');
+            const divContainer = document.createElement('div');
+            const prediction = document.createElement('div');
+            const predicText = document.createElement('h1');
+            prediction.className = 'outcomeDiv';
+            divContainer.className = 'divPrediction2';
+            h1.className = "oddText";
+            const matchStatus = "home";
+            const predicOutcome = data.predictedOutcome;
+            if (data.odds === 'fiveOdds') {
+                button.textContent = `${data.homeTeam} vs ${data.awayTeam}`;
+                h1.textContent = data.GameOdds;
+                predictedIcon.src = "{{url_for('static', filename ='cancel.png')}}";
+                originalIcon.style.backgroundColor = 'green';
+                const [predicText1, originalIcon1] = ifStatment(matchStatus, originalIcon, predicOutcome, predicText);
+                button.addEventListener('click', () => displayAnalysis(data.homeTeam, data.awayTeam));
+                prediction.appendChild(predicText);
+                prediction.appendChild(predictedIcon);
+                divContainer.appendChild(button);
+                divContainer.appendChild(prediction);
+                divContainer.appendChild(h1);
+                divContainer.appendChild(originalIcon);
+            } else if (data.odds === 'bothOdds') {
+                button.textContent = `${data.homeTeam} vs ${data.awayTeam}`;
+                h1.textContent = data.GameOdds;
+                predictedIcon.src = "{{url_for('static', filename ='cancel.png')}}";
+                originalIcon.style.backgroundColor = 'green';
+                const [predicText1, originalIcon1] = ifStatment(matchStatus, originalIcon, predicOutcome, predicText);
+                button.addEventListener('click', () => displayAnalysis(data.homeTeam, data.awayTeam));
+                prediction.appendChild(predicText);
+                prediction.appendChild(predictedIcon);
+                divContainer.appendChild(button);
+                divContainer.appendChild(prediction);
+                divContainer.appendChild(h1);
+                divContainer.appendChild(originalIcon);
+            } else {
+                return;
+            }
+            boxId.appendChild(divContainer);
+        })
+    }
+
 </script>
 
 </html>

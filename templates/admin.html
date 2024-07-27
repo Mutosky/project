@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.v3.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.v4.css')}}">
     <title>Admin</title>
 </head>
 
@@ -23,10 +23,13 @@
                 <ul>
                     <li><a href="{{url_for('home')}}">Home</a></li>
                     {% if current_user.is_authenticated %}
-                    <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
+                    <li><a href="{{url_for('footballanalysis')}}">Club</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional</a></li>
+                    <li><a href="{{url_for('admins')}}">admin</a></li>
                     <li><a href="{{url_for('logout')}}">logout</a></li>
                     {% else %}
-                    <li><a href="{{url_for('login')}}">login</a></li>
+                    <li><a href="{{url_for('footballanalysis')}}">Club Analysis</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional Analysis</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -44,9 +47,227 @@
         <div class="users">
             <ul class="userList" id="userList"></ul>
         </div>
+        <div class="clickdiv">
+            <button class="click" onclick="selecTion()">Add Games</button>
+            <button class="click" onclick="deleteGames()">Delete all game</button>
+        </div>
+        <div id="optionPage" class="selectPage">
+            <div class="innerContents">
+                <div class="select">
+                    <select id="Team1" class="select-item">
+                        <option value="">Home Team</option>
+                        <option value="AC Milan">AC Milan</option>
+                        <option value="Arsenal">Arsenal</option>
+                        <option value="Aston Villa">Aston Villa</option>
+                        <option value="Atalanta">Atalanta</option>
+                        <option value="Atletico Madrid">Atletico Madrid</option>
+                        <option value="Barcelona">Barcelona</option>
+                        <option value="Benfica">Benfica</option>
+                        <option value="Bodø / Glimt">Bodø / Glimt</option>
+                        <option value="Bologna">Bologna</option>
+                        <option value="Brentford">Brentford</option>
+                        <option value="Brighton & Hove Albion">Brighton & Hove Albion</option>
+                        <option value="Burnley">Burnley</option>
+                        <option value="Cagliari">Cagliari</option>
+                        <option value="Cáceres">Cáceres</option>
+                        <option value="Celta Vigo">Celta Vigo</option>
+                        <option value="Chelsea">Chelsea</option>
+                        <option value="Crystal Palace">Crystal Palace</option>
+                        <option value="Everton">Everton</option>
+                        <option value="FC Porto">FC Porto</option>
+                        <option value="Fiorentina">Fiorentina</option>
+                        <option value="Frosinone">Frosinone</option>
+                        <option value="Fulham">Fulham</option>
+                        <option value="Getafe">Getafe</option>
+                        <option value="Genoa">Genoa</option>
+                        <option value="Girona">Girona</option>
+                        <option value="Guadalajara">Guadalajara</option>
+                        <option value="Inter Milan">Inter Milan</option>
+                        <option value="Ipswich">Ipswich</option>
+                        <option value="Juventus">Juventus</option>
+                        <option value="Lazio">Lazio</option>
+                        <option value="Leeds United">Leeds United</option>
+                        <option value="Leicester City">Leicester City</option>
+                        <option value="Lens">Lens</option>
+                        <option value="Liverpool">Liverpool</option>
+                        <option value="Luton Town">Luton Town</option>
+                        <option value="Lyon">Lyon</option>
+                        <option value="Maccabi Haifa">Maccabi Haifa</option>
+                        <option value="Manchester City">Manchester City</option>
+                        <option value="Manchester United">Manchester United</option>
+                        <option value="MLS All-Stars">MLS All-Stars</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Monza">Monza</option>
+                        <option value="Napoli">Napoli</option>
+                        <option value="Newcastle United">Newcastle United</option>
+                        <option value="Nantes">Nantes</option>
+                        <option value="Nottingham Forest">Nottingham Forest</option>
+                        <option value="Nürnberg">Nürnberg</option>
+                        <option value="Orlando City">Orlando City</option>
+                        <option value="Oxford United">Oxford United</option>
+                        <option value="PSG">PSG</option>
+                        <option value="PSV">PSV</option>
+                        <option value="Real Betis">Real Betis</option>
+                        <option value="Real Madrid">Real Madrid</option>
+                        <option value="Real Sociedad">Real Sociedad</option>
+                        <option value="Real Valladolid">Real Valladolid</option>
+                        <option value="Rijeka">Rijeka</option>
+                        <option value="Roma">Roma</option>
+                        <option value="RB Leipzig">RB Leipzig</option>
+                        <option value="Salernitana">Salernitana</option>
+                        <option value="Sampdoria">Sampdoria</option>
+                        <option value="Sassuolo">Sassuolo</option>
+                        <option value="Sevilla">Sevilla</option>
+                        <option value="Shakhtar Donetsk">Shakhtar Donetsk</option>
+                        <option value="Sheffield United">Sheffield United</option>
+                        <option value="Southampton">Southampton</option>
+                        <option value="Sporting Braga">Sporting Braga</option>
+                        <option value="Sporting Lisbon">Sporting Lisbon</option>
+                        <option value="Standard Liège">Standard Liège</option>
+                        <option value="Spezia">Spezia</option>
+                        <option value="Tottenham">Tottenham</option>
+                    </select>
+                </div>
+                <div class="select">
+                    <select id="Team2" class="select-item">
+                        <option value="">Away Team</option>
+                        <option value="AC Milan">AC Milan</option>
+                        <option value="Arsenal">Arsenal</option>
+                        <option value="Aston Villa">Aston Villa</option>
+                        <option value="Atalanta">Atalanta</option>
+                        <option value="Atletico Madrid">Atletico Madrid</option>
+                        <option value="Barcelona">Barcelona</option>
+                        <option value="Benfica">Benfica</option>
+                        <option value="Bodø / Glimt">Bodø / Glimt</option>
+                        <option value="Bologna">Bologna</option>
+                        <option value="Brentford">Brentford</option>
+                        <option value="Brighton & Hove Albion">Brighton & Hove Albion</option>
+                        <option value="Burnley">Burnley</option>
+                        <option value="Cagliari">Cagliari</option>
+                        <option value="Cáceres">Cáceres</option>
+                        <option value="Celta Vigo">Celta Vigo</option>
+                        <option value="Chelsea">Chelsea</option>
+                        <option value="Crystal Palace">Crystal Palace</option>
+                        <option value="Everton">Everton</option>
+                        <option value="FC Porto">FC Porto</option>
+                        <option value="Fiorentina">Fiorentina</option>
+                        <option value="Frosinone">Frosinone</option>
+                        <option value="Fulham">Fulham</option>
+                        <option value="Getafe">Getafe</option>
+                        <option value="Genoa">Genoa</option>
+                        <option value="Girona">Girona</option>
+                        <option value="Guadalajara">Guadalajara</option>
+                        <option value="Inter Milan">Inter Milan</option>
+                        <option value="Ipswich">Ipswich</option>
+                        <option value="Juventus">Juventus</option>
+                        <option value="Lazio">Lazio</option>
+                        <option value="Leeds United">Leeds United</option>
+                        <option value="Leicester City">Leicester City</option>
+                        <option value="Lens">Lens</option>
+                        <option value="Liverpool">Liverpool</option>
+                        <option value="Luton Town">Luton Town</option>
+                        <option value="Lyon">Lyon</option>
+                        <option value="Maccabi Haifa">Maccabi Haifa</option>
+                        <option value="Manchester City">Manchester City</option>
+                        <option value="Manchester United">Manchester United</option>
+                        <option value="MLS All-Stars">MLS All-Stars</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Monza">Monza</option>
+                        <option value="Napoli">Napoli</option>
+                        <option value="Newcastle United">Newcastle United</option>
+                        <option value="Nantes">Nantes</option>
+                        <option value="Nottingham Forest">Nottingham Forest</option>
+                        <option value="Nürnberg">Nürnberg</option>
+                        <option value="Orlando City">Orlando City</option>
+                        <option value="Oxford United">Oxford United</option>
+                        <option value="PSG">PSG</option>
+                        <option value="PSV">PSV</option>
+                        <option value="Real Betis">Real Betis</option>
+                        <option value="Real Madrid">Real Madrid</option>
+                        <option value="Real Sociedad">Real Sociedad</option>
+                        <option value="Real Valladolid">Real Valladolid</option>
+                        <option value="Rijeka">Rijeka</option>
+                        <option value="Roma">Roma</option>
+                        <option value="RB Leipzig">RB Leipzig</option>
+                        <option value="Salernitana">Salernitana</option>
+                        <option value="Sampdoria">Sampdoria</option>
+                        <option value="Sassuolo">Sassuolo</option>
+                        <option value="Sevilla">Sevilla</option>
+                        <option value="Shakhtar Donetsk">Shakhtar Donetsk</option>
+                        <option value="Sheffield United">Sheffield United</option>
+                        <option value="Southampton">Southampton</option>
+                        <option value="Sporting Braga">Sporting Braga</option>
+                        <option value="Sporting Lisbon">Sporting Lisbon</option>
+                        <option value="Standard Liège">Standard Liège</option>
+                        <option value="Spezia">Spezia</option>
+                        <option value="Tottenham">Tottenham</option>
+                    </select>
+                </div>
+                <select name="odds" id="odds">
+                    <option value="">None</option>
+                    <option value="twoOdds">2 Odds</option>
+                    <option value="fiveOdds">5 Odds</option>
+                    <option value="bothOdds">2&5 Odds</option>
+                </select>
+                <label for="odds">Odds</label>
+                <input id="numberOdds" type="number" value="odds">
+                <button class="button1" onclick="addGames()">Add</button>
+            </div>
+        </div>
     </div>
+
 </body>
 <script>
+    displayUser();
+    document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('optionPage');
+
+        overlay.addEventListener('click', () => {
+            overlay.style.display = 'none';
+        });
+    });
+
+    function addGames() {
+        team1 = document.getElementById('Team1').value;
+        team2 = document.getElementById('Team2').value;
+        odds = document.getElementById('odds').value;
+        numberOdds = document.getElementById('numberOdds').value;
+        if(team1 && team2 && numberOdds){
+            if (odds) {
+                fetch('/addGames', {
+                    method: 'POST',
+                    body: JSON.stringify({ team1: team1, team2: team2, odds: odds, numberOdds: numberOdds}),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                    .then(respond => respond.json())
+                    .then(data => {
+                        alert(data.status)
+                    })
+            } else {
+                fetch('/addGames', {
+                    method: 'POST',
+                    body: JSON.stringify({ team1: team1, team2: team2 }),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                    .then(respond => respond.json())
+                    .then(data => {
+                        alert(data.status)
+                    })
+            }
+        }else {
+            alert('please input need data');
+        }
+    }
+
+    function deleteGames(){
+        fetch('/deleteGame')
+        .then(respond => respond.json())
+        .then(data => {
+            alert(data.alert)
+        })
+    }
+
+
     async function displayUser() {
         const respond = await fetch('/get_users');
         const data = await respond.json();
@@ -57,20 +278,23 @@
             const li = document.createElement('li');
             const button = document.createElement('button');
             const Dbutton = document.createElement('button');
+            const status = document.createElement('h1');
             Dbutton.textContent = 'delete';
             button.textContent = user.status === 'active' ? 'deactivate' : 'activate';
-            Dbutton.addEventListener('click', () => deleteUser(user.name))
+            Dbutton.addEventListener('click', () => deleteUser(user.name));
             button.addEventListener('click', () => updateStatus(user.name, user.status));
+            status.textContent = user.status;
             li.textContent = user.name;
             li.appendChild(button);
             li.appendChild(Dbutton)
+            li.appendChild(status)
             userList.appendChild(li);
         });
     }
     async function deleteUser(username) {
         const respond = await fetch('/deleteUser', {
             method: 'DELETE',
-            body: JSON.stringify({name: username}),
+            body: JSON.stringify({ name: username }),
             headers: { 'Content-Type': 'application/json' }
         });
         const data = await respond.json();
@@ -79,13 +303,11 @@
         displayUser();
     }
 
-    displayUser();
-
     async function updateStatus(username, status) {
         const respond = await fetch('/updateUsers', {
             method: 'POST',
-            body: JSON.stringify({name: username, status: status}),
-            headers: {'Content-Type': 'application/json'}
+            body: JSON.stringify({ name: username, status: status }),
+            headers: { 'Content-Type': 'application/json' }
         });
 
         const data = await respond.json()
@@ -98,10 +320,10 @@
         const searchInput = document.getElementById('search-input').value.toLowerCase();
         const usersList = document.getElementById('userList');
         const users = usersList.getElementsByTagName('li');
-   
+
         for (let value of users) {
             const username = value.textContent.toLocaleLowerCase();
-            if (username.includes(searchInput)){
+            if (username.includes(searchInput)) {
                 value.style.display = 'block';
             } else {
                 value.style.display = 'none';
@@ -111,6 +333,6 @@
 
     document.getElementById('search-input').addEventListener('input', filtersUser);
 </script>
-<script src="{{url_for('static', filename='main.v6.js')}}"></script>
+<script src="{{url_for('static', filename='main.v7.js')}}"></script>
 
 </html>

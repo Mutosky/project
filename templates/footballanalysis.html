@@ -2,10 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8"
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Football Match Analyzer</title>
-    <link rel="stylesheet" href="{{url_for('static', filename = 'styles/styles.v4.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'styles/styles.v5.css')}}">
 </head>
 
 <body>
@@ -23,10 +22,13 @@
                 <ul>
                     <li><a href="{{url_for('home')}}">Home</a></li>
                     {% if current_user.is_authenticated %}
-                    <li><a href="{{url_for('footballanalysis')}}">Analysis</a></li>
+                    <li><a href="{{url_for('footballanalysis')}}">Club</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional</a></li>
+                    <li><a href="{{url_for('admins')}}">admin</a></li>
                     <li><a href="{{url_for('logout')}}">logout</a></li>
                     {% else %}
-                    <li><a href="{{url_for('login')}}">login</a></li>
+                    <li><a href="{{url_for('footballanalysis')}}">Club Analysis</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional Analysis</a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -200,92 +202,54 @@
             <p>please ensure: that the home team and away team are correctly selected</p>
         </div>
     </div>
-    <div class="head2head">
-        <div class="chart">
-            <h1>H2H probability</h1>
-            <div class="chart-con">
-                <canvas class="charts" id="chart-container" width="400" height="400"></canvas>
+    <div class="head2headin">
+        <h1 class="headerText">Head-to-Head</h1>
+        <div class="H2HdataDiv">
+            <div class="H2Hcharts" id="H2Hcharts">
             </div>
-        </div>
-        <div class="description">
-            <h1>all H2H matchs</h1>
-            <div class="paragraph">
-                <ul id="date-list" class="itemList"></ul>
-                <ul id="outcome-list" class="itemList"></ul>
+            <div class="H2Hdata" id="H2Hdata">
             </div>
         </div>
     </div>
-    <div class="centerDiv">
-    <div class="last-fivematch" id="last-fivematch">
-        <h1 class="innerLabel">last five match probability</h1>
-        <div class="team-div">
-            <h1 id="home-lastfive" class="label">__</h1>
-            <div class="line-chart">
-                <canvas id="home-myChart"></canvas>
+    <div class="pastfivematchout">
+        <h1 class="headerText">past five match</h1>
+        <div class="PFMdataDiv">
+            <div class="PFMdata" id="homePFM">
             </div>
-            <h1 id="home-label" class="label">__</h1>
-            <div class="bar-chart">
-                <canvas class="bar-container" id="bar-container" width="400" height="400"></canvas>
-            </div>
-            <div class="paragraph">
-                <ul id="homeLFList1"></ul>
-                <ul id="homeLFList2"></ul>
-                <ul id="homeLFList3"></ul>
-            </div>
-        </div>
-        <div class="team-div">
-            <h1 id="away-lastfive" class="label">__</h1>
-            <div class="line-chart">
-                <canvas id="away-myChart"></canvas>
-            </div>
-            <h1 id="away-label" class="label">__</h1>
-            <div class="bar-chart">
-                <canvas class="bar-container" id="bar-containers" width="400" height="400"></canvas>
-            </div>
-            <div class="paragraph">
-                <ul id="awayLFList1"></ul>
-                <ul id="awayLFList2"></ul>
-                <ul id="awayLFList3"></ul>
+            <div class="PFMdata" id="awayPFM">
             </div>
         </div>
     </div>
-    </div>
-    <div class="centerDiv">
-    <div class="homeAdvantage" style="width: 90%;">
-        <h1 id="dataLabel" class="label2">__</h1>
-        <div class="cover">
-        <div class="lineChart">
-            <canvas id="homeAdata"></canvas>
+    <div class="placeAdvantageOut">
+        <h1 class="headerText">HOME & AWAY</h1>
+        <div class="conver">
+        <div class="TeamPlacePlay" id="homeAdvantage">
         </div>
-        <div class="homeADataDiv">
-            <ul id="homeAList" class="itemList2"></ul>
-            <ul id="homeAListB" class="itemList2"></ul>
-            <ul id="homeAListC" class="itemList2"></ul>
+        <div class="TeamPlacePlay" id="awayAdvantage">
         </div>
         </div>
     </div>
-    <div class="SOsection">
-        <h1 class="label2">similar opponent</h1>
-        <div class="SOpiechart">
-            <h3 id="team1opponent" class="label2">__</h3>
-            <canvas id="homeTeamSO"></canvas>
-            <h3 id="team2opponent" class="label2">__</h3>
-            <canvas id="awayTeamSO"></canvas>
+    <div class="similarOpponentout">
+        <h1 class="headerText">similar opponent</h1>
+        <div id="SMOdata">
         </div>
-        <div class="SOlists">
-            <ul id="oppoName" class="itemList2"></ul>
+    </div>
+    <div class="finalPredictionOut">
+        <h1 class="headerText">
+            final result
+        </h1>
+        <div class="finalRcover">
+            <div class="teamFR"></div>
+            <div class="teamFR"></div>
+            <div class="teamFR"></div>
         </div>
     </div>
     <div id="throbber-overlay" class="throbber-overlay">
         <h1 id="loadingState" class="loadingState">__</h1>
         <div id="throbber" class="throbber"></div>
     </div>
-    </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/v-charts/lib/line.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/v-charts/lib/style.min.css">
-<script src="{{url_for('static', filename='main.v6.js')}}"></script>
+
+<script src="{{url_for('static', filename='main.v7.js')}}"></script>
+
 </html>
