@@ -37,6 +37,7 @@ app.config['SECRET_KEY'] = secretKey
 
 
 engine = create_engine(f'postgresql://default:{dbPassword}@ep-wispy-waterfall-a4h1vshm.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require')
+
 Session = sessionmaker(autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -50,27 +51,27 @@ class Users(Base):
     status = Column(String, nullable=True)
     dates = Column(Date)
 
-class DailyGames(Base):
-    __tablename__ = 'dailygames'
+
+class Games(Base):
+    __tablename__ = 'games'
 
     id = Column(Integer, primary_key=True)
-    homeTeam = Column(String, nullable=False)
-    awayTeam = Column(String, nullable=False)
-    date = Column(Date, nullable=False)
-    odds = Column(String, nullable=True)
-    inputodds = Column(Integer, nullable=False)
-    oddscolume = Column(String, nullable=False)
+    HomeTeam = Column(String, nullable=False)
+    AwayTeam = Column(String, nullable=False)
+    PreGames = Column(String, nullable=True)
+    Outcome = Column(String, nullable=True)
+    Dates = Column(Date, nullable=False) 
+    
 
 
 
 Base.metadata.create_all(engine)
 
 
-
 def checkAvalibleGames():
     session = Session()
     try:
-        allGames = session.query(DailyGames).all()
+        allGames = session.query(Games).all()
         return allGames
     except Exception as e:
         return e
@@ -81,17 +82,16 @@ def checkAvalibleGames():
 def clearGames():
     session = Session()
     try:
-        all_games = session.query(DailyGames).all()
+        all_games = session.query(Games).all()
         if all_games:
             for game in all_games:
-                HomeTeam = game.homeTeam
-                AwayTeam = game.awayTeam
-                game_to_delete = session.query(DailyGames).filter_by(homeTeam=HomeTeam, awayTeam=AwayTeam).first()
+                homeTeam = game.HomeTeam
+                awayTeam = game.AwayTeam
+                game_to_delete = session.query(Games).filter_by(HomeTeam=homeTeam, AwayTeam=awayTeam).first()
                 if game_to_delete:
                     session.delete(game_to_delete)
                     session.commit()
-                    return 'game deleted successfully'
-                else: return 'no game found'
+            return 'game deleted successfully'
         else: return 'no games to delete'
     except Exception as e:
         return e
@@ -101,24 +101,16 @@ def clearGames():
 
 
         
-def addGame(HomeTeam, AwayTeam, InputOdds, predictedOutcome, odds=None):
+def addGame(homeTeam, awayTeam, predictedOutcome, date, outcome='ongoing'):
     session = Session()
     try:
-        game = session.query(DailyGames).filter_by(homeTeam=HomeTeam, awayTeam=AwayTeam).first()
+        game = session.query(Games).filter_by(HomeTeam=homeTeam, AwayTeam=awayTeam).first()
         if game:
             return 'already added'
         else:
-            if odds == None:
-                session.add(DailyGames(
-                    homeTeam=HomeTeam, awayTeam=AwayTeam, date=date.today(), inputodds=InputOdds))
-                session.commit()
-                return 'successful'
-            else:
-                session.add(DailyGames(homeTeam=HomeTeam, awayTeam=AwayTeam,
-                            date=date.today(), odds=odds, inputodds=InputOdds, oddscolume=predictedOutcome))
-                session.commit()
-                return 'successful'
-                
+            session.add(Games(HomeTeam=homeTeam, AwayTeam=awayTeam, PreGames=predictedOutcome, Outcome=outcome, Dates=date))
+            session.commit()
+            return 'successful'   
     except Exception as e:
         return e
     finally:
@@ -223,4 +215,3 @@ def authAdmin(name, password):
                 
 
     
-

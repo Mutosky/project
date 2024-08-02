@@ -168,23 +168,6 @@ def login():
     return render_template('register.html')
 
 
-'''@app.route('/signup', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        userData = request.get_json()
-        if userData:
-            username = userData['name']
-            password = userData['pass']
-            dates = date.today()
-            code = add_user(username=username, password=password, dates=dates)
-            if code == 'successful':
-                user = User(username)
-                print(user)
-                login_user(user=user)
-                return jsonify({'redirect': url_for('home')})
-            else:
-                return jsonify({'error': 'internal error try again later'})
-    return render_template('register.html')'''
 
 
 @app.route('/get_users', methods=['GET'])
@@ -199,35 +182,7 @@ def get_users():
     return jsonify({'users': data, 'admin': adminName})
 
 
-@app.route('/updateUsers', methods=['GET', 'POST'])
-@login_required
-def upadate():
-    if request.method == 'POST':
-        data = request.get_json()
-        username = data['name']
-        status = data['status']
-        update = updateUser(username=username, status=status)
-        if update == 'successful':
-            return jsonify({'status': 'users status has been changed successfully'})
-        else:
-            return jsonify({'status': 'user not found'})
 
-
-'''@app.route('/admin', methods=['GET', 'POST'])
-@login_required
-def admin():
-    if request.method == 'POST':
-        data = request.get_json()
-        username = data['name']
-        password = data['password']
-        respond = authAdmin(name=username, password=password)
-        if respond == 'successful':
-            user = User(username)
-            login_user(user=user)
-            return jsonify({'redirect': url_for('admins')})
-        elif respond == None:
-            return 'error user not found', 404
-    return render_template('adminLogin.html')'''
 
 
 @app.route('/admins', methods=['GET', 'POST'])
@@ -241,18 +196,7 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/deleteUser', methods=['GET', 'DELETE'])
-@login_required
-def delete():
-    if request.method == 'DELETE':
-        username = request.get_json()['name']
-        status = updateUser(username=username, delete=True)
-        if status == 'successful':
-            return jsonify({'status': 'user deleted successful'})
-        elif status == 'unable to delete admin':
-            return jsonify({'status': status})
-        else:
-            return jsonify({'status': 'not a user'})
+
 
 
 
@@ -261,17 +205,10 @@ def delete():
 def control_games():
     if request.method == 'POST':
         data = request.get_json()
-        if 'odds' in data:
-            team1 = data['team1']
-            team2 = data['team2']
-            odds= data['odds']
-            numberOdds = data['numberOdds']
-            status = addGame(HomeTeam=team1, AwayTeam=team2, InputOdds=numberOdds,  odds=odds, predictedOutcome='home or draw')
-        else:
-            team1 = data['team1']
-            team2 = data['team2']
-            numberOdds = data['numberOdds']
-            status = addGame(HomeTeam=team1, AwayTeam=team2, InputOdds=numberOdds, predictedOutcome='')
+
+        team1 = data['team1']
+        team2 = data['team2']
+        status = addGame(homeTeam=team1, awayTeam=team2, date=date.today(), predictedOutcome='home or draw')
 
         if status == 'successful':
             return jsonify({'status': 'successfully added game'})
@@ -286,11 +223,13 @@ def control_games():
 def getAllGames():
     data = checkAvalibleGames()
     match_data = []
-    for games in data:
-        match_data.append({'homeTeam': games.homeTeam, 'awayTeam': games.awayTeam,
-                          'odds': games.odds, 'GameOdds': games.inputodds, 'predictedOutcome': games.oddscolume})
-    print(match_data)
-    return jsonify({'data': match_data})
+    if data:
+        for games in data:
+            match_data.append({'homeTeam': games.HomeTeam, 'awayTeam': games.AwayTeam, 'predictedOutcome': games.PreGames, 'outcome': games.Outcome})
+        print(match_data)
+        return jsonify({'data': match_data})
+    else: 
+        return jsonify({'error': 'No Match Yet'})
 
 
 @app.route('/deleteGame', methods=['GET'])

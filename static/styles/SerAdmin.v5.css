@@ -160,22 +160,27 @@ body{
     justify-content: center;
     align-items: center;
 }
-.DailyGamesC div h1{
+.divPrediction h1{
     font-size: 20px;
     font-family: 'Courier New', Courier, monospace;
 }
-.DailyGamesC div img{
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-}
+
 .DailyGamesC button{
     width: 40%;
     height: 30px;
     margin-right: 30px;
+    border-radius: 0px;
+    border: 1px solid black;
+    color: black;
+    font-family: 'Open Sans',
+            Helvetica,
+            Arial,
+            sans-serif;
+        text-transform: uppercase;
+    font-size: 10px;
 }
 .outcomeDiv{
-    width: 15%;
+    width: 30%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -185,55 +190,9 @@ body{
     padding: 0;
 }
 
-.DailyGamesC a{
-    padding-bottom: 10px;
-}
-
-.odds{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.innerOdds {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
-    border-radius: 10px 10px;
-    padding: 10px 10px;
-    width: 39%;
-    margin-bottom: 50px;
-    margin-right: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
 
 
-.innerOdds button{
-    width: 40%;
-    height: 30px;
-    margin-right: 5px;
-}
 
-.divPrediction2 {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    color: black;
-    margin-bottom: 10px;
-    justify-content: center;
-    align-items: center;
-}
-.innerOdds div img{
-    width: 20px;
-    height:20px;
-    border-radius: 100%;
-}
-.innerOdds div h1{
-    font-size: 20px;
-    font-family: 'Courier New', Courier, monospace;
-}
 
 .clickdiv{
     display: flex;
@@ -259,9 +218,7 @@ body{
     color: #000000;
 }
 
-.oddText{
-    margin-right: 20px;
-}
+
 
 .services{
     margin-top: 100px;
@@ -321,6 +278,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 30px;
 }
 .InnerBoxes{
     width: 80%;
@@ -369,6 +327,24 @@ body{
     padding-bottom: 20px;
     padding-left: 50px;
     padding-right: 50px;
+}
+
+.headerTitle {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+}
+.headerTitle h1{
+    font-size: 20px;
+    color: black;
+    margin-left: 100px;
+    margin-left: 100px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 
@@ -868,21 +844,27 @@ body{
             margin-top: 20px;
         }
         .InnerBoxes ul li{
-            font-size: 10px;
+            font-size: 9px;
             padding-top: 10px;
             padding-bottom: 10px;
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            text-transform: lowercase;
         }
         .InnerBoxes ul span li{
-            font-size: 15px;
+            font-size: 12px;
         }
         .Htext{
             font-size: 20px;
         }
-        .InnerBoxes u{
-            margin-left: -10px;
-            margin-right: -10px;
+        .divPrediction h1 {
+            font-size: 10px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .headerTitle h1 {
+            font-size: 10px;
+            margin-left: 20px;
+            margin-left: 20px;
         }
 
 }

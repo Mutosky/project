@@ -53,17 +53,18 @@ function toggleMenu() {
 
 async function similarOppponet(team1Name, team2Name){
     const divID = document.getElementById('SMOdata');
+    
     const respond = await fetch('/similaropponent', {
         method: 'POST',
         body: JSON.stringify({team1: team1Name, team2: team2Name}),
         headers: {'Content-Type': 'application/json'}
     });
+
     const datas = await respond.json();
-    const maxLength = Math.min(datas.team1.win.length, datas.team2.win.length, datas.team1.loss.length, datas.team2.loss.length);
-    const dataList = datas['opponent']['data'];
     if ('team1' in datas){
+        const maxLength = Math.min(datas.team1.win.length, datas.team2.win.length, datas.team1.loss.length, datas.team2.loss.length);
+        const dataList = datas['opponent']['data'];
         for(let i=0; i<maxLength; i++){
-            console.log('i made it');
             const container = document.createElement('div');
             container.className = 'SMOcontain';
 
@@ -113,7 +114,9 @@ async function similarOppponet(team1Name, team2Name){
 
         }
     } else {
-        console.log('no data found');
+        const errorEle = document.createElement('h1');
+        errorEle.textContent = 'unable to get past five match data';
+        innerDiv.appendChild(errorEle);
     }
 
 }
@@ -122,42 +125,47 @@ async function similarOppponet(team1Name, team2Name){
 
 async function displayH2H(team1Name, team2Name){
     const placementContainer = document.getElementById('H2Hdata');
+
     const respond = await fetch('/head2head', {
         method: 'POST',
         body: JSON.stringify({ team1: team1Name, team2: team2Name }),
         headers: { 'Content-Type': 'application/json' }
     });
+
     const datas = await respond.json();
-    const maxLength = Math.min(datas.match_outcome.length, datas.event_date.length, datas.team2_id.length);
-    const dataList = datas['datalist'];
+    if('datalist' in datas){
+        const maxLength = Math.min(datas.match_outcome.length, datas.event_date.length, datas.team2_id.length);
+        const dataList = datas['datalist'];
+        for (let i = 0; i < maxLength; i++) {
+            const divContainer = document.createElement('div');
+            const textDiv = document.createElement('div')
+            textDiv.className = 'textDiv';
+            divContainer.className = '';
+            const OutcomeText = document.createElement('h1');
+            if (datas.match_outcome[i] === 'TeamOne') {
+                OutcomeText.textContent = `outcome: Home win`;
+            } else if (datas.match_outcome[i] === 'TeamTwo') {
+                OutcomeText.textContent = `outcome: Away win`;
+            } else {
+                OutcomeText.textContent = 'outcome: draw';
+            }
+            const DateText = document.createElement('h1');
+            DateText.textContent = `date: ${datas.event_date[i]}`;
+            const teamText = document.createElement('h1');
+            teamText.textContent = `team: ${datas.team1_id[i]} vs ${datas.team2_id[i]}`;
 
-    for(let i=0; i<maxLength; i++){
-        const divContainer = document.createElement('div');
-        const textDiv = document.createElement('div');
-        textDiv.className = 'textDiv';
-        divContainer.className = '';
-        const OutcomeText = document.createElement('h1');
-        if(datas.match_outcome[i] === 'TeamOne'){
-            OutcomeText.textContent = `outcome: Home win`;
-        } else if (datas.match_outcome[i] === 'TeamTwo'){
-            OutcomeText.textContent = `outcome: Away win`;
-        }else{
-            OutcomeText.textContent = 'outcome: draw';
+            textDiv.appendChild(OutcomeText);
+            textDiv.appendChild(DateText);
+            textDiv.appendChild(teamText);
+
+            divContainer.appendChild(textDiv);
+
+            placementContainer.appendChild(divContainer);
         }
-        const DateText = document.createElement('h1');
-        DateText.textContent = `date: ${datas.event_date[i]}`;
-        const teamText = document.createElement('h1');
-        teamText.textContent = `team: ${datas.team1_id[i]} vs ${datas.team2_id[i]}`;
-
-        textDiv.appendChild(OutcomeText);
-        textDiv.appendChild(DateText);
-        textDiv.appendChild(teamText);
-
-        divContainer.appendChild(textDiv);
-
-        placementContainer.appendChild(divContainer);
-
-
+    } else {
+        const Message = document.createElement('h1');
+        Message.textContent = 'unable to get Head-to-Head analysis';
+        placementContainer.appendChild(Message);
     }
 }
 
@@ -165,17 +173,19 @@ async function displayH2H(team1Name, team2Name){
 
 async function displayPFM(team1Name){
     const innerDiv = document.getElementById('homePFM');
-    const headerText = document.createElement('h1');
+
     const respond = await fetch('/pastFiveMatch', {
         method: 'POST',
         body: JSON.stringify({ team1: team1Name }),
         headers: { 'Content-Type': 'application/json' }
     });
-    headerText.textContent = team1Name;
-    innerDiv.appendChild(headerText);
+
     const datas = await respond.json();
-    const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.datepd.length);
     if('win' in datas){
+        const headerText = document.createElement('h1');
+        headerText.textContent = team1Name;
+        innerDiv.appendChild(headerText);
+        const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.datepd.length);
         for(let i=0; i<maxLength; i++){
             const divContain = document.createElement('div');
             divContain.className = 'dataDisplay';
@@ -196,6 +206,10 @@ async function displayPFM(team1Name){
             innerDiv.appendChild(progressContainer);
             innerDiv.appendChild(textDiv);
         }
+    } else {
+        const errorEle = document.createElement('h1');
+        errorEle.textContent = 'unable to get past five match data';
+        innerDiv.appendChild(errorEle);
     }
 
 }
@@ -203,20 +217,19 @@ async function displayPFM(team1Name){
 
 async function displayPFMTWO(team2Name) {
     const innerDiv = document.getElementById('awayPFM');
-    const headerText = document.createElement('h1');
+
     const respond = await fetch('/pastFiveMatch', {
         method: 'POST',
         body: JSON.stringify({ team1: team2Name }),
         headers: { 'Content-Type': 'application/json' }
     });
-    headerText.textContent = team2Name;
-    innerDiv.appendChild(headerText);
+
     const datas = await respond.json();
-    console.log('i am here');
-    const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.datepd.length);
-    console.log('also here');
     if ('win' in datas) {
-        console.log('almost there')
+        const headerText = document.createElement('h1');
+        headerText.textContent = team2Name;
+        innerDiv.appendChild(headerText);
+        const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.datepd.length);
         for (let i=0; i<maxLength; i++) {
             const divContain = document.createElement('div');
             divContain.className = 'dataDisplay';
@@ -237,6 +250,10 @@ async function displayPFMTWO(team2Name) {
             innerDiv.appendChild(progressContainer);
             innerDiv.appendChild(textDiv);
         }
+    } else {
+        const errorEle = document.createElement('h1');
+        errorEle.textContent = 'unable to get past five match data';
+        innerDiv.appendChild(errorEle);
     }
 
 }
@@ -245,17 +262,19 @@ async function displayPFMTWO(team2Name) {
 
 async function displayHAT(team1Name){
     const innerDiv = document.getElementById('homeAdvantage');
-    const headerText = document.createElement('h1');
+    
     const respond = await fetch('/homeAdvantages', {
         method: 'POST',
         body: JSON.stringify({ team1: team1Name }),
         headers: { 'Content-Type': 'application/json' }
     });
-    headerText.textContent = `${team1Name} home play`;
-    innerDiv.appendChild(headerText);
+    
     const datas = await respond.json();
-    const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.date.length);
     if ('win' in datas){
+        const headerText = document.createElement('h1');
+        headerText.textContent = `${team1Name} home play`;
+        innerDiv.appendChild(headerText);
+        const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.date.length);
         for(let i=0; i<maxLength; i++){
             const divContain = document.createElement('div');
             divContain.className = 'dataDisplay';
@@ -276,6 +295,10 @@ async function displayHAT(team1Name){
             innerDiv.appendChild(progressContainer);
             innerDiv.appendChild(textDiv);
         }
+    } else {
+        const errorEle = document.createElement('h1');
+        errorEle.textContent = 'unable to get home play data';
+        innerDiv.appendChild(errorEle);
     }
 
 
@@ -284,17 +307,19 @@ async function displayHAT(team1Name){
 
 async function displayAAT(team2Name) {
     const innerDiv = document.getElementById('awayAdvantage');
-    const headerText = document.createElement('h1');
+    
     const respond = await fetch('/awayadvantage', {
         method: 'POST',
         body: JSON.stringify({ team2: team2Name }),
         headers: { 'Content-Type': 'application/json' }
     });
-    headerText.textContent = `${team2Name} away play`;
-    innerDiv.appendChild(headerText);
+    
     const datas = await respond.json();
-    const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.date.length);
     if ('win' in datas) {
+        const headerText = document.createElement('h1');
+        headerText.textContent = `${team2Name} away play`;
+        innerDiv.appendChild(headerText);
+        const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.date.length);
         for (let i = 0; i < maxLength; i++) {
             const divContain = document.createElement('div');
             divContain.className = 'dataDisplay';
@@ -315,6 +340,10 @@ async function displayAAT(team2Name) {
             innerDiv.appendChild(progressContainer);
             innerDiv.appendChild(textDiv);
         }
+    } else {
+        const errorEle = document.createElement('h1');
+        errorEle.textContent = 'unable to away play data';
+        innerDiv.appendChild(errorEle);
     }
 
 
