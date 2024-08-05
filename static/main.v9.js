@@ -1,21 +1,32 @@
-function chart(winP, lossP, drawP){
+function chart(winP, lossP, drawP, HDA=false){
     const progressContainer = document.createElement('div');
     progressContainer.className = 'progress-container';
 
     const progressBar = document.createElement('div');
     progressBar.className = 'progress-bar';
-
+    
     const winLabel = document.createElement('div');
-    winLabel.textContent = `win ${winP*100}%` ;
-    winLabel.className = 'label';
-
     const lossLabel = document.createElement('div');
-    lossLabel.textContent = `loss ${lossP*100}%`;
-    lossLabel.className = 'label';
-
     const drawLabel = document.createElement('div');
-    drawLabel.textContent = `draw ${drawP*100}%`;
-    drawLabel.className = 'label';
+    if(HDA == true){
+        winLabel.textContent = `home ${Math.round(winP * 100)}%`;
+        winLabel.className = 'label';
+
+        lossLabel.textContent = `away ${Math.round(lossP * 100)}%`;
+        lossLabel.className = 'label';
+
+        drawLabel.textContent = `draw ${Math.round(drawP * 100)}%`;
+        drawLabel.className = 'label';
+    }else{
+        winLabel.textContent = `win ${Math.round(winP*100)}%` ;
+        winLabel.className = 'label';
+
+        lossLabel.textContent = `loss ${Math.round(lossP*100)}%`;
+        lossLabel.className = 'label';
+
+        drawLabel.textContent = `draw ${Math.round(drawP*100)}%`;
+        drawLabel.className = 'label';
+    }
     
     const winPro = document.createElement('div');
     winPro.className = 'progress win';
@@ -53,7 +64,8 @@ function toggleMenu() {
 
 async function similarOppponet(team1Name, team2Name){
     const divID = document.getElementById('SMOdata');
-    
+    divID.innerHTML = '';
+
     const respond = await fetch('/similaropponent', {
         method: 'POST',
         body: JSON.stringify({team1: team1Name, team2: team2Name}),
@@ -125,7 +137,7 @@ async function similarOppponet(team1Name, team2Name){
 
 async function displayH2H(team1Name, team2Name){
     const placementContainer = document.getElementById('H2Hdata');
-
+    placementContainer.innerHTML = '';
     const respond = await fetch('/head2head', {
         method: 'POST',
         body: JSON.stringify({ team1: team1Name, team2: team2Name }),
@@ -173,6 +185,7 @@ async function displayH2H(team1Name, team2Name){
 
 async function displayPFM(team1Name){
     const innerDiv = document.getElementById('homePFM');
+    innerDiv.innerHTML ='';
 
     const respond = await fetch('/pastFiveMatch', {
         method: 'POST',
@@ -183,6 +196,7 @@ async function displayPFM(team1Name){
     const datas = await respond.json();
     if('win' in datas){
         const headerText = document.createElement('h1');
+        headerText.className = 'textEdit';
         headerText.textContent = team1Name;
         innerDiv.appendChild(headerText);
         const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.datepd.length);
@@ -217,6 +231,7 @@ async function displayPFM(team1Name){
 
 async function displayPFMTWO(team2Name) {
     const innerDiv = document.getElementById('awayPFM');
+    innerDiv.innerHTML ='';
 
     const respond = await fetch('/pastFiveMatch', {
         method: 'POST',
@@ -227,6 +242,7 @@ async function displayPFMTWO(team2Name) {
     const datas = await respond.json();
     if ('win' in datas) {
         const headerText = document.createElement('h1');
+        headerText.className = 'textEdit';
         headerText.textContent = team2Name;
         innerDiv.appendChild(headerText);
         const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.datepd.length);
@@ -262,6 +278,7 @@ async function displayPFMTWO(team2Name) {
 
 async function displayHAT(team1Name){
     const innerDiv = document.getElementById('homeAdvantage');
+    innerDiv.innerHTML = '';
     
     const respond = await fetch('/homeAdvantages', {
         method: 'POST',
@@ -272,6 +289,7 @@ async function displayHAT(team1Name){
     const datas = await respond.json();
     if ('win' in datas){
         const headerText = document.createElement('h1');
+        headerText.className = 'textEdit';
         headerText.textContent = `${team1Name} home play`;
         innerDiv.appendChild(headerText);
         const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.date.length);
@@ -307,6 +325,7 @@ async function displayHAT(team1Name){
 
 async function displayAAT(team2Name) {
     const innerDiv = document.getElementById('awayAdvantage');
+    innerDiv.innerHTML = '';
     
     const respond = await fetch('/awayadvantage', {
         method: 'POST',
@@ -317,6 +336,7 @@ async function displayAAT(team2Name) {
     const datas = await respond.json();
     if ('win' in datas) {
         const headerText = document.createElement('h1');
+        headerText.className = 'textEdit';
         headerText.textContent = `${team2Name} away play`;
         innerDiv.appendChild(headerText);
         const maxLength = Math.min(datas.win.length, datas.loss.length, datas.draw.length, datas.opponent.length, datas.outcome.length, datas.date.length);
@@ -345,8 +365,64 @@ async function displayAAT(team2Name) {
         errorEle.textContent = 'unable to away play data';
         innerDiv.appendChild(errorEle);
     }
+}
+
+async function finalResult(HomeTeam, AwayTeam){
+    const mainDiv1 = document.getElementById('team1FP');
+    mainDiv1.innerHTML = '';
+    const mainDiv2 = document.getElementById('team2FP');
+    mainDiv2.innerHTML = '';
+    const mainDiv3 = document.getElementById('finalPrediction');
+    mainDiv3.innerHTML = '';
 
 
+    const respond = await fetch('/teamfinalP', {
+        method: 'POST',
+        body: JSON.stringify({team1: HomeTeam, team2: AwayTeam}),
+        headers: { 'Content-Type': 'application/json' }
+    });
+
+    const datas = await respond.json();
+    if('team1FP' in datas){
+        const header1 = document.createElement('h1');
+        header1.className = 'textEdit';
+        header1.textContent = HomeTeam;
+        mainDiv1.appendChild(header1);
+
+        const header2 = document.createElement('h1');
+        header2.className = 'textEdit';
+        header2.textContent = AwayTeam;
+        mainDiv2.appendChild(header2);
+
+        const header3 = document.createElement('h1');
+        header3.className = 'textEdit';
+        header3.textContent = 'event outcome probability';
+        mainDiv3.appendChild(header3)
+
+        const Team1win = datas['team1FP']['win'];
+        const Team1draw = datas['team1FP']['draw'];
+        const Team1loss = datas['team1FP']['loss'];
+    
+        const team1chart = chart(Team1win, Team1loss, Team1draw);
+        mainDiv1.appendChild(team1chart);
+
+        const Team2win = datas['team2FP']['win'];
+        const Team2draw = datas['team2FP']['draw'];
+        const Team2loss = datas['team2FP']['loss'];
+
+        const team2chart = chart(Team2win, Team2loss, Team2draw);
+        mainDiv2.appendChild(team2chart)
+
+        const FRhome = datas['final_result']['homeTeam']
+        const FRdraw = datas['final_result']['draw']
+        const FRaway = datas['final_result']['awayTeam']
+
+        const FRchart = chart(FRhome, FRaway, FRdraw, true)
+        mainDiv3.appendChild(FRchart)
+
+
+
+    }
 }
 
 
@@ -389,6 +465,7 @@ async function getSelectedTeams(){
             await similarOppponet(team1Selected, team2Selected);
             await displayPFM(team1Selected);
             await displayAAT(team2Selected);
+            await finalResult(team1Selected, team2Selected);
             loadings(false);
             throbber.style.display = 'none';
             alert('data received successfully');

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/styles.v6.css')}}">
+    <title>privacy and policies</title>
+</head>
+<body>
+    <div class="navbar">
+        <div class="userss">
+            <h1 class="displayname">SmartStake</h1>
+        </div>
+        <div class="innerMain">
+            <div class="toggle-btn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="{{url_for('home')}}">Home</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{url_for('footballanalysis')}}">Club</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional</a></li>
+                    <li><a href="{{url_for('admins')}}">admin</a></li>
+                    <li><a href="{{url_for('logout')}}">logout</a></li>
+                    {% else %}
+                    <li><a href="{{url_for('footballanalysis')}}">Club Analysis</a></li>
+                    <li><a href="{{url_for('regionalAnalysis')}}">Regional Analysis</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -227,6 +227,11 @@ body {
     margin-right: 10px;
     border-radius: 20px 20px;
 }
+.textEdit {
+    font-size: 20px;
+    text-align: center;
+    text-transform: capitalize;
+}
 
 
 

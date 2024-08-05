@@ -1,6 +1,6 @@
-from init import app, teams, add_user, login_users, get_allusers, get_user, updateUser, authAdmin, addGame, checkAvalibleGames, clearGames
+from init import app, teams, login_users, get_allusers, get_user, addGame, checkAvalibleGames, clearGames, finallyProbability
 from flask import request, jsonify, render_template, redirect, url_for
-from flask_login import login_required, login_user, logout_user, UserMixin, LoginManager, current_user
+from flask_login import login_required, login_user, logout_user, UserMixin, LoginManager
 import requests
 from datetime import date
 
@@ -70,7 +70,6 @@ def similarOpponent():
             if responds.status_code == 200:
                 data = responds.json()
                 if 'status' in data:
-                    print(data)
                     return data['message']
                 else: return data
         except Exception as e:
@@ -138,6 +137,22 @@ def awayAdvantages():
         except Exception as e:
             if e:
              return jsonify({'status': 500})
+            
+@app.route('/teamfinalP', methods=['GET', 'POST'])
+def teamProbability():
+    if request.method == 'POST':
+        data = request.get_json()
+        Team1 = int(teams[data['team1']])
+        Team2 = int(teams[data['team2']])
+
+        try:
+            team1FinalP, team2FinalP, eventOutcomeP = finallyProbability(team1=Team1, team2=Team2)
+            return jsonify({'team1FP': team1FinalP, 'team2FP': team2FinalP, 'final_result': eventOutcomeP})
+        except Exception as e:
+            print(e)
+             
+
+
 
 
 @app.route('/')
@@ -208,7 +223,12 @@ def control_games():
 
         team1 = data['team1']
         team2 = data['team2']
-        status = addGame(homeTeam=team1, awayTeam=team2, date=date.today(), predictedOutcome='home or draw')
+        try: 
+            Poutcome = finallyProbability(team1=team1, team2=team2)
+            status = addGame(homeTeam=team1, awayTeam=team2, date=date.today(), predictedOutcome=Poutcome)
+        except Exception as e:
+            print(e)
+        
 
         if status == 'successful':
             return jsonify({'status': 'successfully added game'})
@@ -230,13 +250,15 @@ def getAllGames():
         return jsonify({'data': match_data})
     else: 
         return jsonify({'error': 'No Match Yet'})
+    
 
-
+    
 @app.route('/deleteGame', methods=['GET'])
 @login_required
 def deleteGames():
     respond = clearGames()
     return jsonify({'alert': respond})
+
 
 
 if __name__ == "__main__":

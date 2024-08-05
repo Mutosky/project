@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.v5.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.v6.css')}}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>services</title>
 </head>
@@ -108,44 +108,46 @@
             </div>
         </div>
     </div>
-    <div class="predictedGames">
-        <div class="innertext">
-            <h1 class="Htext">predicted games</h1>
-        </div>
-        <div class="InnerBoxes">
-            <ul class="playersUL">
-                <span>
-                    <li>home vs away </li>
-                </span>
-                <li>Inter Milan vs Newcastle United</li>
-                <li>Inter Milan vs Newcastle United</li>
-                <li>Inter Milan vs Newcastle United</li>
-                <li>Inter Milan vs Newcastle United</li>
-                <li>Inter Milan vs Newcastle United</li>
-                <li>Inter Milan vs Newcastle United</li>
-            </ul>
-            <ul> 
-                <span>
-                    <li> prediction </li>
-                </span>
-                <li> home or draw </li>
-                <li> home or draw </li>
-                <li> home or draw </li>
-                <li> home or draw </li>
-                <li> home or draw </li>
-                <li> home or draw </li>
-            </ul>
-            <ul>
-                <span>
-                    <li>outcome</li>
-                </span>
-                <li>home won </li>
-                <li>away won </li>
-                <li>away won </li>
-                <li>home won </li>
-                <li>draw </li>
-                <li>home won </li>
-            </ul>
+    <div class="PredictedGamesI">
+        <div class="predictedGames">
+            <div class="innertext">
+                <h1 class="Htext">predicted games</h1>
+            </div>
+            <div class="InnerBoxes">
+                <ul class="playersUL">
+                    <span>
+                        <li>home vs away </li>
+                    </span>
+                    <li>Chelsea vs Liverpool</li>
+                    <li>Man City vs Arsenal</li>
+                    <li>Liverpool vs Brighton</li>
+                    <li>Juventus vs Frosinone</li>
+                    <li>Sheffield vs Arsenal</li>
+                    <li>Napoli vs Juventus</li>
+                </ul>
+                <ul>
+                    <span>
+                        <li> prediction </li>
+                    </span>
+                    <li>draw or away</li>
+                    <li>draw</li>
+                    <li>home or away</li>
+                    <li>home or draw</li>
+                    <li>away</li>
+                    <li>home</li>
+                </ul>
+                <ul>
+                    <span>
+                        <li>outcome</li>
+                    </span>
+                    <li>away won </li>
+                    <li>draw </li>
+                    <li>home won </li>
+                    <li>home won</li>
+                    <li>away won</li>
+                    <li>home won </li>
+                </ul>
+            </div>
         </div>
     </div>
     <!--how it works (what the buttons) the row and column of the line chart -->
@@ -156,7 +158,7 @@
         </div>
     </div>
 </body>
-<script src="{{url_for('static', filename='main.v8.js')}}"></script>
+<script src="{{url_for('static', filename='main.v9.js')}}"></script>
 <script>
     document
         .querySelector(".scroll-button")
@@ -170,6 +172,7 @@
 
 
     async function displaydailygames() {
+        alert('<h1> daily games </h1> section is still in production so any data seen is demo');
         boxId = document.getElementById('dailygames');
         const respond = await fetch('/getAllGames');
         const awaitRespond = await respond.json();
@@ -197,7 +200,7 @@
         display5Odds(datas);
     }
     displaydailygames();
-    
+
 
 </script>
 

@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, Column, Float, String, Integer, Date, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from flask import jsonify
+import requests
 from datetime import date
 
 import os
@@ -212,6 +214,165 @@ def authAdmin(name, password):
             print(f'error in try{e}')
             return f'error {e}'
         finally: session.close()
-                
+
+
+def similarOpponent(team1, team2):
+    url = 'http://fpsapi.pythonanywhere.com/similaropponent'
+    json = {'team1': team1, 'team2': team2}
+    try:
+        responds = requests.post(url=url, json=json, timeout=10)
+        if responds.status_code == 200:
+            data = responds.json()
+            if 'status' in data:
+                return data['message']
+            else:
+                return data
+    except Exception as e:
+        if e:
+            return jsonify({'status': 500})
+
+
+def pastFiveMatch(team):
+    url = 'http://fpsapi.pythonanywhere.com/pastfivematch'
+    json = {'team1': team}
+    try:
+        responds = requests.post(url=url, json=json, timeout=10)
+        if responds.status_code == 200:
+            data = responds.json()
+            if 'status' in data:
+                return data['message']
+            else:
+                return data
+        else:
+            print(responds.status_code)
+    except Exception as e:
+        if e:
+            return jsonify({'status': 500})
+
+
+def homeAdvantages(team1):
+    url = 'http://fpsapi.pythonanywhere.com/homeadvantage'
+    json = {'team1': team1}
+    try:
+        responds = requests.post(url=url, json=json, timeout=10)
+        if responds.status_code == 200:
+            data = responds.json()
+            if 'status' in data:
+                return data['message']
+            else:
+                return data
+    except Exception as e:
+        if e:
+            return jsonify({'status': 500})
+
+
+def awayAdvantages(team2):
+    url = 'http://fpsapi.pythonanywhere.com/awayadvantage'
+    json = {'team2': team2}
+    try:
+        respond = requests.post(url=url, json=json, timeout=10)
+        if respond.status_code == 200:
+            data = respond.json()
+            if 'status' in data:
+                return data['message']
+            else:
+                return data
+    except Exception as e:
+        if e:
+            return jsonify({'status': 500})
+
+
+def finallyProbability(team1, team2):
+    SOD = similarOpponent(team1=team1, team2=team2)
+    PFMDTeam1 = pastFiveMatch(team=team1)
+    HAD = homeAdvantages(team1=team1)
+    PFMDTeam2 = pastFiveMatch(team=team2)
+    AAD = awayAdvantages(team2=team2)
+    weight = {
+        "similaropponent": 1.00,
+        "advantages": 1.00,
+        "pastfivematch": 1.00
+    }
+    team1Data = {
+        "similaropponent": SOD['team1'],
+        "advantages": HAD,
+        "pastfivematch": PFMDTeam1
+    }
+    team2Data = {
+        "similaropponent": SOD['team2'],
+        "advantages": AAD,
+        "pastfivematch": PFMDTeam2
+    }
+    team1FinalP = calculatefinallyprobability(
+        probability=team1Data, weights=weight)
+
+    team2FinalP = calculatefinallyprobability(
+        probability=team2Data, weights=weight)
+    
+    eventOutcomeP = eventProbability(team1FP=team1FinalP, team2FP=team2FinalP)
+
+    return team1FinalP, team2FinalP, eventOutcomeP
+
+
+def calculatefinallyprobability(probability, weights):
+    final_probs = {'win': 0.0, 'draw': 0.0, 'loss': 0.0}
+
+    for name, weight in weights.items():
+        for match_probs in probability[name]['win']:
+            final_probs['win'] = final_probs['win']+weight*match_probs
+        for match_probs in probability[name]['draw']:
+            final_probs['draw'] = final_probs['draw']+weight*match_probs
+        for match_probs in probability[name]['loss']:
+            final_probs['loss'] = final_probs['loss']+weight*match_probs
+
+    total = final_probs['win']+final_probs['loss']+final_probs['draw']
+
+    ScalingFactor = 100/total
+
+    win = final_probs['win']*ScalingFactor
+    loss = final_probs['loss']*ScalingFactor
+    draw = final_probs['draw']*ScalingFactor
+
+    final_probs['win'] = win/100
+    final_probs['loss'] = loss/100
+    final_probs['draw'] = draw/100
+
+    return final_probs
+
+
+def eventProbability(team1FP, team2FP):
+    eventprob = {'homeTeam': 0.0, 'draw': 0.0, 'awayTeam': 0.0}
+
+    team1win = team1FP['win']
+    team2win = team2FP['win']
+
+    draw = team1FP['draw']+team2FP['draw']
+
+    Sum = team1win+team2win+draw
+    scalingFactor = 100/Sum
+
+    team1win = team1win*scalingFactor
+    team2win = team2win*scalingFactor
+    draw = draw*scalingFactor
+
+    eventprob['homeTeam'] = team1win/100
+    eventprob['awayTeam'] = team2win/100
+    eventprob['draw'] = draw/100
+
+    return eventprob
+
+
+    
+
+   
+
+
+    
+
+
+    
+
+
+
 
     

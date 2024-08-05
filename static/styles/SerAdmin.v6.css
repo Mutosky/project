@@ -272,23 +272,31 @@ body{
     color: #6c6c6c;
     text-align: center;
 }
-.predictedGames{
-    margin-top: 60px;
+.PredictedGamesI{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.predictedGames{
+    padding-top: 20px;
+    margin-top: 60px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #d3d3d3;
+    align-items: center;
     margin-bottom: 30px;
+    border-radius: 20px;
 }
 .InnerBoxes{
-    width: 80%;
-    background-color: #d3d3d3;
-    padding: 30px 30px;
-    border-radius: 20px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-left: -40px;
 }
 
 .InnerBoxes ul{
