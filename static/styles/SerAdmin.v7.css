@@ -42,19 +42,18 @@ body{
 }
 
 .welcome-message button{
-    width: 90px;
-    height: 40px;
+    width: 120px;
+    height: 60px;
     margin: 0px 50px;
-    background-color: rgb(33, 116, 65);
-    color: white;
-    border-radius: 50px;
+    cursor: pointer;
+    background-color: white;
+    font-size: 15px;
+    color: black;
+    border-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.31), 0 6px 20px 0 rgba(0, 0, 0, 0.31);
 }
 
-.welcome-message button a{
-    color: white;
-    text-decoration: none;
-}
+
 
 .containers{
     width: 100%;
@@ -711,7 +710,7 @@ body{
         }
 
         .welcome-message p {
-            font-size: 10px;
+            font-size: 15px;
             font-family: 'Open Sans',
                 Helvetica,
                 Arial,
@@ -721,7 +720,7 @@ body{
 
         .welcome-message h1 {
             text-align: center;
-            font-size: 20px;
+            font-size: 30px;
             padding: 20px 20px;
             font-family: 'Open Sans',
                 Helvetica,

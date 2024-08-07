@@ -360,19 +360,3 @@ def eventProbability(team1FP, team2FP):
     eventprob['draw'] = draw/100
 
     return eventprob
-
-
-    
-
-   
-
-
-    
-
-
-    
-
-
-
-
-    

@@ -50,7 +50,10 @@ def Head_to_Head():
         try:
             responds = requests.post(url=url, json=json, timeout=6)
             if responds.status_code == 200:
-                return responds.json()
+                if responds.json():
+                    return responds.json()
+                else: return jsonify({'status': 404})
+            else: return jsonify({'status': 500})
         except Exception as e:
             if e:
                 return jsonify({'status': 500})
@@ -69,9 +72,10 @@ def similarOpponent():
             responds = requests.post(url=url, json=json, timeout=10)
             if responds.status_code == 200:
                 data = responds.json()
-                if 'status' in data:
-                    return data['message']
-                else: return data
+                if data:
+                    return data
+                else: return jsonify({'status': 404})
+            else: return jsonify({'status': 500})
         except Exception as e:
             if e:
                 return jsonify({'status': 500})
@@ -89,11 +93,10 @@ def pastFiveMatch():
             responds = requests.post(url=url, json=json, timeout=10)
             if responds.status_code == 200:
                 data =  responds.json()
-                if 'status' in data:
-                    return data['message']
-                else:
+                if data:
                     return data
-            else: print(responds.status_code)
+                else: return jsonify(({'status': 404}))
+            else: return jsonify({'status': 500})
         except Exception as e:
             if e:
                 return jsonify({'status': 500})
@@ -111,9 +114,10 @@ def homeAdvantages():
             responds = requests.post(url=url, json=json, timeout=10)
             if responds.status_code == 200:
                 data = responds.json()
-                if 'status' in data:
-                    return data['message']
-                else: return data
+                if data:
+                    return data
+                else: return jsonify({'status': 404})
+            else: return jsonify({'status': 50})
         except Exception as e:
             if e:
                 return jsonify({'status': 500})
@@ -131,12 +135,13 @@ def awayAdvantages():
             respond = requests.post(url=url, json=json, timeout=10)
             if respond.status_code == 200:
                 data = respond.json()
-                if 'status' in data:
-                    return data['message']
-                else: return data
+                if data:
+                    return data
+                else: return jsonify({'status': 404})
         except Exception as e:
             if e:
              return jsonify({'status': 500})
+            
             
 @app.route('/teamfinalP', methods=['GET', 'POST'])
 def teamProbability():
@@ -212,9 +217,6 @@ def logout():
 
 
 
-
-
-
 @app.route('/addGames', methods=['POST'])
 @login_required
 def control_games():
@@ -224,8 +226,12 @@ def control_games():
         team1 = data['team1']
         team2 = data['team2']
         try: 
-            Poutcome = finallyProbability(team1=team1, team2=team2)
-            status = addGame(homeTeam=team1, awayTeam=team2, date=date.today(), predictedOutcome=Poutcome)
+            _, _, eventOutcomeP = finallyProbability(team1=team1, team2=team2)
+            homeTeam = eventOutcomeP['homeTeam']
+            awayTeam = eventOutcomeP['awayTeam']
+            draw = eventOutcomeP['draw']
+            
+            status = addGame(homeTeam=team1, awayTeam=team2, date=date.today(), predictedOutcome=_)
         except Exception as e:
             print(e)
         

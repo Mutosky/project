@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regional Football Match Analyzer</title>
-    <link rel="stylesheet" href="{{url_for('static', filename = 'styles/styles.v6.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename = 'styles/styles.v7.css')}}">
 </head>
 
 <body>
@@ -149,15 +149,15 @@
         </h1>
         <div class="finalRcover">
             <div class="teamFR" id="team1FP"></div>
-            <div class="teamFR" id="finalPrediction"></div>
             <div class="teamFR" id="team2FP"></div>
+            <div class="teamFR" id="finalPrediction"></div>
         </div>
     </div>
     <div id="throbber-overlay" class="throbber-overlay">
-        <h1 id="loadingState" class="loadingState">__</h1>
+        <div id="loadingState" class="loadingState"></div>
         <div id="throbber" class="throbber"></div>
     </div>
 </body>
-<script src="{{url_for('static', filename='main.v9.js')}}"></script>
+<script src="{{url_for('static', filename='main.v10.js')}}"></script>
 
 </html>
