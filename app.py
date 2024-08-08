@@ -1,4 +1,4 @@
-from init import app, teams, login_users, get_allusers, get_user, addGame, checkAvalibleGames, clearGames, finallyProbability
+from init import app, teams, login_users, get_allusers, get_user, addGame, checkAvalibleGames, clearGames, finallyProbability, determine_outcome
 from flask import request, jsonify, render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, UserMixin, LoginManager
 import requests
@@ -152,7 +152,9 @@ def teamProbability():
 
         try:
             team1FinalP, team2FinalP, eventOutcomeP = finallyProbability(team1=Team1, team2=Team2)
-            return jsonify({'team1FP': team1FinalP, 'team2FP': team2FinalP, 'final_result': eventOutcomeP})
+            if team1FinalP:
+                return jsonify({'team1FP': team1FinalP, 'team2FP': team2FinalP, 'final_result': eventOutcomeP})
+            else: return jsonify({'status': 500})
         except Exception as e:
             print(e)
              
@@ -227,22 +229,18 @@ def control_games():
         team2 = data['team2']
         try: 
             _, _, eventOutcomeP = finallyProbability(team1=team1, team2=team2)
-            homeTeam = eventOutcomeP['homeTeam']
-            awayTeam = eventOutcomeP['awayTeam']
-            draw = eventOutcomeP['draw']
-            
-            status = addGame(homeTeam=team1, awayTeam=team2, date=date.today(), predictedOutcome=_)
+            Poutcome = determine_outcome(eventOutcomeP)
+            status = addGame(homeTeam=team1, awayTeam=team2, date=date.today(), predictedOutcome=Poutcome)
+            if status == 'successful':
+                return jsonify({'status': 'successfully added game'})
+            elif status == 'already added':
+                return jsonify({'status': 'Game as already been added'})
+            else:
+                print(status)
+                return jsonify({'status': 'error adding games'})
         except Exception as e:
             print(e)
-        
-
-        if status == 'successful':
-            return jsonify({'status': 'successfully added game'})
-        elif status == 'already added':
-            return jsonify({'status': 'Game as already been added'})
-        else:
-            print(status)
-            return jsonify({'status': 'error adding games'})
+    
 
 
 @app.route('/getAllGames', methods=['GET'])
@@ -269,3 +267,4 @@ def deleteGames():
 
 if __name__ == "__main__":
     app.run(debug=True)
+

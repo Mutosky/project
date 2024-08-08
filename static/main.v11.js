@@ -128,7 +128,7 @@ async function similarOppponet(team1Name, team2Name){
         } else {
             const errorEle = document.createElement('h1');
             errorEle.textContent = 'unable to get past five match data';
-            innerDiv.appendChild(errorEle);
+            divID.appendChild(errorEle);
         }
     }
 }

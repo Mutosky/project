@@ -360,3 +360,30 @@ def eventProbability(team1FP, team2FP):
     eventprob['draw'] = draw/100
 
     return eventprob
+
+
+def determine_outcome(probabilities):
+    print('yoooo')
+    sorted_probs = sorted(probabilities.items(), key=lambda item: item[1], reverse=True)
+
+
+    first = sorted_probs[0][0] 
+    second = sorted_probs[1][0]  
+
+
+    if first == "homeTeam":
+        if second == "awayTeam":
+            return "home or away"
+        else: 
+            return "home"
+    elif first == "awayTeam":
+        if second == "homeTeam":
+            return "home or away"
+        else: 
+            return "away"
+    else:  
+        if second == "homeTeam":
+            return "home"
+        else: 
+            return "away or draw"
+

@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.v7.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/SerAdmin.v8.css')}}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script defer src="/_vercel/insights/script.js"></script>
     <title>services</title>
 </head>
 
@@ -158,7 +159,7 @@
         </div>
     </div>
 </body>
-<script src="{{url_for('static', filename='main.v10.js')}}"></script>
+<script src="{{url_for('static', filename='main.v11.js')}}"></script>
 <script>
     document
         .querySelector(".scroll-button")
@@ -172,7 +173,7 @@
 
 
     async function displaydailygames() {
-        alert('<h1> daily games </h1> section is still in production so any data seen is demo');
+        alert('DAILY GAMES section is still in production so any data seen is demo');
         boxId = document.getElementById('dailygames');
         const respond = await fetch('/getAllGames');
         const awaitRespond = await respond.json();
